@@ -1,10 +1,3 @@
-/*
- * 3. Să se scrie un program care găsește o soluție pentru unul din următoarele labirinturi:
- * labirint_1.txt, labirint_2.txt, labirint_cuvinte.txt.
- * Pentru labirintul 1 si 2 punctul de pornire este indicat de litera S
- * și punctul de oprire este indicat de litera F, spre deosebire de
- * labirintul 1 și 2, labirintul 3 nu are o soluție unică.
- */
 #include <fstream>
 #include <cstring>
 #include <iostream>
@@ -13,6 +6,12 @@ using namespace std;
 
 ifstream in("input.txt");
 ofstream out("output.txt");
+
+/*
+ * 3. Să se scrie un program care găsește o soluție pentru unul din următoarele labirinturi:
+ * labirint_1.txt, labirint_2.txt, labirint_cuvinte.txt.
+ * implementat pentru labirint 1 si 2
+ */
 
 int mat[1000][1000];
 int n, m;
