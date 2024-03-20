@@ -1,4 +1,3 @@
-/*
 #include <iostream>
 #include <fstream>
 
@@ -82,4 +81,4 @@ int main() {
         reconstituire_drum(nod_destinatie);
     }
     return 0;
-}*/
+}
