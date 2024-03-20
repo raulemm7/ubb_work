@@ -1,4 +1,3 @@
-/*
 #include <iostream>
 #include <fstream>
 
@@ -40,4 +39,3 @@ int main() {
     dfs(nod_de_start);
     return 0;
 }
-*/
