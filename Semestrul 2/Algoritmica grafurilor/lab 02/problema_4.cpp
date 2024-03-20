@@ -1,4 +1,3 @@
-/*
 #include <iostream>
 #include <fstream>
 
@@ -77,4 +76,3 @@ int main() {
     free(matrice);
     return 0;
 }
-*/
