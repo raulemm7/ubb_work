@@ -1,0 +1,156 @@
+     1                                  bits 32 
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit, scanf, fopen, fclose, fprintf, printf               
+     6                                  import exit msvcrt.dll 
+     7                                  import scanf msvcrt.dll
+     8                                  import fopen msvcrt.dll
+     9                                  import fclose msvcrt.dll 
+    10                                  import fprintf msvcrt.dll  
+    11                                  import printf msvcrt.dll
+    12                                  
+    13                                  segment data use32 class=data
+    14 00000000 00<rept>                    nume_tastatura times 100 db 0
+    15 00000064 00<rept>                    nume_fisier times 100 db 0
+    16 000000C8 612B00                      mod_acces db 'a+', 0
+    17 000000CB FFFFFFFF                    descriptor_fisier dd -1
+    18                                      
+    19 000000CF 257300                      format_str db '%s', 0
+    20 000000D2 256300                      format_char db '%c', 0
+    21                                      
+    22 000000D5 00000000                    numar_caractere dd 0
+    23 000000D9 00000000                    numar_caractere_aux dd 0
+    24 000000DD 00000000                    pointer_sir dd 0
+    25                                  
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ; citesc numele fisierului
+    29 00000000 68[00000000]                    push dword nume_tastatura
+    30 00000005 68[CF000000]                    push dword format_str
+    31 0000000A FF15[00000000]                  call [scanf]
+    32 00000010 83C408                          add esp, 4 * 2
+    33                                          
+    34                                          ; copie sor string
+    35 00000013 BE[00000000]                    mov esi, nume_tastatura
+    36 00000018 BF[64000000]                    mov edi, nume_fisier
+    37 0000001D FC                              cld
+    38                                          cat_timp_caractere:
+    39 0000001E AC                                  lodsb    ; al = caracter
+    40                                              
+    41 0000001F 3C00                                cmp al, 0
+    42 00000021 741C                                je stop
+    43                                              
+    44                                              ; actualizez nr de caractere
+    45 00000023 8B1D[D5000000]                      mov ebx, [numar_caractere]
+    46 00000029 43                                  inc ebx
+    47 0000002A 891D[D5000000]                      mov [numar_caractere], ebx
+    48 00000030 891D[D9000000]                      mov [numar_caractere_aux], ebx
+    49                                              
+    50 00000036 893D[DD000000]                      mov [pointer_sir], edi
+    51 0000003C AA                                  stosb    ; stochez caracterul in nume_fisier
+    52 0000003D EBDF                            jmp cat_timp_caractere
+    53                                          
+    54                                          stop:
+    55 0000003F 90                                  nop
+    56                                          
+    57                                          ; adaug extensia '.txt' pentru a crea fisierul cu succes
+    58 00000040 B02E                            mov al, '.'
+    59 00000042 AA                              stosb
+    60 00000043 B074                            mov al, 't'
+    61 00000045 AA                              stosb
+    62 00000046 B078                            mov al, 'x'
+    63 00000048 AA                              stosb
+    64 00000049 B074                            mov al, 't'
+    65 0000004B AA                              stosb 
+    66                                          
+    67                                          ; fopen(nume_fisier, mod_acces)
+    68 0000004C 68[C8000000]                    push dword mod_acces
+    69 00000051 68[64000000]                    push dword nume_fisier
+    70 00000056 FF15[00000000]                  call [fopen]
+    71 0000005C 83C408                          add esp, 4 * 2
+    72                                          
+    73                                          ; verific daca fisierul s a deschis corect
+    74 0000005F 83F800                          cmp eax, 0
+    75 00000062 0F84BC000000                    je finish
+    76 00000068 A3[CB000000]                    mov [descriptor_fisier], eax
+    77                                          
+    78                                          ; carpeala
+    79 0000006D B820000000                      mov eax, ' '
+    80 00000072 50                              push eax
+    81 00000073 68[D2000000]                    push dword format_char
+    82 00000078 FF35[CB000000]                  push dword [descriptor_fisier]
+    83 0000007E FF15[00000000]                  call [fprintf]
+    84 00000084 83C40C                          add esp, 4 * 3
+    85                                          
+    86                                          ; afisez in fisier doar cifrele
+    87 00000087 8B35[DD000000]                  mov esi, [pointer_sir]
+    88 0000008D 8B0D[D5000000]                  mov ecx, [numar_caractere]
+    89 00000093 FD                              std
+    90                                          cifre:
+    91 00000094 890D[D5000000]                      mov [numar_caractere], ecx
+    92                                              
+    93 0000009A B800000000                          mov eax, 0
+    94 0000009F AC                                  lodsb
+    95                                              
+    96 000000A0 83F830                              cmp eax, '0'
+    97 000000A3 721A                                jb nu_e_cifra
+    98 000000A5 83F839                              cmp eax, '9'
+    99 000000A8 7715                                ja nu_e_cifra
+   100                                              
+   101 000000AA 50                                  push eax
+   102 000000AB 68[D2000000]                        push dword format_char
+   103 000000B0 FF35[CB000000]                      push dword [descriptor_fisier]
+   104 000000B6 FF15[00000000]                      call [fprintf]
+   105 000000BC 83C40C                              add esp, 4 * 3
+   106                                              
+   107                                              nu_e_cifra:
+   108 000000BF 90                                      nop
+   109                                              
+   110 000000C0 8B0D[D5000000]                      mov ecx, [numar_caractere]
+   111 000000C6 E2CC                            loop cifre
+   112                                          
+   113                                          ; afisez in fisier doar literele (mari si mici)
+   114 000000C8 8B35[DD000000]                  mov esi, [pointer_sir]
+   115 000000CE 8B0D[D9000000]                  mov ecx, [numar_caractere_aux]
+   116 000000D4 FD                              std
+   117                                          caractere:
+   118 000000D5 890D[D9000000]                      mov [numar_caractere_aux], ecx
+   119                                              
+   120 000000DB B800000000                          mov eax, 0
+   121 000000E0 AC                                  lodsb
+   122                                              
+   123 000000E1 83F87A                              cmp eax, 'z'
+   124 000000E4 7726                                ja nu_e_litera
+   125 000000E6 83F861                              cmp eax, 'a'
+   126 000000E9 7202                                jb litera_mare
+   127                                              
+   128 000000EB EB0A                                jmp afisare
+   129                                              
+   130                                              litera_mare:
+   131 000000ED 83F85A                                  cmp eax, 'Z'
+   132 000000F0 771A                                    ja nu_e_litera
+   133 000000F2 83F841                                  cmp eax, 'A'
+   134 000000F5 7215                                    jb nu_e_litera
+   135                                              
+   136                                              afisare:
+   137 000000F7 50                                      push eax
+   138 000000F8 68[D2000000]                            push dword format_char
+   139 000000FD FF35[CB000000]                          push dword [descriptor_fisier]
+   140 00000103 FF15[00000000]                          call [fprintf]
+   141 00000109 83C40C                                  add esp, 4 * 3
+   142                                              
+   143                                              nu_e_litera:
+   144 0000010C 90                                      nop
+   145                                              
+   146 0000010D 8B0D[D9000000]                      mov ecx, [numar_caractere_aux]
+   147 00000113 E2C0                            loop caractere
+   148                                          
+   149                                          ; fclose(descriptor_fisier)
+   150 00000115 FF35[CB000000]                  push dword [descriptor_fisier]
+   151 0000011B FF15[00000000]                  call [fclose]
+   152 00000121 83C408                          add esp, 4 * 2
+   153                                      
+   154                                      finish:
+   155 00000124 6A00                            push dword 0    
+   156 00000126 FF15[00000000]                  call [exit]       
