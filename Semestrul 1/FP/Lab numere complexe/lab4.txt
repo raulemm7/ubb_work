@@ -1,0 +1,310 @@
+import math
+
+
+def menu():
+    print("1) Adaugă număr complex la sfârșitul listei")
+    print("2) Inserare număr complex pe o poziție dată")
+    print("3) Șterge element de pe o poziție dată")
+    print("4) Șterge elementele de pe un interval de poziții.")
+    print("5) Înlocuiește toate aparițiile unui număr complex cu un alt număr complex.")
+    print("6) Tipărește partea imaginara pentru numerele din listă.")
+    print("7) Tipărește toate numerele complexe care au modulul mai mic decât 10")
+    print("8) Tipărește toate numerele complexe care au modulul egal cu 10")
+    print("9) Iesire")
+
+
+# functii interactiune cu utilizator
+def citire_nr_complex():
+    """
+    """
+    parte_reala = input('Introdu partea reala a numarului complex: \n')
+    parte_imaginara = input('Introdu partea imaginara a numarului complex: \n')
+
+    return parte_reala, parte_imaginara
+
+
+def citire_index_start_final():
+    """
+
+    :return:
+    """
+    start_index_value = int(input('Introdu pozitia de inceput a subsecventei: \n'))
+    finish_index_value = int(input('Introdu pozitia de sfarsit a subsecventei: \n'))
+    return start_index_value, finish_index_value
+
+
+def citire_index_pozitie():
+    """
+
+    :return:
+    """
+    index_value = int(input('Introdu pozitia dorita: \n'))
+    return index_value
+
+
+def tipareste_nr_complex(nr_complex):
+    """
+
+    :param nr_complex:
+    :return:
+    """
+    if nr_complex[1] > 0:
+        print(nr_complex[0], end="+")
+    else:
+        print(nr_complex[0], end="")
+
+    print(nr_complex[1], end="i\n")
+
+
+def creeare_nr_complex():
+    """
+
+    :return:
+    """
+    nr_complex = []
+    parte_reala, parte_imaginara = citire_nr_complex()
+
+    nr_complex.append(parte_reala)
+    nr_complex.append(parte_imaginara)
+
+    return nr_complex
+
+
+# 1.1
+def adauga_la_sfarsitul_listei(lista_cu_nr_complexe, nr_complex):
+    """
+
+    :param lista_cu_nr_complexe:
+    :param nr_complex:
+    :return:
+    """
+    lista_cu_nr_complexe.append(nr_complex)
+
+    return lista_cu_nr_complexe
+
+
+def test_adauga_la_sfarsitul_listei():
+    assert adauga_la_sfarsitul_listei([], [1, 2]) == [[1, 2]]
+    assert adauga_la_sfarsitul_listei([[1, 2]], [3, -4]) == [[1, 2], [3, -4]]
+
+
+# 1.2
+def inserare_la_o_pozitie_data(lista_cu_nr_complexe, nr_complex, index_value):
+    """
+
+    :param lista_cu_nr_complexe:
+    :param nr_complex:
+    :param index_value:
+    :return:
+    """
+    lista_cu_nr_complexe.insert(index_value, nr_complex)
+
+    return lista_cu_nr_complexe
+
+
+def test_inserare_la_o_pozitie_data():
+    assert inserare_la_o_pozitie_data([], [1, 2], 0) == [[1, 2]]
+    assert inserare_la_o_pozitie_data([[1, 2]], [3, -4], 1) == [[1, 2], [3, -4]]
+
+    # aici trebuie sa fac cu try si erroru lu gabi mircea
+
+
+# 2.1
+def sterge_de_pe_pozitie(lista_cu_nr_complexe, index_value):
+    """
+
+    :param lista_cu_nr_complexe:
+    :param index_value:
+    :return:
+    """
+    lista_cu_nr_complexe.pop(index_value)
+
+    return lista_cu_nr_complexe
+
+
+def test_sterge_de_pe_pozitie():
+    assert sterge_de_pe_pozitie([[1, 2]], 0) == []
+    assert sterge_de_pe_pozitie([[1, 2], [3, -4]], 1) == [[1, 2]]
+
+    # aici tre sa fac cu try si error
+
+
+# 2.2
+def sterge_interval_pozitii(lista_cu_nr_complexe, start_index_value, finish_index_value):
+    """
+
+    :param lista_cu_nr_complexe:
+    :param start_index_value:
+    :param finish_index_value:
+    :return:
+    """
+    nr_stergeri = finish_index_value - start_index_value + 1
+    while nr_stergeri > 0:
+        lista_cu_nr_complexe.pop(start_index_value)
+        nr_stergeri -= 1
+
+    return lista_cu_nr_complexe
+
+
+def test_sterge_interval_pozitii():
+    assert sterge_interval_pozitii([[1, 2], [3, -4]], 0, 1) == []
+    assert sterge_interval_pozitii([[1, 2], [3, -4], [5, 6], [7, 8]], 2, 3) == [[1, 2], [3, -4]]
+
+    # try si error
+
+
+# 2.3
+def inlocuieste_aparitii(lista_cu_nr_complexe, nr_complex_de_inlocuit, nr_complex_inlocuitor):
+    """
+
+    :param lista_cu_nr_complexe:
+    :param nr_complex_de_inlocuit:
+    :param nr_complex_inlocuitor:
+    :return:
+    """
+    for i in lista_cu_nr_complexe:
+        if lista_cu_nr_complexe[i] == nr_complex_de_inlocuit:
+            lista_cu_nr_complexe[i] = nr_complex_inlocuitor
+
+    return lista_cu_nr_complexe
+
+
+def test_inlocuieste_aparitii():
+    pass
+
+
+def get_parte_reala(nr_complex):
+    """
+
+    :param nr_complex:
+    :return:
+    """
+    return nr_complex[0]
+
+
+def test_get_parte_reala():
+    assert get_parte_reala([1, 2]) == 1
+    assert get_parte_reala([-32, 24]) == -32
+
+    # cred ca si aici try si error (optional)
+
+
+def get_parte_imaginara(nr_complex):
+    """
+
+    :param nr_complex:
+    :return:
+    """
+    return nr_complex[1]
+
+
+def test_get_parte_imaginara():
+    assert get_parte_imaginara([1, 2]) == 2
+    assert get_parte_imaginara([-32, 24]) == 24
+
+
+# 3.1
+def tipareste_parte_imaginara(lista_cu_nr_complexe):
+    """
+
+    :param lista_cu_nr_complexe:
+    :return:
+    """
+    start_index_value, finish_index_value = citire_index_start_final()
+
+    for i in range(start_index_value, finish_index_value + 1):
+        print(get_parte_imaginara(lista_cu_nr_complexe[i]))
+
+
+# 3.2
+def tipareste_nr_modul_mai_mic_10(lista_cu_nr_complexe):
+    """
+
+    :param lista_cu_nr_complexe:
+    :return:
+    """
+    for i in lista_cu_nr_complexe:
+        a = get_parte_reala(lista_cu_nr_complexe[i])
+        b = get_parte_imaginara(lista_cu_nr_complexe[i])
+
+        modul = math.sqrt(a * a + b * b)
+
+        if modul < 10:
+            tipareste_nr_complex(lista_cu_nr_complexe[i])
+
+
+# 3.3
+def tipareste_nr_modul_egal_10(lista_cu_nr_complexe):
+    """
+
+    :param lista_cu_nr_complexe:
+    :return:
+    """
+    epsilon = 0.001
+
+    for i in lista_cu_nr_complexe:
+        a = get_parte_reala(lista_cu_nr_complexe[i])
+        b = get_parte_imaginara(lista_cu_nr_complexe[i])
+
+        modul = math.sqrt(a * a + b * b)
+
+        # verific daca un float este egal cu 10
+        if abs(modul - 10) < epsilon:
+            tipareste_nr_complex(lista_cu_nr_complexe[i])
+
+
+def ruleaza_teste():
+    test_adauga_la_sfarsitul_listei()
+    test_inserare_la_o_pozitie_data()
+    test_sterge_de_pe_pozitie()
+    test_sterge_interval_pozitii()
+    test_inlocuieste_aparitii()
+    test_get_parte_reala()
+    test_get_parte_imaginara()
+
+
+def main():
+    ruleaza_teste()
+
+    lista_cu_nr_complexe = []
+
+    while True:
+        menu()
+        comanda = int(input('\nIntrodu o comanda: '))
+
+        if comanda == 1:
+            nr_complex = creeare_nr_complex()
+            lista_cu_nr_complexe = adauga_la_sfarsitul_listei(lista_cu_nr_complexe, nr_complex)
+
+        elif comanda == 2:
+            nr_complex = creeare_nr_complex()
+            index_value = citire_index_pozitie()
+            lista_cu_nr_complexe = inserare_la_o_pozitie_data(lista_cu_nr_complexe, nr_complex, index_value)
+
+        elif comanda == 3:
+            index_value = citire_index_pozitie()
+            lista_cu_nr_complexe = sterge_de_pe_pozitie(lista_cu_nr_complexe, index_value)
+
+        elif comanda == 4:
+            start_index_value, finish_index_value = citire_index_start_final()
+            lista_cu_nr_complexe = sterge_interval_pozitii(lista_cu_nr_complexe, start_index_value, finish_index_value)
+
+        elif comanda == 5:
+            nr_complex_de_inlocuit = creeare_nr_complex()
+            nr_complex_inloc = creeare_nr_complex()
+            lista_cu_nr_complexe = inlocuieste_aparitii(lista_cu_nr_complexe, nr_complex_de_inlocuit, nr_complex_inloc)
+
+        elif comanda == 6:
+            tipareste_parte_imaginara(lista_cu_nr_complexe)
+
+        elif comanda == 7:
+            tipareste_nr_modul_mai_mic_10(lista_cu_nr_complexe)
+
+        elif comanda == 8:
+            tipareste_nr_modul_egal_10(lista_cu_nr_complexe)
+
+        elif comanda == 9:
+            exit()
+
+
+main()
