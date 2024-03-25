@@ -17,7 +17,7 @@ typedef int (*functie_cmp)(cheltuiala chelt1, cheltuiala chelt2);
  * tmp_storage: lista cu cheltuieli
  * functie: criteriul dupa care se face sortarea
  */
-Repo sortare(Repo tmp_storage, functie_cmp functie);
+Repo* sortare(Repo* tmp_storage, functie_cmp functie);
 
 /* test */
 void run_sort_test();

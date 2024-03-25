@@ -21,7 +21,7 @@ int validare_tip(char *tip) {
     return 0;
 }
 
-int validare_cheltuiala_existenta(Repo storage, int numar_ap, int suma_chelt, char *tip_chelt) {
+int validare_cheltuiala_existenta(Repo* storage, int numar_ap, int suma_chelt, char *tip_chelt) {
     for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
         cheltuiala chelt = get_cheltuiala_by_id(storage, i);
 
@@ -75,6 +75,10 @@ int comparare_tipuri_mai_mic(cheltuiala chelt1, cheltuiala chelt2) {
     return 0;
 }
 
+int comparare_id_crescator(cheltuiala chelt1, cheltuiala chelt2) {
+    return get_id_cheltuiala(chelt1) > get_id_cheltuiala(chelt2);
+}
+
 // functii de test
 void run_validator_tests() {
     test_validare_tip();
@@ -94,7 +98,7 @@ void test_validare_tip() {
 }
 
 void test_validare_cheltuiala_existenta() {
-    Repo storage = creeaza_repository();
+    Repo* storage = creeaza_repository();
 
     char *tip = (char*)malloc(sizeof(char) * 32);
     strcpy(tip, "apa");
@@ -118,13 +122,15 @@ void test_comparari() {
 
     char *tip2 = (char*)malloc(sizeof(char) * 32);
     strcpy(tip2, "internet");
-    cheltuiala chelt2 = create_cheltuiala(0, 23, 360, tip2);
+    cheltuiala chelt2 = create_cheltuiala(1, 23, 360, tip2);
 
     assert(comparare_suma_mai_mare(chelt1, chelt2) == 0);
     assert(comparare_suma_mai_mic(chelt1, chelt2) == 1);
 
     assert(comparare_tipuri_mai_mare(chelt1, chelt2) == 0);
     assert(comparare_tipuri_mai_mic(chelt1, chelt2) == 1);
+
+    assert(comparare_id_crescator(chelt1, chelt2) == 0);
 
     destroy_cheltuiala(chelt1);
     destroy_cheltuiala(chelt2);
@@ -135,13 +141,15 @@ void test_comparari() {
 
     char *tip4 = (char*)malloc(sizeof(char) * 32);
     strcpy(tip4, "apa");
-    cheltuiala chelt4 = create_cheltuiala(0, 12, 250, tip4);
+    cheltuiala chelt4 = create_cheltuiala(1, 12, 250, tip4);
 
     assert(comparare_suma_mai_mare(chelt3, chelt4) == 1);
     assert(comparare_suma_mai_mic(chelt3, chelt4) == 0);
 
     assert(comparare_tipuri_mai_mare(chelt3, chelt4) == 1);
     assert(comparare_tipuri_mai_mic(chelt3, chelt4) == 0);
+
+    assert(comparare_id_crescator(chelt4, chelt3) == 1);
 
     destroy_cheltuiala(chelt3);
     destroy_cheltuiala(chelt4);

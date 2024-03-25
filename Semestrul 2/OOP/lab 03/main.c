@@ -25,7 +25,7 @@ void run_app_tests() {
 
 void run_app() {
     // initializare lista
-    Repo storage_cheltuieli = creeaza_repository();
+    Repo* storage_cheltuieli = creeaza_repository();
 
     while(1) {
         menu();
@@ -97,9 +97,6 @@ void run_app() {
             if(get_nr_cheltuieli(storage_cheltuieli) > 0) {
                 show_ordonated_menu();
 
-                Repo tmp_storage = creeaza_repository();
-                tmp_storage = copiaza_repo(tmp_storage, storage_cheltuieli);
-
                 int sort_command = citire_comanda(2, "Alege tipul de sortare: ");
                 if(sort_command == 1) {
                     // dupa suma
@@ -108,11 +105,11 @@ void run_app() {
                     int sum_command = citire_comanda(2, "Alege cum doresti sa faci sortarea: ");
                     if(sum_command == 1) {
                         // crescator
-                        tmp_storage = sortare(tmp_storage, comparare_suma_mai_mare);
+                        storage_cheltuieli = sortare(storage_cheltuieli, comparare_suma_mai_mare);
                     }
                     else{
                         //descrescator
-                        tmp_storage = sortare(tmp_storage, comparare_suma_mai_mic);
+                        storage_cheltuieli = sortare(storage_cheltuieli, comparare_suma_mai_mic);
                     }
                 }
                 else {
@@ -122,17 +119,18 @@ void run_app() {
                     int type_command = citire_comanda(2, "Alege cum doresti sa faci sortarea: ");
                     if(type_command == 1) {
                         // crescator (alfabetic)
-                        tmp_storage = sortare(tmp_storage, comparare_tipuri_mai_mare);
+                        storage_cheltuieli = sortare(storage_cheltuieli, comparare_tipuri_mai_mare);
                     }
                     else {
                         // descrescator
-                        tmp_storage = sortare(tmp_storage, comparare_tipuri_mai_mic);
+                        storage_cheltuieli = sortare(storage_cheltuieli, comparare_tipuri_mai_mic);
                     }
                 }
 
-                print_cheltuieli(tmp_storage);
+                print_cheltuieli(storage_cheltuieli);
 
-                destroy_repository(tmp_storage);
+                // revenire sortat dupa id
+                storage_cheltuieli = sortare(storage_cheltuieli, comparare_id_crescator);
             }
             else
                 print_mesaj("Nu exista inregistrari facute!\n");

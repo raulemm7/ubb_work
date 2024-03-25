@@ -46,7 +46,7 @@ void print_o_cheltuiala(cheltuiala chelt);
 /*
  * afiseaza o lista de cheltuieli pe ecran
  */
-void print_cheltuieli(Repo storage);
+void print_cheltuieli(Repo* storage);
 
 /*
  * Citeste de la tastatura o comanda
@@ -77,8 +77,8 @@ char* citire_tip_cheltuiala(char *mesaj);
 
 char citire_operator(char *mesaj);
 
-void afisare_cheltuieli_filtrat_tip(Repo storage);
+void afisare_cheltuieli_filtrat_tip(Repo* storage);
 
-void afisare_cheltuieli_filtrat_suma(Repo storage);
+void afisare_cheltuieli_filtrat_suma(Repo* storage);
 
 #endif //LAB03_UI_H

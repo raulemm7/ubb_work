@@ -3,7 +3,7 @@
 //
 #include "sort.h"
 
-Repo sortare(Repo tmp_storage, functie_cmp functie) {
+Repo* sortare(Repo *tmp_storage, functie_cmp functie) {
     for(int i = 0; i < get_nr_cheltuieli(tmp_storage) - 1; i++) {
         for(int j = i + 1; j < get_nr_cheltuieli(tmp_storage); j++) {
             cheltuiala chelt_i = get_cheltuiala_by_id(tmp_storage, i);
@@ -20,7 +20,7 @@ Repo sortare(Repo tmp_storage, functie_cmp functie) {
 }
 
 void run_sort_test() {
-    Repo storage = creeaza_repository();
+    Repo* storage = creeaza_repository();
 
     char *tip = (char*)malloc(sizeof(char) * 32);
     strcpy(tip, "internet");

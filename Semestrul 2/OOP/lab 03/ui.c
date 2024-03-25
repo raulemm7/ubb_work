@@ -47,7 +47,7 @@ void print_o_cheltuiala(cheltuiala chelt) {
     free(tip_cheltuiala);
 }
 
-void print_cheltuieli(Repo storage) {
+void print_cheltuieli(Repo* storage) {
     for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
         cheltuiala chelt = get_cheltuiala_by_id(storage, i);
         print_o_cheltuiala(chelt);
@@ -143,7 +143,7 @@ char citire_operator(char *mesaj) {
     }
 }
 
-void afisare_cheltuieli_filtrat_tip(Repo storage) {
+void afisare_cheltuieli_filtrat_tip(Repo* storage) {
     int bool_ok = 0;
 
     // citesc un tip
@@ -168,7 +168,7 @@ void afisare_cheltuieli_filtrat_tip(Repo storage) {
         print_mesaj("Nu au fost gasite cheltuieli care sa satisfaca conditiile!\n");
 }
 
-void afisare_cheltuieli_filtrat_suma(Repo storage) {
+void afisare_cheltuieli_filtrat_suma(Repo* storage) {
     char operator = citire_operator("Citeste operatorul dupa care doresti sa faci filtrarea: ");
     int suma_citita = citire_suma_cheltuiala("Citeste suma dupa care doresti sa faci filtrarea: ");
 

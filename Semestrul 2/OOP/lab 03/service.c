@@ -4,7 +4,7 @@
 
 #include "service.h"
 
-Repo adauga_o_noua_cheltuiala(Repo storage, int id_cheltuiala, int numar_apartament, int suma_cheltuiala,
+Repo* adauga_o_noua_cheltuiala(Repo* storage, int id_cheltuiala, int numar_apartament, int suma_cheltuiala,
                               char* tip_cheltuiala) {
     // verific daca aceasta cheltuiala exista deja
     if(validare_cheltuiala_existenta(storage, numar_apartament, suma_cheltuiala, tip_cheltuiala)) {
@@ -31,7 +31,7 @@ Repo adauga_o_noua_cheltuiala(Repo storage, int id_cheltuiala, int numar_apartam
     return storage;
 }
 
-Repo modifica_cheltuiala_existenta(Repo storage, int id_ales, int suma_noua,
+Repo* modifica_cheltuiala_existenta(Repo* storage, int id_ales, int suma_noua,
                                    char *tip_cheltuiala_nou) {
     // verific daca pentru datele introduse exista deja inregistrari
     int numar_ap = get_numar_apartament(get_cheltuiala_by_id(storage, id_ales));
@@ -54,7 +54,7 @@ Repo modifica_cheltuiala_existenta(Repo storage, int id_ales, int suma_noua,
     return storage;
 }
 
-Repo sterge_cheltuiala_din_storage(Repo storage, int id_ales) {
+Repo* sterge_cheltuiala_din_storage(Repo* storage, int id_ales) {
     // sterg efectiv
     storage = delete_cheltuiala(storage, id_ales);
 
@@ -69,7 +69,7 @@ void run_service_tests() {
 }
 
 void test_adaugare() {
-    Repo storage = creeaza_repository();
+    Repo* storage = creeaza_repository();
 
     char *tip = (char*)malloc(sizeof(char) * 32);
     strcpy(tip, "internet");
@@ -85,7 +85,7 @@ void test_adaugare() {
 }
 
 void test_modificare() {
-    Repo storage = creeaza_repository();
+    Repo* storage = creeaza_repository();
 
     char *tip = (char*)malloc(sizeof(char) * 32);
     strcpy(tip, "internet");
@@ -106,7 +106,7 @@ void test_modificare() {
 }
 
 void test_stergere() {
-    Repo storage = creeaza_repository();
+    Repo* storage = creeaza_repository();
 
     char *tip = (char*)malloc(sizeof(char) * 32);
     strcpy(tip, "internet");
