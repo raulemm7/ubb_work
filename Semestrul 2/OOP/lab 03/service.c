@@ -9,7 +9,7 @@ Repo* adauga_o_noua_cheltuiala(Repo* storage, int id_cheltuiala, int numar_apart
     // verific daca aceasta cheltuiala exista deja
     if(validare_cheltuiala_existenta(storage, numar_apartament, suma_cheltuiala, tip_cheltuiala)) {
         // creez o noua cheltuiala
-        cheltuiala chelt = create_cheltuiala(id_cheltuiala, numar_apartament, suma_cheltuiala, tip_cheltuiala);
+        cheltuiala* chelt = create_cheltuiala(id_cheltuiala, numar_apartament, suma_cheltuiala, tip_cheltuiala);
 
         // adaug cheltuiala in storage
         // verific daca mai am loc, daca nu realoc memorie pentru storage
@@ -37,7 +37,7 @@ Repo* modifica_cheltuiala_existenta(Repo* storage, int id_ales, int suma_noua,
     int numar_ap = get_numar_apartament(get_cheltuiala_by_id(storage, id_ales));
     if(validare_cheltuiala_existenta(storage, numar_ap, suma_noua, tip_cheltuiala_nou)) {
         // actualizez cheltuiala
-        cheltuiala chelt = get_cheltuiala_by_id(storage, id_ales);
+        cheltuiala* chelt = get_cheltuiala_by_id(storage, id_ales);
         chelt = modifica_informatii_cheltuiala(chelt, suma_noua, tip_cheltuiala_nou);
 
         // actualizez storage-ul
@@ -95,7 +95,7 @@ void test_modificare() {
     strcpy(new_tip, "apa");
     storage = modifica_cheltuiala_existenta(storage, 0, 460, new_tip);
 
-    cheltuiala chelt = get_cheltuiala_by_id(storage, 0);
+    cheltuiala* chelt = get_cheltuiala_by_id(storage, 0);
 
     assert(get_suma_cheltuiala(chelt) == 460);
     char *tip_from_chelt = get_tip_cheltuiala(chelt);

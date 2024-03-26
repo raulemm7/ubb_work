@@ -21,11 +21,11 @@ int validare_tip(char *tip);
 int validare_cheltuiala_existenta(Repo* storage, int numar_ap, int suma_chelt, char *tip_chelt);
 
 /* criterii de comparare */
-int comparare_suma_mai_mare(cheltuiala chelt1, cheltuiala chelt2);
-int comparare_suma_mai_mic(cheltuiala chelt1, cheltuiala chelt2);
-int comparare_tipuri_mai_mare(cheltuiala chelt1, cheltuiala chelt2);
-int comparare_tipuri_mai_mic(cheltuiala chelt1, cheltuiala chelt2);
-int comparare_id_crescator(cheltuiala chelt1, cheltuiala chelt2);
+int comparare_suma_mai_mare(cheltuiala* chelt1, cheltuiala* chelt2);
+int comparare_suma_mai_mic(cheltuiala* chelt1, cheltuiala* chelt2);
+int comparare_tipuri_mai_mare(cheltuiala* chelt1, cheltuiala* chelt2);
+int comparare_tipuri_mai_mic(cheltuiala* chelt1, cheltuiala* chelt2);
+int comparare_id_crescator(cheltuiala* chelt1, cheltuiala* chelt2);
 
 /*
  * tests

@@ -10,7 +10,7 @@
 #include "repository.h"
 #include "validator.h"
 
-typedef int (*functie_cmp)(cheltuiala chelt1, cheltuiala chelt2);
+typedef int (*functie_cmp)(cheltuiala* chelt1, cheltuiala* chelt2);
 
 /*
  * sorteaza o lista de cheltuieli in functie de un criteriu

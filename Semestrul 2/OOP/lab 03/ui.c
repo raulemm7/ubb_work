@@ -37,7 +37,7 @@ void print_mesaj(char *mesaj) {
     printf("%s", mesaj);
 }
 
-void print_o_cheltuiala(cheltuiala chelt) {
+void print_o_cheltuiala(cheltuiala* chelt) {
     char *tip_cheltuiala = get_tip_cheltuiala(chelt);
     printf("ID: %d; ap: %d, suma: %d, tip: %s\n",
            get_id_cheltuiala(chelt),
@@ -49,7 +49,7 @@ void print_o_cheltuiala(cheltuiala chelt) {
 
 void print_cheltuieli(Repo* storage) {
     for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
-        cheltuiala chelt = get_cheltuiala_by_id(storage, i);
+        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
         print_o_cheltuiala(chelt);
     }
 }
@@ -151,7 +151,7 @@ void afisare_cheltuieli_filtrat_tip(Repo* storage) {
 
     // fac filtrarea
     for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
-        cheltuiala chelt = get_cheltuiala_by_id(storage, i);
+        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
 
         char *tip_chelt = get_tip_cheltuiala(chelt);
         if(strcmp(tip_chelt, tip_citit) == 0) {
@@ -177,7 +177,7 @@ void afisare_cheltuieli_filtrat_suma(Repo* storage) {
         case '=': {
             int ok = 0;
             for(i = 0; i < get_nr_cheltuieli(storage); i++) {
-                cheltuiala chelt = get_cheltuiala_by_id(storage, i);
+                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
                 if(get_suma_cheltuiala(chelt) == suma_citita) {
                     print_o_cheltuiala(chelt);
                     ok += 1;
@@ -192,7 +192,7 @@ void afisare_cheltuieli_filtrat_suma(Repo* storage) {
         case '>': {
             int ok = 0;
             for(i = 0; i < get_nr_cheltuieli(storage); i++) {
-                cheltuiala chelt = get_cheltuiala_by_id(storage, i);
+                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
                 if(get_suma_cheltuiala(chelt) > suma_citita) {
                     print_o_cheltuiala(chelt);
                     ok += 1;
@@ -207,7 +207,7 @@ void afisare_cheltuieli_filtrat_suma(Repo* storage) {
         case '<': {
             int ok = 0;
             for(i = 0; i < get_nr_cheltuieli(storage); i++) {
-                cheltuiala chelt = get_cheltuiala_by_id(storage, i);
+                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
                 if(get_suma_cheltuiala(chelt) < suma_citita) {
                     print_o_cheltuiala(chelt);
                     ok += 1;

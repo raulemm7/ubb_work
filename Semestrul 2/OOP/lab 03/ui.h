@@ -41,7 +41,7 @@ void print_mesaj(char *mesaj);
 /*
  * afiseaza pe ecran o cheltuiala formatat
  */
-void print_o_cheltuiala(cheltuiala chelt);
+void print_o_cheltuiala(cheltuiala* chelt);
 
 /*
  * afiseaza o lista de cheltuieli pe ecran

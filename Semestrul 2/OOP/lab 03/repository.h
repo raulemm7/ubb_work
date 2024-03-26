@@ -8,7 +8,7 @@
 #include "domain.h"
 
 typedef struct {
-    cheltuiala *lista_cheltuieli;
+    cheltuiala** lista_cheltuieli;
     int nr_cheltuieli;
     int capacitate_maxima;
 }Repo;
@@ -29,7 +29,7 @@ void destroy_repository(Repo* storage);
 Repo* realocare_memorie(Repo* storage);
 
 /* getters */
-cheltuiala get_cheltuiala_by_id(Repo* storage, int id_cheltuiala);
+cheltuiala* get_cheltuiala_by_id(Repo* storage, int id_cheltuiala);
 int get_nr_cheltuieli(Repo* storage);
 int get_capacitate_maxima(Repo* storage);
 
@@ -38,7 +38,7 @@ int get_capacitate_maxima(Repo* storage);
  * storage: lista cu cheltuieli
  * chelt: cheltuiala care se adauga
  */
-Repo* adauga_cheltuiala_la_storage(Repo* storage, cheltuiala chelt);
+Repo* adauga_cheltuiala_la_storage(Repo* storage, cheltuiala* chelt);
 
 /*
  * pune pe o pozitie precizata o cheltuiala in lista de cheltuieli
@@ -46,7 +46,7 @@ Repo* adauga_cheltuiala_la_storage(Repo* storage, cheltuiala chelt);
  * chelt: cheltuiala care se va aloca
  * id_position: pozitia pe care se va aloca
  */
-Repo* set_cheltuiala_pe_pozitie(Repo* storage, cheltuiala chelt, int id_position);
+Repo* set_cheltuiala_pe_pozitie(Repo* storage, cheltuiala* chelt, int id_position);
 
 /*
  * sterge o cheltuiala din lista de cheltuieli
