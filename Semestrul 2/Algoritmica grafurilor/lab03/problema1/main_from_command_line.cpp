@@ -45,9 +45,8 @@ bool bellman_ford(int n, int v, int s)
 }
 
 
-// g++ -std=c++17 -Wall -Wextra -onume_problema nume_prolema.cpp
-// pentru run:
-// ./nume_problema graf.txt fisier_iesire.txt
+// creeeare executabil: g++ -std=c++17 -Wall -Wextra -onume_fisier nume_fisier.cpp
+// pentru run: ./nume_problema graf.txt fisier_iesire.txt (poti rula doar executabilul 😀)
 int main(int argc, char* argv[]) {
     int n, v, sursa;
 
