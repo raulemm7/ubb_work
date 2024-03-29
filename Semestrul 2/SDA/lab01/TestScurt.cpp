@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "Colectie.h"
 #include "IteratorColectie.h"
-
+#include <iostream>
 
 
 
@@ -33,4 +33,13 @@ void testAll() { //apelam fiecare functie sa vedem daca exista
         TElem e = ic.element();
         ic.urmator();
     }
+
+    // TESTE PENTRU NOUA FUNCTIE DE ADAUGARE
+    Colectie c_noua;
+    assert(c_noua.vida() == true);
+    c_noua.adaugare_n_ori(10, 3);
+    assert(c_noua.dim() == 10);
+    c_noua.adaugare_n_ori(100, 5);
+    assert(c_noua.dim() == 110);
+//    std::cout << "am trecut testele";
 }

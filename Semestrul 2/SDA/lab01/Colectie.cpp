@@ -268,6 +268,20 @@ bool Colectie::vida() const {
 }
 
 /**
+ * FUNCTIE ADAUGATA IN TIMPUL LABULUI
+ * Adauga un element elem de x ori intr o colectie
+ * preconditii: c = colectie, x = int, elem = TElem
+ * postconditii: true
+ * complexitate timp: caz favorabil = caz defavorabil = caz mediu = O(n^2)
+ * complexitate memorie: Θ(1)
+ */
+void Colectie::adaugare_n_ori(const int x, TElem elem) {
+    for(int i = 0; i < x; i++) {
+        adauga(elem);
+    }
+}
+
+/**
  * Construieste un iterator peste o colectie
  * preconditii: c = un obiect de tip Colectie
  * postconditii: i = iterator pe c, i refera un prim element al colectiei c

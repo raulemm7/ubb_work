@@ -45,6 +45,8 @@ class Colectie
         //verifica daca colectia e vida;
         bool vida() const;
 
+        void adaugare_n_ori(const int x, TElem elem);
+
         //returneaza un iterator pe colectie
         IteratorColectie iterator() const;
 

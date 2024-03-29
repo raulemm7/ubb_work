@@ -4,6 +4,8 @@
 using namespace std;
 
 int main() {
+    // timpul de executie al testelor e foarte mare
+    // datorita numarului mare de date introduse
 	testAll();
     testAllExtins();
 

@@ -295,7 +295,7 @@ void testQuantity() {//scopul e sa adaugam multe date
     assert(ic.valid() == true);
     for (int i = 0; i < c.dim(); i++) {
         ic.urmator();
-//        cout << i << ": " << c.dim() << '\n';  ->pt debug
+//        cout << i << ": " << c.dim() << '\n';
     }
 //    int ii = 0;
     ic.prim();
@@ -307,7 +307,7 @@ void testQuantity() {//scopul e sa adaugam multe date
 //        cout << ii << "\n";
 //        ii++;
     }
-    cout << "\n\n\nam iesit de aici \n\n\n";
+//    cout << "\n\n\nam iesit de aici \n\n\n";
     assert(ic.valid() == false);
 //    ii = 0;
     for (int i = 0; i < 10; i++) { //stergem multe elemente existente si inexistente
