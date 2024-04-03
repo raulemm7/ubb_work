@@ -1,3 +1,4 @@
+@ -0,0 +1,225 @@
 //
 // Created by raulo on 3/21/2024.
 //
@@ -37,7 +38,7 @@ void print_mesaj(char *mesaj) {
     printf("%s", mesaj);
 }
 
-void print_o_cheltuiala(cheltuiala* chelt) {
+void print_o_cheltuiala(cheltuiala chelt) {
     char *tip_cheltuiala = get_tip_cheltuiala(chelt);
     printf("ID: %d; ap: %d, suma: %d, tip: %s\n",
            get_id_cheltuiala(chelt),
@@ -47,9 +48,9 @@ void print_o_cheltuiala(cheltuiala* chelt) {
     free(tip_cheltuiala);
 }
 
-void print_cheltuieli(Repo* storage) {
+void print_cheltuieli(Repo storage) {
     for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
-        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+        cheltuiala chelt = get_cheltuiala_by_id(storage, i);
         print_o_cheltuiala(chelt);
     }
 }
@@ -143,7 +144,7 @@ char citire_operator(char *mesaj) {
     }
 }
 
-void afisare_cheltuieli_filtrat_tip(Repo* storage) {
+void afisare_cheltuieli_filtrat_tip(Repo storage) {
     int bool_ok = 0;
 
     // citesc un tip
@@ -151,7 +152,7 @@ void afisare_cheltuieli_filtrat_tip(Repo* storage) {
 
     // fac filtrarea
     for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
-        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+        cheltuiala chelt = get_cheltuiala_by_id(storage, i);
 
         char *tip_chelt = get_tip_cheltuiala(chelt);
         if(strcmp(tip_chelt, tip_citit) == 0) {
@@ -168,7 +169,7 @@ void afisare_cheltuieli_filtrat_tip(Repo* storage) {
         print_mesaj("Nu au fost gasite cheltuieli care sa satisfaca conditiile!\n");
 }
 
-void afisare_cheltuieli_filtrat_suma(Repo* storage) {
+void afisare_cheltuieli_filtrat_suma(Repo storage) {
     char operator = citire_operator("Citeste operatorul dupa care doresti sa faci filtrarea: ");
     int suma_citita = citire_suma_cheltuiala("Citeste suma dupa care doresti sa faci filtrarea: ");
 
@@ -177,7 +178,7 @@ void afisare_cheltuieli_filtrat_suma(Repo* storage) {
         case '=': {
             int ok = 0;
             for(i = 0; i < get_nr_cheltuieli(storage); i++) {
-                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+                cheltuiala chelt = get_cheltuiala_by_id(storage, i);
                 if(get_suma_cheltuiala(chelt) == suma_citita) {
                     print_o_cheltuiala(chelt);
                     ok += 1;
@@ -192,7 +193,7 @@ void afisare_cheltuieli_filtrat_suma(Repo* storage) {
         case '>': {
             int ok = 0;
             for(i = 0; i < get_nr_cheltuieli(storage); i++) {
-                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+                cheltuiala chelt = get_cheltuiala_by_id(storage, i);
                 if(get_suma_cheltuiala(chelt) > suma_citita) {
                     print_o_cheltuiala(chelt);
                     ok += 1;
@@ -207,7 +208,7 @@ void afisare_cheltuieli_filtrat_suma(Repo* storage) {
         case '<': {
             int ok = 0;
             for(i = 0; i < get_nr_cheltuieli(storage); i++) {
-                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+                cheltuiala chelt = get_cheltuiala_by_id(storage, i);
                 if(get_suma_cheltuiala(chelt) < suma_citita) {
                     print_o_cheltuiala(chelt);
                     ok += 1;
