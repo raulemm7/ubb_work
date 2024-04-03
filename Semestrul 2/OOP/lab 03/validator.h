@@ -1,3 +1,4 @@
+@ -0,0 +1,37 @@
 //
 // Created by raulo on 3/21/2024.
 //
@@ -18,14 +19,13 @@ int validare_tip(char *tip);
  * storage: lista cu cheltuieli
  * numar_ap, suma_chelt, tip_chelt: informatii care se vor verifica
  */
-int validare_cheltuiala_existenta(Repo* storage, int numar_ap, int suma_chelt, char *tip_chelt);
+int validare_cheltuiala_existenta(Repo storage, int numar_ap, int suma_chelt, char *tip_chelt);
 
 /* criterii de comparare */
-int comparare_suma_mai_mare(cheltuiala* chelt1, cheltuiala* chelt2);
-int comparare_suma_mai_mic(cheltuiala* chelt1, cheltuiala* chelt2);
-int comparare_tipuri_mai_mare(cheltuiala* chelt1, cheltuiala* chelt2);
-int comparare_tipuri_mai_mic(cheltuiala* chelt1, cheltuiala* chelt2);
-int comparare_id_crescator(cheltuiala* chelt1, cheltuiala* chelt2);
+int comparare_suma_mai_mare(cheltuiala chelt1, cheltuiala chelt2);
+int comparare_suma_mai_mic(cheltuiala chelt1, cheltuiala chelt2);
+int comparare_tipuri_mai_mare(cheltuiala chelt1, cheltuiala chelt2);
+int comparare_tipuri_mai_mic(cheltuiala chelt1, cheltuiala chelt2);
 
 /*
  * tests
