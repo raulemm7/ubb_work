@@ -1,0 +1,213 @@
+        -:    0:Source:/mnt/d/oop/lab03/service.c
+        -:    0:Graph:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/service.c.gcno
+        -:    0:Data:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/service.c.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by raulo on 3/21/2024.
+        -:    3://
+        -:    4:
+        -:    5:#include "service.h"
+        -:    6:
+function adauga_o_noua_cheltuiala called 6 returned 100% blocks executed 92%
+        6:    7:Repo* adauga_o_noua_cheltuiala(Repo* storage, int id_cheltuiala, int numar_apartament, int suma_cheltuiala,
+        -:    8:                              char* tip_cheltuiala) {
+        -:    9:    // verific daca aceasta cheltuiala exista deja
+        6:   10:    if(validare_cheltuiala_existenta(storage, numar_apartament, suma_cheltuiala, tip_cheltuiala)) {
+        6:   10-block  0
+call    0 returned 6
+branch  1 taken 5 (fallthrough)
+branch  2 taken 1
+        -:   11:        // creez o noua cheltuiala
+        5:   12:        cheltuiala* chelt = create_cheltuiala(id_cheltuiala, numar_apartament, suma_cheltuiala, tip_cheltuiala);
+        5:   12-block  0
+call    0 returned 5
+        -:   13:
+        -:   14:        // adaug cheltuiala in storage
+        -:   15:        // verific daca mai am loc, daca nu realoc memorie pentru storage
+        5:   16:        if(get_nr_cheltuieli(storage) == get_capacitate_maxima(storage))
+call    0 returned 5
+call    1 returned 5
+branch  2 taken 0 (fallthrough)
+branch  3 taken 5
+    #####:   17:            storage = realocare_memorie(storage);
+    %%%%%:   17-block  0
+call    0 never executed
+        -:   18:
+        -:   19:        // append cheltuiala
+        5:   20:        storage = adauga_cheltuiala_la_storage(storage, chelt);
+        5:   20-block  0
+call    0 returned 5
+        -:   21:    }
+        -:   22:    else {
+        -:   23:        // cheltuiala exista deja, signalez eroarea
+        1:   24:        print_mesaj("Aceasta cheltuiala exista deja!\n");
+        1:   24-block  0
+call    0 returned 1
+        -:   25:
+        -:   26:        // eliberare memorie suplimentara
+        1:   27:        free(tip_cheltuiala);
+        -:   28:    }
+        -:   29:
+        -:   30:    // returnez storage
+        6:   31:    return storage;
+        6:   31-block  0
+        -:   32:}
+        -:   33:
+function modifica_cheltuiala_existenta called 1 returned 100% blocks executed 90%
+        1:   34:Repo* modifica_cheltuiala_existenta(Repo* storage, int id_ales, int suma_noua,
+        -:   35:                                   char *tip_cheltuiala_nou) {
+        -:   36:    // verific daca pentru datele introduse exista deja inregistrari
+        1:   37:    int numar_ap = get_numar_apartament(get_cheltuiala_by_id(storage, id_ales));
+        1:   37-block  0
+call    0 returned 1
+call    1 returned 1
+        1:   38:    if(validare_cheltuiala_existenta(storage, numar_ap, suma_noua, tip_cheltuiala_nou)) {
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0
+        -:   39:        // actualizez cheltuiala
+        1:   40:        cheltuiala* chelt = get_cheltuiala_by_id(storage, id_ales);
+        1:   40-block  0
+call    0 returned 1
+        1:   41:        chelt = modifica_informatii_cheltuiala(chelt, suma_noua, tip_cheltuiala_nou);
+call    0 returned 1
+        -:   42:
+        -:   43:        // actualizez storage-ul
+        1:   44:        storage = set_cheltuiala_pe_pozitie(storage, chelt, id_ales);
+call    0 returned 1
+        -:   45:    }
+        -:   46:    else {
+    #####:   47:        print_mesaj("Cheltuiala nou modificata este deja inregistrata!");
+    %%%%%:   47-block  0
+call    0 never executed
+        -:   48:    }
+        -:   49:
+        -:   50:    // eliberez memoria
+        1:   51:    free(tip_cheltuiala_nou);
+        -:   52:
+        -:   53:    // returnez informatiile updatate
+        1:   54:    return storage;
+        1:   54-block  0
+        -:   55:}
+        -:   56:
+function sterge_cheltuiala_din_storage called 1 returned 100% blocks executed 100%
+        1:   57:Repo* sterge_cheltuiala_din_storage(Repo* storage, int id_ales) {
+        -:   58:    // sterg efectiv
+        1:   59:    storage = delete_cheltuiala(storage, id_ales);
+        1:   59-block  0
+call    0 returned 1
+        -:   60:
+        -:   61:    // returnez storage
+        1:   62:    return storage;
+        -:   63:}
+        -:   64:
+function run_service_tests called 1 returned 100% blocks executed 100%
+        1:   65:void run_service_tests() {
+        1:   66:    test_adaugare();
+        1:   66-block  0
+call    0 returned 1
+        1:   67:    test_modificare();
+call    0 returned 1
+        1:   68:    test_stergere();
+call    0 returned 1
+        1:   69:}
+        -:   70:
+function test_adaugare called 1 returned 100% blocks executed 82%
+        1:   71:void test_adaugare() {
+        1:   72:    Repo* storage = creeaza_repository();
+        1:   72-block  0
+call    0 returned 1
+        -:   73:
+        1:   74:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:   75:    strcpy(tip, "internet");
+        1:   76:    storage = adauga_o_noua_cheltuiala(storage, 0, 12, 250, tip);
+call    0 returned 1
+       1*:   77:    assert(get_nr_cheltuieli(storage) == 1);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   77-block  0
+call    3 never executed
+        -:   78:
+        1:   79:    char *new_tip = (char*)malloc(sizeof(char) * 32);
+        1:   80:    strcpy(new_tip, "internet");
+        1:   81:    storage = adauga_o_noua_cheltuiala(storage, 0, 12, 250, new_tip);
+        1:   81-block  0
+call    0 returned 1
+       1*:   82:    assert(get_nr_cheltuieli(storage) == 1);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   82-block  0
+call    3 never executed
+        -:   83:
+        1:   84:    destroy_repository(storage);
+        1:   84-block  0
+call    0 returned 1
+        1:   85:}
+        -:   86:
+function test_modificare called 1 returned 100% blocks executed 83%
+        1:   87:void test_modificare() {
+        1:   88:    Repo* storage = creeaza_repository();
+        1:   88-block  0
+call    0 returned 1
+        -:   89:
+        1:   90:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:   91:    strcpy(tip, "internet");
+        1:   92:    storage = adauga_o_noua_cheltuiala(storage, 0, 12, 250, tip);
+call    0 returned 1
+        -:   93:
+        1:   94:    char *new_tip = (char*)malloc(sizeof(char) * 32);
+        1:   95:    strcpy(new_tip, "apa");
+        1:   96:    storage = modifica_cheltuiala_existenta(storage, 0, 460, new_tip);
+call    0 returned 1
+        -:   97:
+        1:   98:    cheltuiala* chelt = get_cheltuiala_by_id(storage, 0);
+call    0 returned 1
+        -:   99:
+       1*:  100:    assert(get_suma_cheltuiala(chelt) == 460);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  100-block  0
+call    3 never executed
+        1:  101:    char *tip_from_chelt = get_tip_cheltuiala(chelt);
+        1:  101-block  0
+call    0 returned 1
+       1*:  102:    assert(strcmp(tip_from_chelt, "apa") == 0);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:  102-block  0
+call    2 never executed
+        1:  103:    free(tip_from_chelt);
+        -:  104:
+        1:  105:    destroy_repository(storage);
+        1:  105-block  0
+call    0 returned 1
+        1:  106:}
+        -:  107:
+function test_stergere called 1 returned 100% blocks executed 88%
+        1:  108:void test_stergere() {
+        1:  109:    Repo* storage = creeaza_repository();
+        1:  109-block  0
+call    0 returned 1
+        -:  110:
+        1:  111:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:  112:    strcpy(tip, "internet");
+        1:  113:    storage = adauga_o_noua_cheltuiala(storage, 0, 12, 250, tip);
+call    0 returned 1
+        -:  114:
+        1:  115:    storage = sterge_cheltuiala_din_storage(storage, 0);
+call    0 returned 1
+        -:  116:
+       1*:  117:    assert(get_nr_cheltuieli(storage) == 0);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  117-block  0
+call    3 never executed
+        -:  118:
+        1:  119:    destroy_repository(storage);
+        1:  119-block  0
+call    0 returned 1
+        1:  120:}

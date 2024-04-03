@@ -1,0 +1,449 @@
+        -:    0:Source:/mnt/d/oop/lab03/ui.c
+        -:    0:Graph:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/ui.c.gcno
+        -:    0:Data:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/ui.c.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by raulo on 3/21/2024.
+        -:    3://
+        -:    4:
+        -:    5:#include "ui.h"
+        -:    6:
+function menu called 0 returned 0% blocks executed 0%
+    #####:    7:void menu() {
+    #####:    8:    printf("1. Creeaza o noua cheltuiala;\n");
+    %%%%%:    8-block  0
+call    0 never executed
+    #####:    9:    printf("2. Modifica o cheltuiala existenta;\n");
+call    0 never executed
+    #####:   10:    printf("3. Sterge o cheltuiala;\n");
+call    0 never executed
+    #####:   11:    printf("4. Afiseaza lista de cheltuieli filtrata dupa un criteriu;\n");
+call    0 never executed
+    #####:   12:    printf("5. Afiseaza lista de cheltuieli ordonata dupa un criteriu;\n");
+call    0 never executed
+    #####:   13:    printf("6. Iesire din aplicatie;\n");
+call    0 never executed
+    #####:   14:}
+        -:   15:
+function show_filter_menu called 0 returned 0% blocks executed 0%
+    #####:   16:void show_filter_menu() {
+    #####:   17:    printf("1. Filtrare dupa suma;\n");
+    %%%%%:   17-block  0
+call    0 never executed
+    #####:   18:    printf("2. Filtrare dupa tip;\n");
+call    0 never executed
+    #####:   19:}
+        -:   20:
+function show_ordonated_menu called 0 returned 0% blocks executed 0%
+    #####:   21:void show_ordonated_menu() {
+    #####:   22:    printf("1. Afisare ordonata dupa suma;\n");
+    %%%%%:   22-block  0
+call    0 never executed
+    #####:   23:    printf("2. Afisare ordonata dupa tip;\n");
+call    0 never executed
+    #####:   24:}
+        -:   25:
+function show_ordonated_menu_for_sum called 0 returned 0% blocks executed 0%
+    #####:   26:void show_ordonated_menu_for_sum() {
+    #####:   27:    printf("1. Afisare in ordine crescatoare;\n");
+    %%%%%:   27-block  0
+call    0 never executed
+    #####:   28:    printf("2. Afisare in ordine descrescatoare;\n");
+call    0 never executed
+    #####:   29:}
+        -:   30:
+function show_ordonated_menu_for_type called 0 returned 0% blocks executed 0%
+    #####:   31:void show_ordonated_menu_for_type() {
+    #####:   32:    printf("1. Afisare in ordine alfabetica;\n");
+    %%%%%:   32-block  0
+call    0 never executed
+    #####:   33:    printf("2. Afisare in ordine inversa alfabetica;\n");
+call    0 never executed
+    #####:   34:}
+        -:   35:
+function print_mesaj called 1 returned 100% blocks executed 100%
+        1:   36:void print_mesaj(char *mesaj) {
+        1:   37:    printf("%s", mesaj);
+        1:   37-block  0
+call    0 returned 1
+        1:   38:}
+        -:   39:
+function print_o_cheltuiala called 0 returned 0% blocks executed 0%
+    #####:   40:void print_o_cheltuiala(cheltuiala* chelt) {
+    #####:   41:    char *tip_cheltuiala = get_tip_cheltuiala(chelt);
+    %%%%%:   41-block  0
+call    0 never executed
+    #####:   42:    printf("ID: %d; ap: %d, suma: %d, tip: %s\n",
+call    0 never executed
+call    1 never executed
+call    2 never executed
+call    3 never executed
+        -:   43:           get_id_cheltuiala(chelt),
+        -:   44:           get_numar_apartament(chelt),
+        -:   45:           get_suma_cheltuiala(chelt),
+        -:   46:           tip_cheltuiala);
+    #####:   47:    free(tip_cheltuiala);
+    #####:   48:}
+        -:   49:
+function print_cheltuieli called 0 returned 0% blocks executed 0%
+    #####:   50:void print_cheltuieli(Repo* storage) {
+    #####:   51:    for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
+    %%%%%:   51-block  0
+    %%%%%:   51-block  1
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   52:        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+    %%%%%:   52-block  0
+call    0 never executed
+    #####:   53:        print_o_cheltuiala(chelt);
+call    0 never executed
+        -:   54:    }
+    #####:   55:}
+        -:   56:
+function citire_comanda called 0 returned 0% blocks executed 0%
+    #####:   57:int citire_comanda(int MAX_COMMAND, char *mesaj) {
+    #####:   58:    while(1) {
+    %%%%%:   58-block  0
+        -:   59:        int command;
+    #####:   60:        printf("%s", mesaj);
+    %%%%%:   60-block  0
+call    0 never executed
+    #####:   61:        if(scanf("%d", &command) > 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   62:            if(0 < command && command <= MAX_COMMAND)
+    %%%%%:   62-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   62-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   63:                return command;
+    %%%%%:   63-block  0
+        -:   64:
+    #####:   65:            printf("Ai introdus o comanda gresita!");
+    %%%%%:   65-block  0
+call    0 never executed
+        -:   66:        }
+        -:   67:        else {
+    #####:   68:            printf("Introdu o comanda! ");
+    %%%%%:   68-block  0
+call    0 never executed
+        -:   69:        }
+        -:   70:    }
+        -:   71:}
+        -:   72:
+function citire_id called 0 returned 0% blocks executed 0%
+    #####:   73:int citire_id(int MAX_ID, char *mesaj) {
+    #####:   74:    while(1) {
+    %%%%%:   74-block  0
+        -:   75:        int id;
+    #####:   76:        printf("%s", mesaj);
+    %%%%%:   76-block  0
+call    0 never executed
+    #####:   77:        if(scanf("%d", &id) > 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   78:            if(0 <= id && id <= MAX_ID)
+    %%%%%:   78-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   78-block  1
+branch  2 never executed
+branch  3 never executed
+    #####:   79:                return id;
+    %%%%%:   79-block  0
+        -:   80:
+    #####:   81:            printf("Ai introdus un id gresit! ");
+    %%%%%:   81-block  0
+call    0 never executed
+        -:   82:        }
+        -:   83:        else {
+    #####:   84:            printf("Introdu un id! ");
+    %%%%%:   84-block  0
+call    0 never executed
+        -:   85:        }
+        -:   86:    }
+        -:   87:}
+        -:   88:
+function citire_nr_apartament called 0 returned 0% blocks executed 0%
+    #####:   89:int citire_nr_apartament(char *mesaj) {
+    #####:   90:    printf("%s", mesaj);
+    %%%%%:   90-block  0
+call    0 never executed
+        -:   91:
+        -:   92:    int numar;
+        -:   93:    while(1) {
+    #####:   94:        if(scanf("%d", &numar) > 0)
+    %%%%%:   94-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:   95:            return numar;
+    %%%%%:   95-block  0
+        -:   96:        else
+    #####:   97:            printf("Introdu un numar!");
+    %%%%%:   97-block  0
+call    0 never executed
+        -:   98:    }
+        -:   99:}
+        -:  100:
+function citire_suma_cheltuiala called 0 returned 0% blocks executed 0%
+    #####:  101:int citire_suma_cheltuiala(char *mesaj) {
+    #####:  102:    printf("%s", mesaj);
+    %%%%%:  102-block  0
+call    0 never executed
+        -:  103:
+        -:  104:    int suma;
+        -:  105:    while(1) {
+    #####:  106:        if(scanf("%d", &suma) > 0)
+    %%%%%:  106-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  107:            return suma;
+    %%%%%:  107-block  0
+        -:  108:        else
+    #####:  109:            printf("Introdu o suma!");
+    %%%%%:  109-block  0
+call    0 never executed
+        -:  110:    }
+        -:  111:}
+        -:  112:
+function citire_tip_cheltuiala called 0 returned 0% blocks executed 0%
+    #####:  113:char* citire_tip_cheltuiala(char *mesaj) {
+    #####:  114:    while(1) {
+    %%%%%:  114-block  0
+    #####:  115:        char *tip = (char*) malloc(sizeof(char) * 32);
+    #####:  116:        printf("%s", mesaj);
+    %%%%%:  116-block  0
+call    0 never executed
+    #####:  117:        if(scanf("%s", tip) > 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  118:            if(validare_tip(tip) == 1) {
+    %%%%%:  118-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  119:                return tip;
+    %%%%%:  119-block  0
+        -:  120:            }
+        -:  121:
+    #####:  122:            printf("Introdu un tip corect pentru cheltuiala!");
+    %%%%%:  122-block  0
+call    0 never executed
+        -:  123:        }
+        -:  124:        else {
+    #####:  125:            printf("Introdu un tip!");
+    %%%%%:  125-block  0
+call    0 never executed
+        -:  126:        }
+        -:  127:    }
+        -:  128:}
+        -:  129:
+function citire_operator called 0 returned 0% blocks executed 0%
+    #####:  130:char citire_operator(char *mesaj) {
+    #####:  131:    char operatori_posibili[3] = {'<', '=', '>'};
+    %%%%%:  131-block  0
+    #####:  132:    while(1) {
+    %%%%%:  132-block  0
+    #####:  133:        printf("%s", mesaj);
+    %%%%%:  133-block  0
+call    0 never executed
+        -:  134:        char operator_citire;
+    #####:  135:        if(scanf(" %c", &operator_citire) > 0) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  136:            for(int i = 0; i < 3; i++)
+    %%%%%:  136-block  0
+    %%%%%:  136-block  1
+    %%%%%:  136-block  2
+branch  0 never executed
+branch  1 never executed
+    #####:  137:                if(operator_citire == operatori_posibili[i])
+    %%%%%:  137-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  138:                    return operator_citire;
+    %%%%%:  138-block  0
+        -:  139:        }
+        -:  140:        else {
+    #####:  141:            printf("Introdu un operator!");
+    %%%%%:  141-block  0
+call    0 never executed
+        -:  142:        }
+        -:  143:    }
+        -:  144:}
+        -:  145:
+function afisare_cheltuieli_filtrat_tip called 0 returned 0% blocks executed 0%
+    #####:  146:void afisare_cheltuieli_filtrat_tip(Repo* storage) {
+    #####:  147:    int bool_ok = 0;
+        -:  148:
+        -:  149:    // citesc un tip
+    #####:  150:    char *tip_citit = citire_tip_cheltuiala("Introdu tipul dupa care doresti sa faci filtrarea: ");
+    %%%%%:  150-block  0
+call    0 never executed
+        -:  151:
+        -:  152:    // fac filtrarea
+    #####:  153:    for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
+    %%%%%:  153-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  154:        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+    %%%%%:  154-block  0
+call    0 never executed
+        -:  155:
+    #####:  156:        char *tip_chelt = get_tip_cheltuiala(chelt);
+call    0 never executed
+    #####:  157:        if(strcmp(tip_chelt, tip_citit) == 0) {
+branch  0 never executed
+branch  1 never executed
+    #####:  158:            bool_ok = 1;
+    #####:  159:            print_o_cheltuiala(chelt);
+    %%%%%:  159-block  0
+call    0 never executed
+        -:  160:        }
+    #####:  161:        free(tip_chelt);
+    %%%%%:  161-block  0
+        -:  162:    }
+        -:  163:
+        -:  164:    // eliberez memoria folosita
+    #####:  165:    free(tip_citit);
+        -:  166:
+    #####:  167:    if(bool_ok == 0)
+    %%%%%:  167-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  168:        print_mesaj("Nu au fost gasite cheltuieli care sa satisfaca conditiile!\n");
+    %%%%%:  168-block  0
+call    0 never executed
+    #####:  169:}
+        -:  170:
+function afisare_cheltuieli_filtrat_suma called 0 returned 0% blocks executed 0%
+    #####:  171:void afisare_cheltuieli_filtrat_suma(Repo* storage) {
+    #####:  172:    char operator = citire_operator("Citeste operatorul dupa care doresti sa faci filtrarea: ");
+    %%%%%:  172-block  0
+call    0 never executed
+    #####:  173:    int suma_citita = citire_suma_cheltuiala("Citeste suma dupa care doresti sa faci filtrarea: ");
+call    0 never executed
+        -:  174:
+        -:  175:    int i;
+    #####:  176:    switch (operator) {
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:  177:        case '=': {
+    #####:  178:            int ok = 0;
+    #####:  179:            for(i = 0; i < get_nr_cheltuieli(storage); i++) {
+    %%%%%:  179-block  0
+    %%%%%:  179-block  1
+    %%%%%:  179-block  2
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  180:                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+    %%%%%:  180-block  0
+call    0 never executed
+    #####:  181:                if(get_suma_cheltuiala(chelt) == suma_citita) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  182:                    print_o_cheltuiala(chelt);
+    %%%%%:  182-block  0
+call    0 never executed
+    #####:  183:                    ok += 1;
+        -:  184:                }
+        -:  185:            }
+        -:  186:
+    #####:  187:            if(!ok)
+    %%%%%:  187-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  188:                printf("Nu exista cheltuieli care sa satisfaca conditiile!\n");
+    %%%%%:  188-block  0
+call    0 never executed
+        -:  189:
+    #####:  190:            return;
+    %%%%%:  190-block  0
+        -:  191:        }
+    #####:  192:        case '>': {
+    #####:  193:            int ok = 0;
+    #####:  194:            for(i = 0; i < get_nr_cheltuieli(storage); i++) {
+    %%%%%:  194-block  0
+    %%%%%:  194-block  1
+    %%%%%:  194-block  2
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  195:                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+    %%%%%:  195-block  0
+call    0 never executed
+    #####:  196:                if(get_suma_cheltuiala(chelt) > suma_citita) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  197:                    print_o_cheltuiala(chelt);
+    %%%%%:  197-block  0
+call    0 never executed
+    #####:  198:                    ok += 1;
+        -:  199:                }
+        -:  200:            }
+        -:  201:
+    #####:  202:            if(!ok)
+    %%%%%:  202-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  203:                printf("Nu exista cheltuieli care sa satisfaca conditiile!\n");
+    %%%%%:  203-block  0
+call    0 never executed
+        -:  204:
+    #####:  205:            return;
+    %%%%%:  205-block  0
+        -:  206:        }
+    #####:  207:        case '<': {
+    #####:  208:            int ok = 0;
+    #####:  209:            for(i = 0; i < get_nr_cheltuieli(storage); i++) {
+    %%%%%:  209-block  0
+    %%%%%:  209-block  1
+    %%%%%:  209-block  2
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  210:                cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+    %%%%%:  210-block  0
+call    0 never executed
+    #####:  211:                if(get_suma_cheltuiala(chelt) < suma_citita) {
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    #####:  212:                    print_o_cheltuiala(chelt);
+    %%%%%:  212-block  0
+call    0 never executed
+    #####:  213:                    ok += 1;
+        -:  214:                }
+        -:  215:            }
+        -:  216:
+    #####:  217:            if(!ok)
+    %%%%%:  217-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:  218:                printf("Nu exista cheltuieli care sa satisfaca conditiile!\n");
+    %%%%%:  218-block  0
+call    0 never executed
+        -:  219:
+    #####:  220:            return;
+    %%%%%:  220-block  0
+        -:  221:        }
+    #####:  222:        default:
+    #####:  223:            return;
+    %%%%%:  223-block  0
+        -:  224:    }
+        -:  225:}

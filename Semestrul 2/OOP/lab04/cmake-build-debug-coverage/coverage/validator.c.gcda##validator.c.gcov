@@ -1,0 +1,378 @@
+        -:    0:Source:/mnt/d/oop/lab03/validator.c
+        -:    0:Graph:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/validator.c.gcno
+        -:    0:Data:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/validator.c.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by raulo on 3/21/2024.
+        -:    3://
+        -:    4:
+        -:    5:#include "validator.h"
+        -:    6:
+function validare_tip called 8 returned 100% blocks executed 100%
+        8:    7:int validare_tip(char *tip) {
+        8:    8:    if(strcmp(tip, "apa") == 0)
+        8:    8-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 7
+        1:    9:        return 1;
+        1:    9-block  0
+        7:   10:    if(strcmp(tip, "gaz") == 0)
+        7:   10-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 6
+        1:   11:        return 1;
+        1:   11-block  0
+        6:   12:    if(strcmp(tip, "curent") == 0)
+        6:   12-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 5
+        1:   13:        return 1;
+        1:   13-block  0
+        5:   14:    if(strcmp(tip, "incalzire") == 0)
+        5:   14-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 4
+        1:   15:        return 1;
+        1:   15-block  0
+        4:   16:    if(strcmp(tip, "canal") == 0)
+        4:   16-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 3
+        1:   17:        return 1;
+        1:   17-block  0
+        3:   18:    if(strcmp(tip, "internet") == 0)
+        3:   18-block  0
+branch  0 taken 1 (fallthrough)
+branch  1 taken 2
+        1:   19:        return 1;
+        1:   19-block  0
+        -:   20:
+        2:   21:    return 0;
+        2:   21-block  0
+        -:   22:}
+        -:   23:
+function validare_cheltuiala_existenta called 9 returned 100% blocks executed 100%
+        9:   24:int validare_cheltuiala_existenta(Repo* storage, int numar_ap, int suma_chelt, char *tip_chelt) {
+       12:   25:    for(int i = 0; i < get_nr_cheltuieli(storage); i++) {
+        9:   25-block  0
+       12:   25-block  1
+call    0 returned 12
+branch  1 taken 5
+branch  2 taken 7 (fallthrough)
+        5:   26:        cheltuiala* chelt = get_cheltuiala_by_id(storage, i);
+        5:   26-block  0
+call    0 returned 5
+        -:   27:
+        5:   28:        char *tip_chelt_curenta = get_tip_cheltuiala(chelt);
+call    0 returned 5
+        8:   29:        if(numar_ap == get_numar_apartament(chelt) &&
+call    0 returned 5
+branch  1 taken 3 (fallthrough)
+branch  2 taken 2
+branch  3 taken 2 (fallthrough)
+branch  4 taken 1
+        3:   30:           suma_chelt == get_suma_cheltuiala(chelt) &&
+        3:   30-block  0
+call    0 returned 3
+        2:   31:           strcmp(tip_chelt, tip_chelt_curenta) == 0) {
+        2:   31-block  0
+branch  0 taken 2 (fallthrough)
+branch  1 taken 0
+        2:   32:            free(tip_chelt_curenta);
+        2:   33:            return 0;
+        2:   33-block  0
+        -:   34:        }
+        3:   35:        free(tip_chelt_curenta);
+        3:   35-block  0
+        -:   36:    }
+        7:   37:    return 1;
+        7:   37-block  0
+        -:   38:}
+        -:   39:
+function comparare_suma_mai_mare called 3 returned 100% blocks executed 100%
+        3:   40:int comparare_suma_mai_mare(cheltuiala* chelt1, cheltuiala* chelt2) {
+        3:   41:    return (get_suma_cheltuiala(chelt1) > get_suma_cheltuiala(chelt2));
+        3:   41-block  0
+call    0 returned 3
+call    1 returned 3
+        -:   42:}
+        -:   43:
+function comparare_suma_mai_mic called 2 returned 100% blocks executed 100%
+        2:   44:int comparare_suma_mai_mic(cheltuiala* chelt1, cheltuiala* chelt2) {
+        2:   45:    return (get_suma_cheltuiala(chelt1) < get_suma_cheltuiala(chelt2));
+        2:   45-block  0
+call    0 returned 2
+call    1 returned 2
+        -:   46:}
+        -:   47:
+function comparare_tipuri_mai_mare called 2 returned 100% blocks executed 100%
+        2:   48:int comparare_tipuri_mai_mare(cheltuiala* chelt1, cheltuiala* chelt2) {
+        2:   49:    char *tip_chelt_1 = get_tip_cheltuiala(chelt1);
+        2:   49-block  0
+call    0 returned 2
+        2:   50:    char *tip_chelt_2 = get_tip_cheltuiala(chelt2);
+call    0 returned 2
+        -:   51:
+        2:   52:    if(strcmp(tip_chelt_1, tip_chelt_2) > 0) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+        1:   53:        free(tip_chelt_1);
+        1:   54:        free(tip_chelt_2);
+        -:   55:
+        1:   56:        return 1;
+        1:   56-block  0
+        -:   57:    }
+        1:   58:    free(tip_chelt_1);
+        1:   59:    free(tip_chelt_2);
+        1:   60:    return 0;
+        1:   60-block  0
+        -:   61:}
+        -:   62:
+function comparare_tipuri_mai_mic called 2 returned 100% blocks executed 100%
+        2:   63:int comparare_tipuri_mai_mic(cheltuiala* chelt1, cheltuiala* chelt2) {
+        2:   64:    char *tip_chelt_1 = get_tip_cheltuiala(chelt1);
+        2:   64-block  0
+call    0 returned 2
+        2:   65:    char *tip_chelt_2 = get_tip_cheltuiala(chelt2);
+call    0 returned 2
+        -:   66:
+        2:   67:    if(strcmp(tip_chelt_1, tip_chelt_2) < 0) {
+branch  0 taken 1 (fallthrough)
+branch  1 taken 1
+        1:   68:        free(tip_chelt_1);
+        1:   69:        free(tip_chelt_2);
+        -:   70:
+        1:   71:        return 1;
+        1:   71-block  0
+        -:   72:    }
+        1:   73:    free(tip_chelt_1);
+        1:   74:    free(tip_chelt_2);
+        1:   75:    return 0;
+        1:   75-block  0
+        -:   76:}
+        -:   77:
+function comparare_id_crescator called 2 returned 100% blocks executed 100%
+        2:   78:int comparare_id_crescator(cheltuiala* chelt1, cheltuiala* chelt2) {
+        2:   79:    return get_id_cheltuiala(chelt1) > get_id_cheltuiala(chelt2);
+        2:   79-block  0
+call    0 returned 2
+call    1 returned 2
+        -:   80:}
+        -:   81:
+        -:   82:// functii de test
+function run_validator_tests called 1 returned 100% blocks executed 100%
+        1:   83:void run_validator_tests() {
+        1:   84:    test_validare_tip();
+        1:   84-block  0
+call    0 returned 1
+        1:   85:    test_validare_cheltuiala_existenta();
+call    0 returned 1
+        1:   86:    test_comparari();
+call    0 returned 1
+        1:   87:}
+        -:   88:
+function test_validare_tip called 1 returned 100% blocks executed 68%
+        1:   89:void test_validare_tip() {
+       1*:   90:    assert(validare_tip("dadad") == 0);
+        1:   90-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   90-block  1
+call    3 never executed
+       1*:   91:    assert(validare_tip("internet") == 1);
+        1:   91-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   91-block  1
+call    3 never executed
+       1*:   92:    assert(validare_tip("gaz") == 1);
+        1:   92-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   92-block  1
+call    3 never executed
+       1*:   93:    assert(validare_tip("apa") == 1);
+        1:   93-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   93-block  1
+call    3 never executed
+       1*:   94:    assert(validare_tip("curent") == 1);
+        1:   94-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   94-block  1
+call    3 never executed
+       1*:   95:    assert(validare_tip("incalzire") == 1);
+        1:   95-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   95-block  1
+call    3 never executed
+       1*:   96:    assert(validare_tip("canal") == 1);
+        1:   96-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   96-block  1
+call    3 never executed
+       1*:   97:    assert(validare_tip("ceva") == 0);
+        1:   97-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   97-block  1
+call    3 never executed
+        1:   98:}
+        -:   99:
+function test_validare_cheltuiala_existenta called 1 returned 100% blocks executed 82%
+        1:  100:void test_validare_cheltuiala_existenta() {
+        1:  101:    Repo* storage = creeaza_repository();
+        1:  101-block  0
+call    0 returned 1
+        -:  102:
+        1:  103:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:  104:    strcpy(tip, "apa");
+        1:  105:    cheltuiala* chelt = create_cheltuiala(0, 12, 250, tip);
+call    0 returned 1
+        -:  106:
+        1:  107:    storage = adauga_cheltuiala_la_storage(storage, chelt);
+call    0 returned 1
+        -:  108:
+        1:  109:    char *new_tip = (char*)malloc(sizeof(char) * 32);
+        1:  110:    strcpy(new_tip, "apa");
+       1*:  111:    assert(validare_cheltuiala_existenta(storage, 12, 250, new_tip) == 0);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  111-block  0
+call    3 never executed
+       1*:  112:    assert(validare_cheltuiala_existenta(storage, 21, 342, new_tip) == 1);
+        1:  112-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  112-block  1
+call    3 never executed
+        1:  113:    free(new_tip);
+        -:  114:
+        1:  115:    destroy_repository(storage);
+        1:  115-block  0
+call    0 returned 1
+        1:  116:}
+        -:  117:
+function test_comparari called 1 returned 100% blocks executed 74%
+        1:  118:void test_comparari() {
+        1:  119:    char *tip1 = (char*)malloc(sizeof(char) * 32);
+        1:  120:    strcpy(tip1, "apa");
+        1:  121:    cheltuiala* chelt1 = create_cheltuiala(0, 12, 250, tip1);
+        1:  121-block  0
+call    0 returned 1
+        -:  122:
+        1:  123:    char *tip2 = (char*)malloc(sizeof(char) * 32);
+        1:  124:    strcpy(tip2, "internet");
+        1:  125:    cheltuiala* chelt2 = create_cheltuiala(1, 23, 360, tip2);
+call    0 returned 1
+        -:  126:
+       1*:  127:    assert(comparare_suma_mai_mare(chelt1, chelt2) == 0);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  127-block  0
+call    3 never executed
+       1*:  128:    assert(comparare_suma_mai_mic(chelt1, chelt2) == 1);
+        1:  128-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  128-block  1
+call    3 never executed
+        -:  129:
+       1*:  130:    assert(comparare_tipuri_mai_mare(chelt1, chelt2) == 0);
+        1:  130-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  130-block  1
+call    3 never executed
+       1*:  131:    assert(comparare_tipuri_mai_mic(chelt1, chelt2) == 1);
+        1:  131-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  131-block  1
+call    3 never executed
+        -:  132:
+       1*:  133:    assert(comparare_id_crescator(chelt1, chelt2) == 0);
+        1:  133-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  133-block  1
+call    3 never executed
+        -:  134:
+        1:  135:    destroy_cheltuiala(chelt1);
+        1:  135-block  0
+call    0 returned 1
+        1:  136:    destroy_cheltuiala(chelt2);
+call    0 returned 1
+        -:  137:
+        1:  138:    char *tip3 = (char*)malloc(sizeof(char) * 32);
+        1:  139:    strcpy(tip3, "internet");
+        1:  140:    cheltuiala* chelt3 = create_cheltuiala(0, 12, 360, tip3);
+call    0 returned 1
+        -:  141:
+        1:  142:    char *tip4 = (char*)malloc(sizeof(char) * 32);
+        1:  143:    strcpy(tip4, "apa");
+        1:  144:    cheltuiala* chelt4 = create_cheltuiala(1, 12, 250, tip4);
+call    0 returned 1
+        -:  145:
+       1*:  146:    assert(comparare_suma_mai_mare(chelt3, chelt4) == 1);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  146-block  0
+call    3 never executed
+       1*:  147:    assert(comparare_suma_mai_mic(chelt3, chelt4) == 0);
+        1:  147-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  147-block  1
+call    3 never executed
+        -:  148:
+       1*:  149:    assert(comparare_tipuri_mai_mare(chelt3, chelt4) == 1);
+        1:  149-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  149-block  1
+call    3 never executed
+       1*:  150:    assert(comparare_tipuri_mai_mic(chelt3, chelt4) == 0);
+        1:  150-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  150-block  1
+call    3 never executed
+        -:  151:
+       1*:  152:    assert(comparare_id_crescator(chelt4, chelt3) == 1);
+        1:  152-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  152-block  1
+call    3 never executed
+        -:  153:
+        1:  154:    destroy_cheltuiala(chelt3);
+        1:  154-block  0
+call    0 returned 1
+        1:  155:    destroy_cheltuiala(chelt4);
+call    0 returned 1
+        1:  156:}

@@ -1,0 +1,221 @@
+        -:    0:Source:/mnt/d/oop/lab03/domain.c
+        -:    0:Graph:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/domain.c.gcno
+        -:    0:Data:/mnt/d/oop/lab03/cmake-build-debug-coverage/CMakeFiles/lab03.dir/domain.c.gcda
+        -:    0:Runs:1
+        -:    1://
+        -:    2:// Created by raulo on 3/21/2024.
+        -:    3://
+        -:    4:
+        -:    5:#include "domain.h"
+        -:    6:
+function create_cheltuiala called 19 returned 100% blocks executed 100%
+       19:    7:cheltuiala* create_cheltuiala(int id_chelt, int nr_ap, int suma_chelt, char *tip_chelt) {
+       19:    8:    cheltuiala* chelt = (cheltuiala*)malloc(sizeof(cheltuiala));
+       19:    9:    chelt->id_cheltuiala = id_chelt;
+       19:   10:    chelt->nr_apartament = nr_ap;
+       19:   11:    chelt->suma_cheltuiala = suma_chelt;
+        -:   12:
+       19:   13:    chelt->tip_cheltuiala = (char*)malloc(sizeof(char) * 32);
+       19:   14:    strcpy(chelt->tip_cheltuiala, tip_chelt);
+       19:   15:    free(tip_chelt);
+        -:   16:
+       19:   17:    return chelt;
+       19:   17-block  0
+        -:   18:}
+        -:   19:
+function destroy_cheltuiala called 20 returned 100% blocks executed 100%
+       20:   20:void destroy_cheltuiala(cheltuiala* chelt) {
+       20:   21:    chelt->id_cheltuiala = -1;
+       20:   22:    chelt->nr_apartament = -1;
+       20:   23:    chelt->suma_cheltuiala = -1;
+       20:   24:    free(chelt->tip_cheltuiala);
+       20:   25:    free(chelt);
+       20:   26:}
+        -:   27:
+function copiaza_noua_cheltuiala called 1 returned 100% blocks executed 100%
+        1:   28:cheltuiala* copiaza_noua_cheltuiala(cheltuiala* chelt) {
+        1:   29:    cheltuiala* new_chelt = (cheltuiala*)malloc(sizeof(cheltuiala));
+        1:   30:    new_chelt->id_cheltuiala = chelt->id_cheltuiala;
+        1:   31:    new_chelt->nr_apartament = chelt->nr_apartament;
+        1:   32:    new_chelt->suma_cheltuiala = chelt->suma_cheltuiala;
+        -:   33:
+        1:   34:    new_chelt->tip_cheltuiala = (char*)malloc(sizeof(char) * 32);
+        1:   35:    strcpy(new_chelt->tip_cheltuiala, chelt->tip_cheltuiala);
+        -:   36:
+        1:   37:    return new_chelt;
+        1:   37-block  0
+        -:   38:}
+        -:   39:
+function get_id_cheltuiala called 13 returned 100% blocks executed 100%
+       13:   40:int get_id_cheltuiala(cheltuiala* chelt) {
+       13:   41:    return chelt->id_cheltuiala;
+       13:   41-block  0
+        -:   42:}
+        -:   43:
+function get_numar_apartament called 14 returned 100% blocks executed 100%
+       14:   44:int get_numar_apartament(cheltuiala* chelt) {
+       14:   45:    return chelt->nr_apartament;
+       14:   45-block  0
+        -:   46:}
+        -:   47:
+function get_suma_cheltuiala called 21 returned 100% blocks executed 100%
+       21:   48:int get_suma_cheltuiala(cheltuiala* chelt) {
+       21:   49:    return chelt->suma_cheltuiala;
+       21:   49-block  0
+        -:   50:}
+        -:   51:
+function get_tip_cheltuiala called 18 returned 100% blocks executed 100%
+       18:   52:char* get_tip_cheltuiala(cheltuiala* chelt) {
+       18:   53:    char *tip_chelt = (char*)malloc(sizeof(char) * 32);
+       18:   54:    strcpy(tip_chelt, chelt->tip_cheltuiala);
+       18:   55:    return tip_chelt;
+       18:   55-block  0
+        -:   56:}
+        -:   57:
+function modifica_informatii_cheltuiala called 2 returned 100% blocks executed 100%
+        2:   58:cheltuiala* modifica_informatii_cheltuiala(cheltuiala* chelt, int new_suma, char *new_tip_cheltuiala) {
+        2:   59:    chelt->suma_cheltuiala = new_suma;
+        2:   60:    strcpy(chelt->tip_cheltuiala, new_tip_cheltuiala);
+        2:   61:    return chelt;
+        2:   61-block  0
+        -:   62:}
+        -:   63:
+function run_domain_tests called 1 returned 100% blocks executed 100%
+        1:   64:void run_domain_tests() {
+        1:   65:    test_create_and_getters_cheltuiala();
+        1:   65-block  0
+call    0 returned 1
+        1:   66:    test_modifica_informatii_cheltuiala();
+call    0 returned 1
+        1:   67:    test_copiaza_cheltuiala();
+call    0 returned 1
+        1:   68:}
+        -:   69:
+function test_create_and_getters_cheltuiala called 1 returned 100% blocks executed 73%
+        1:   70:void test_create_and_getters_cheltuiala() {
+        1:   71:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:   72:    strcpy(tip, "internet");
+        1:   73:    cheltuiala* chelt = create_cheltuiala(0, 12, 250, tip);
+        1:   73-block  0
+call    0 returned 1
+        -:   74:
+       1*:   75:    assert(get_id_cheltuiala(chelt) == 0);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   75-block  0
+call    3 never executed
+       1*:   76:    assert(get_numar_apartament(chelt) == 12);
+        1:   76-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   76-block  1
+call    3 never executed
+       1*:   77:    assert(get_suma_cheltuiala(chelt) == 250);
+        1:   77-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   77-block  1
+call    3 never executed
+        1:   78:    char *tip_from_cheltuiala = get_tip_cheltuiala(chelt);
+        1:   78-block  0
+call    0 returned 1
+       1*:   79:    assert(strcmp(tip_from_cheltuiala, "internet") == 0);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:   79-block  0
+call    2 never executed
+        1:   80:    free(tip_from_cheltuiala);
+        -:   81:
+        1:   82:    destroy_cheltuiala(chelt);
+        1:   82-block  0
+call    0 returned 1
+        1:   83:}
+        -:   84:
+function test_modifica_informatii_cheltuiala called 1 returned 100% blocks executed 80%
+        1:   85:void test_modifica_informatii_cheltuiala() {
+        1:   86:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:   87:    strcpy(tip, "internet");
+        1:   88:    cheltuiala* chelt = create_cheltuiala(0, 12, 250, tip);
+        1:   88-block  0
+call    0 returned 1
+        -:   89:
+        1:   90:    char *tip_nou = (char*)malloc(sizeof(char) * 32);
+        1:   91:    strcpy(tip_nou, "gaz");
+        1:   92:    chelt = modifica_informatii_cheltuiala(chelt, 560, tip_nou);
+call    0 returned 1
+        1:   93:    free(tip_nou);
+        -:   94:
+        1:   95:    char* tip_from_cheltuiala = get_tip_cheltuiala(chelt);
+call    0 returned 1
+        -:   96:
+       1*:   97:    assert(get_suma_cheltuiala(chelt) == 560);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:   97-block  0
+call    3 never executed
+       1*:   98:    assert(strcmp(tip_from_cheltuiala, "gaz") == 0);
+        1:   98-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:   98-block  1
+call    2 never executed
+        -:   99:
+        1:  100:    free(tip_from_cheltuiala);
+        1:  101:    destroy_cheltuiala(chelt);
+        1:  101-block  0
+call    0 returned 1
+        1:  102:}
+        -:  103:
+function test_copiaza_cheltuiala called 1 returned 100% blocks executed 76%
+        1:  104:void test_copiaza_cheltuiala() {
+        1:  105:    char *tip = (char*)malloc(sizeof(char) * 32);
+        1:  106:    strcpy(tip, "internet");
+        1:  107:    cheltuiala* chelt = create_cheltuiala(0, 12, 250, tip);
+        1:  107-block  0
+call    0 returned 1
+        -:  108:
+        1:  109:    cheltuiala* new_chelt = copiaza_noua_cheltuiala(chelt);
+call    0 returned 1
+        -:  110:
+       1*:  111:    assert(get_id_cheltuiala(new_chelt) == 0);
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  111-block  0
+call    3 never executed
+       1*:  112:    assert(get_numar_apartament(new_chelt) == 12);
+        1:  112-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  112-block  1
+call    3 never executed
+       1*:  113:    assert(get_suma_cheltuiala(new_chelt) == 250);
+        1:  113-block  0
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    %%%%%:  113-block  1
+call    3 never executed
+        -:  114:
+        1:  115:    char *tip_chelt = get_tip_cheltuiala(new_chelt);
+        1:  115-block  0
+call    0 returned 1
+       1*:  116:    assert(strcmp(tip_chelt, "internet") == 0);
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    %%%%%:  116-block  0
+call    2 never executed
+        1:  117:    free(tip_chelt);
+        -:  118:
+        1:  119:    destroy_cheltuiala(chelt);
+        1:  119-block  0
+call    0 returned 1
+        1:  120:    destroy_cheltuiala(new_chelt);
+call    0 returned 1
+        1:  121:}
+        -:  122:
