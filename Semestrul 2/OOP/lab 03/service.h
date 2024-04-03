@@ -1,3 +1,4 @@
+@ -0,0 +1,44 @@
 //
 // Created by raulo on 3/21/2024.
 //
@@ -16,7 +17,7 @@
  * id_cheltuiala, numar_apartament, suma_cheltuiala,
  * tip_cheltuiala: informatii despre noua cheltuiala
  */
-Repo* adauga_o_noua_cheltuiala(Repo* storage, int id_cheltuiala, int numar_apartament, int suma_cheltuiala,
+Repo adauga_o_noua_cheltuiala(Repo storage, int id_cheltuiala, int numar_apartament, int suma_cheltuiala,
                               char* tip_cheltuiala);
 
 /*
@@ -25,7 +26,7 @@ Repo* adauga_o_noua_cheltuiala(Repo* storage, int id_cheltuiala, int numar_apart
  * id_ales: id-ul cheltuielii care va suferi modificari
  * suma_noua, tip_cheltuiala_nou: informatii noi despre cheltuiala
  */
-Repo* modifica_cheltuiala_existenta(Repo* storage, int id_ales, int suma_noua,
+Repo modifica_cheltuiala_existenta(Repo storage, int id_ales, int suma_noua,
                                    char *tip_cheltuiala_nou);
 
 /*
@@ -33,7 +34,7 @@ Repo* modifica_cheltuiala_existenta(Repo* storage, int id_ales, int suma_noua,
  * storage: lista cu cheltuieli
  * id_ales: id-ul cheltuielii care se va sterge
  */
-Repo* sterge_cheltuiala_din_storage(Repo* storage, int id_ales);
+Repo sterge_cheltuiala_din_storage(Repo storage, int id_ales);
 
 /* tests */
 void run_service_tests();
