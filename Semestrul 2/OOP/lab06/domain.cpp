@@ -4,33 +4,33 @@
 
 #include "domain.h"
 #include <cassert>
-#include <utility>
+//#include <utility>
 
-Medicament::Medicament(int id_med, string denumire, int pret, string producator, string subst_activa) {
+/*Medicament::Medicament(int id_med, string denumire, int pret, string producator, string subst_activa) {
     this->id_med = id_med;
     this->denumire = std::move(denumire);
     this->pret = pret;
     this->producator = std::move(producator);
     this->subst_activa = std::move(subst_activa);
-}
+}*/
 
-int Medicament::get_id() const {
+const int Medicament::get_id() const {
     return this->id_med;
 }
 
-string Medicament::get_denumire() const{
+const string& Medicament::get_denumire() const{
     return this->denumire;
 }
 
-int Medicament::get_pret() const{
+const int Medicament::get_pret() const{
     return this->pret;
 }
 
-string Medicament::get_producator() const {
+const string& Medicament::get_producator() const {
     return this->producator;
 }
 
-string Medicament::get_subst_activa() const {
+const string& Medicament::get_subst_activa() const {
     return this->subst_activa;
 }
 

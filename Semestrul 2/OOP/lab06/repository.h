@@ -17,17 +17,40 @@ public:
     // constructor
     MedicamenteRepo();
 
-    [[nodiscard]] int get_last_id() const;
-    Medicament get_med(const int& position);
+    /** returneaza numarul de medicamente inregistrate */
+    const int get_last_id() const;
 
-    void adauga_medicament(const Medicament& medicament);
-    void sterge_medicament(const int& id_med);
-    void modifica_medicament(const int& id_med, const int& new_pret, const string& new_subst_activa);
+    /**
+     * returneaza un medicament de pe o pozitie specificata
+     * @param position: pozitia medicamentului din lista de medicamente
+     * @return: obiect de tip Medicament
+     */
+    const Medicament& get_med(const int& position) const;
+
+    /**
+     * adaugare medicament in lista curenta
+     * @param medicament: medicamentul care se va adauga
+     */
+    const void adauga_medicament(const Medicament& medicament);
+
+    /**
+     * stergerea unui medicament din lista curenta
+     * @param id_med: id-ul medicamentului care se va sterge
+     */
+    const void sterge_medicament(const int& id_med);
+
+    /**
+     * modificarea unui medicament din lista curenta
+     * @param id_med: id-ul medicamentului care se va modifica
+     * @param new_pret: noul pret al medicamentului
+     * @param new_subst_activa: noua substanta activa a medicamentului
+     */
+    const void modifica_medicament(const int& id_med, const int& new_pret, const string& new_subst_activa);
 };
 
 class repositoryTests{
 public:
-    static void test_repository_functionalities();
+    const static void test_repository_functionalities();
 };
 
 #endif //LAB06_REPOSITORY_H

@@ -5,9 +5,9 @@
 #include "validators.h"
 #include <cassert>
 
-bool Validator::valideaza_med(MedicamenteRepo& storage, const Medicament &medicament) {
+const bool Validator::valideaza_med(const MedicamenteRepo& storage, const Medicament &medicament) {
     for(int i = 0; i < storage.get_last_id(); i++) {
-        Medicament med = storage.get_med(i);
+        const Medicament& med = storage.get_med(i);
 
         if(med.get_denumire() == medicament.get_denumire() and
            med.get_pret() == medicament.get_pret() and
@@ -18,7 +18,7 @@ bool Validator::valideaza_med(MedicamenteRepo& storage, const Medicament &medica
     return true;
 }
 
-void validatorTests::test_valideaza_med() {
+const void validatorTests::test_valideaza_med() {
     MedicamenteRepo storage;
     Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
     storage.adauga_medicament(med);

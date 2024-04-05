@@ -5,7 +5,7 @@
 #include "service.h"
 #include <cassert>
 
-string Service::adaugaMedicament(MedicamenteRepo &storage, const Medicament &medicament) {
+const string Service::adaugaMedicament(MedicamenteRepo &storage, const Medicament &medicament) {
     Validator vali;
     if(vali.valideaza_med(storage, medicament)) {
         storage.adauga_medicament(medicament);
@@ -14,23 +14,24 @@ string Service::adaugaMedicament(MedicamenteRepo &storage, const Medicament &med
     return "Acest medicament exista deja!";
 }
 
-string Service::stergeMedicament(MedicamenteRepo &storage, const int &id_medicament) {
+const string Service::stergeMedicament(MedicamenteRepo &storage, const int &id_medicament) {
     storage.sterge_medicament(id_medicament);
     return "Medicament sters cu succes!";
 }
 
-string Service::modificaMedicament(MedicamenteRepo &storage, const int &id_medicament, const int& new_pret,
+const string Service::modificaMedicament(MedicamenteRepo &storage, const int &id_medicament, const int& new_pret,
                                    const string& new_subst_activa) {
     storage.modifica_medicament(id_medicament, new_pret, new_subst_activa);
     return "Medicament modificat cu succes!";
 }
 
-string Service::cautaMedicament(MedicamenteRepo &storage, const string &search) {
+const string Service::cautaMedicament(const MedicamenteRepo &storage, const string &search) {
     for(int i = 0; i < storage.get_last_id(); i++) {
-        Medicament med = storage.get_med(i);
+        const Medicament& med = storage.get_med(i);
 
         if(med.get_denumire() == search) {
             ui_operations ui;
+            ui.show_message("  ID  |  DENUMIRE  |  PRET  |  PRODUCATOR  |  SUBST. ACTIVA");
             ui.print_one_med(med);
             return "Medicament gasit si afisat cu succes!";
         }
@@ -38,14 +39,14 @@ string Service::cautaMedicament(MedicamenteRepo &storage, const string &search) 
     return "Nu am gasit niciun medicament inregistrat cu aceasta denumire!";
 }
 
-void serviceTests::run_all_servive_tests() {
+const void serviceTests::run_all_servive_tests() {
     test_adaugaMedicament();
     test_cautaMedicament();
     test_modificaMedicament();
     test_stergeMedicament();
 }
 
-void serviceTests::test_adaugaMedicament() {
+const void serviceTests::test_adaugaMedicament() {
     Service service;
 
     MedicamenteRepo storage;
@@ -55,7 +56,7 @@ void serviceTests::test_adaugaMedicament() {
     assert(service.adaugaMedicament(storage, med) == "Acest medicament exista deja!");
 }
 
-void serviceTests::test_stergeMedicament() {
+const void serviceTests::test_stergeMedicament() {
     MedicamenteRepo storage;
     Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
 
@@ -65,7 +66,7 @@ void serviceTests::test_stergeMedicament() {
     assert(service.stergeMedicament(storage, 0) == "Medicament sters cu succes!");
 }
 
-void serviceTests::test_modificaMedicament() {
+const void serviceTests::test_modificaMedicament() {
     MedicamenteRepo storage;
     Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
 
@@ -75,7 +76,7 @@ void serviceTests::test_modificaMedicament() {
     assert(service.modificaMedicament(storage, 0, 26, "alta_substanta") == "Medicament modificat cu succes!");
 }
 
-void serviceTests::test_cautaMedicament() {
+const void serviceTests::test_cautaMedicament() {
     MedicamenteRepo storage;
     Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
 

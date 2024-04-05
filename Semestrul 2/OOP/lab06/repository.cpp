@@ -9,20 +9,20 @@ MedicamenteRepo::MedicamenteRepo() {
     this->nr_medicamente = 0;
 }
 
-void MedicamenteRepo::adauga_medicament(const Medicament &medicament) {
+const void MedicamenteRepo::adauga_medicament(const Medicament& medicament) {
     this->lista_meds.push_back(medicament);
     this->nr_medicamente++;
 }
 
-int MedicamenteRepo::get_last_id() const{
+const int MedicamenteRepo::get_last_id() const{
     return this->nr_medicamente;
 }
 
-Medicament MedicamenteRepo::get_med(const int &position) {
+const Medicament& MedicamenteRepo::get_med(const int &position) const {
     return this->lista_meds[position];
 }
 
-void MedicamenteRepo::sterge_medicament(const int &id_med) {
+const void MedicamenteRepo::sterge_medicament(const int &id_med) {
     for(int i = id_med; i < this->nr_medicamente - 1; i++)
         this->lista_meds[i] = this->lista_meds[i + 1];
 
@@ -31,20 +31,16 @@ void MedicamenteRepo::sterge_medicament(const int &id_med) {
 
     // update id for every medicament
     for(int i = 0; i < this->nr_medicamente; i++) {
-        Medicament med = this->lista_meds[i];
-        med.set_id(i);
-        this->lista_meds[i] = med;
+        this->lista_meds[i].set_id(i);
     }
 }
 
-void MedicamenteRepo::modifica_medicament(const int &id_med, const int& new_pret, const string& new_subst_activa) {
-    Medicament med = this->lista_meds[id_med];
-    med.set_pret(new_pret);
-    med.set_subst_activa(new_subst_activa);
-    this->lista_meds[id_med] = med;
+const void MedicamenteRepo::modifica_medicament(const int &id_med, const int& new_pret, const string& new_subst_activa) {
+    this->lista_meds[id_med].set_pret(new_pret);
+    this->lista_meds[id_med].set_subst_activa(new_subst_activa);
 }
 
-void repositoryTests::test_repository_functionalities() {
+const void repositoryTests::test_repository_functionalities() {
     MedicamenteRepo storage;
 
     assert(storage.get_last_id() == 0);

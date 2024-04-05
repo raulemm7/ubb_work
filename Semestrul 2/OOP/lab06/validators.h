@@ -10,12 +10,19 @@
 
 class Validator {
 public:
-    bool valideaza_med(MedicamenteRepo& storage, const Medicament& medicament);
+    /**
+     * valideaza daca un medicament a fost deja inregistrat intr o lista de medicamente
+     * @param storage: lista de medicamente actuala
+     * @param medicament: medicamentul pentru care se face validarea
+     * @return: 1 => medicamentul NU se afla in lista (poate fi adaugat in lista)
+     *          0 => altfel
+     */
+    const bool valideaza_med(const MedicamenteRepo& storage, const Medicament& medicament);
 };
 
 class validatorTests {
 public:
-    static void test_valideaza_med();
+    const static void test_valideaza_med();
 };
 
 #endif //LAB06_VALIDATORS_H

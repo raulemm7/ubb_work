@@ -36,6 +36,24 @@ void run_app() {
 
         int command = ui.read_command(8);
 
+        if(command == 0) {
+            int id = storage.get_last_id();
+            string rez;
+
+            // adaugare rapida
+            Medicament med1(id, "algolcalmin", 25, "pharma", "paracetamol");
+            rez = service.adaugaMedicament(storage, med1);
+            if(rez == "Medicament adaugat cu succes!")
+                id++;
+
+            Medicament med2(id, "brufen", 34, "boiron", "paracetamol");
+            service.adaugaMedicament(storage, med2);
+            if(rez == "Medicament adaugat cu succes!")
+                id++;
+
+            Medicament med3(id, "lecitina", 19, "walmark", "boabe de soia");
+            service.adaugaMedicament(storage, med3);
+        }
         if(command == 1) {
             int id = storage.get_last_id();
             Medicament medicament = ui.citire_medicament(id);
@@ -70,7 +88,10 @@ void run_app() {
             }
         }
         if(command == 4) {
-            ui.print_meds(storage);
+            if(storage.get_last_id() > 0)
+                ui.print_meds(storage);
+            else
+                ui.show_message(NO_REGISTRATIONS_MESSAGE);
         }
         if(command == 5) {
             if(storage.get_last_id() > 0) {
@@ -103,7 +124,7 @@ void run_app() {
         }
         if(command == 7) {
             if(storage.get_last_id() > 0) {
-                ui.show_message("inca nu a fost implementata sortarea generica!");
+                ui.show_message("inca nu a fost implementata sortarea!");
             }
             else {
                 ui.show_message(NO_REGISTRATIONS_MESSAGE);
