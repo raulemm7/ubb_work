@@ -43,5 +43,7 @@ int main() {
         }
         cout << '\n';
     }
+
+    fin.close();
     return 0;
 }
