@@ -1,3 +1,0 @@
-/mnt/d/oop/lab06/cmake-build-debug/CMakeFiles/lab06.dir
-/mnt/d/oop/lab06/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/d/oop/lab06/cmake-build-debug/CMakeFiles/rebuild_cache.dir
