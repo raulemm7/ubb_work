@@ -1,1 +1,0 @@
-/usr/bin/cc --coverage -Wall -Wextra -Werror -g CMakeFiles/lab03.dir/main.c.o CMakeFiles/lab03.dir/ui.c.o CMakeFiles/lab03.dir/domain.c.o CMakeFiles/lab03.dir/service.c.o CMakeFiles/lab03.dir/repository.c.o CMakeFiles/lab03.dir/validator.c.o CMakeFiles/lab03.dir/sort.c.o -o lab03 
