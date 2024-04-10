@@ -1,3 +1,0 @@
-/mnt/d/proiect_tad/cmake-build-debug/CMakeFiles/proiect_tad.dir
-/mnt/d/proiect_tad/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/d/proiect_tad/cmake-build-debug/CMakeFiles/rebuild_cache.dir
