@@ -16,6 +16,15 @@ void dfs(int nod_curent, int grup_nod) {
     }
 }
 
+/*
+void reconstituire_traseu(int nod_curent) {
+    if(nod_curent != 0) {
+        reconstituire_traseu(parinte[nod_curent]);
+        cout << nod_curent << " ";
+    }
+}
+*/
+
 int main() {
     int x, y;
 
