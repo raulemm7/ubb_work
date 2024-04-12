@@ -4,6 +4,7 @@
 
 #include "ui.h"
 #include "domain.h"
+#include <numeric>
 
 const void ui_operations::show_menu() {
     std::cout << "1. Adauga medicament\n";
@@ -70,7 +71,13 @@ const int ui_operations::citire_pret(const string &msg1, const string &msg2) {
     while(true) {
         int pret;
         std::cout << msg1;
-        std::cin >> pret;
+
+        while(!(std::cin >> pret)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+            std::cout << "Valoarea introdusa nu este un numar!\n";
+            std::cout << msg1;
+        }
 
         if(pret > 5)
             return pret;
@@ -83,7 +90,13 @@ const int ui_operations::read_id(const int &MAX_ID, const string& msg_out, const
     while(true) {
         int id_ales;
         std::cout << msg_out;
-        std::cin >> id_ales;
+
+        while(!(std::cin >> id_ales)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+            std::cout << "Valoarea introdusa nu este un numar!\n";
+            std::cout << msg_out;
+        }
 
         if(0 <= id_ales and id_ales <= MAX_ID)
             return id_ales;

@@ -3,6 +3,7 @@
 //
 
 #include "service.h"
+#include "iteratorVector.h"
 #include <cassert>
 
 const string Service::adaugaMedicament(VectorDinamic<Medicament>& storage, const Medicament& medicament) {
@@ -26,8 +27,10 @@ const string Service::modificaMedicament(VectorDinamic<Medicament> &storage, con
 }
 
 const string Service::cautaMedicament(const VectorDinamic<Medicament> &storage, const string &search) {
-    for(int i = 0; i < storage.get_last_id_vd(); i++) {
-        const Medicament& med = storage.get_element(i);
+    IteratorVectorDinamic<Medicament> iterator(storage);
+    iterator.prim();
+    while(iterator.valid()) {
+        const Medicament& med = iterator.element();
 
         if(med.get_denumire() == search) {
             ui_operations ui;
@@ -35,6 +38,8 @@ const string Service::cautaMedicament(const VectorDinamic<Medicament> &storage, 
             ui.print_one_med(med);
             return "Medicament gasit si afisat cu succes!";
         }
+
+        iterator.next();
     }
     return "Nu am gasit niciun medicament inregistrat cu aceasta denumire!";
 }
@@ -54,6 +59,15 @@ const void serviceTests::test_adaugaMedicament() {
 
     assert(service.adaugaMedicament(storage, med) == "Medicament adaugat cu succes!");
     assert(service.adaugaMedicament(storage, med) == "Acest medicament exista deja!");
+
+    // adaug mult pentru a verifica
+    // daca se executa corect realocarea de memorie
+    for(int i = 1; i <= 20; i++) {
+        Medicament med1(i, "adsda", 20 + i, "dsadada", "asddaa");
+        service.adaugaMedicament(storage, med1);
+    }
+    // verific numarul de elemente din storage
+    assert(storage.get_last_id_vd() == 21);
 }
 
 const void serviceTests::test_stergeMedicament() {

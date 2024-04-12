@@ -17,7 +17,7 @@ public:
 
     bool valid() const noexcept;
 
-    ElementType element() const noexcept;
+    const ElementType& element() const noexcept;
 
     void prim() noexcept;
 
@@ -30,7 +30,7 @@ bool IteratorVectorDinamic<ElementType>::valid() const noexcept {
 }
 
 template<typename ElementType>
-ElementType IteratorVectorDinamic<ElementType>::element() const noexcept {
+const ElementType& IteratorVectorDinamic<ElementType>::element() const noexcept {
     return this->vectorDinamic.get_element(this->pozitie);
 }
 

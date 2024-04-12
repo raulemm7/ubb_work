@@ -111,7 +111,7 @@ void run_app() {
                 command = ui.read_command(2);
 
                 if(command == 1) {
-                    char op = ui.citire_operator_filtrare("Introdu opreatorul de filtrare: ", "Ai introdus un operator gresit!");
+                    char op = ui.citire_operator_filtrare("Introdu opreatorul de filtrare(>, <, =): ", "Ai introdus un operator gresit!");
                     int pret = ui.citire_pret("Introdu pretul dupa care faci filtrarea: ", "Ai introdus un pret gresit!");
                     ui.show_meds_filter_by_price(storage, op, pret);
                 }
@@ -150,3 +150,6 @@ void run_app() {
         }
     }
 }
+
+// fn + alt + insert to insert constructor, destructor, setters, getters etc.
+// ctrl w select code

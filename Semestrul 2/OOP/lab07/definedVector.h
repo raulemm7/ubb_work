@@ -16,19 +16,27 @@ private:
     int capacitate_maxima{};
     ElementType* lista;
 
+    /**
+     * aloca mai multa memorie container-ului
+     */
     void alloc_more_memory();
 public:
-    // constructor
-    // aloca memorie pentru 8 de elemente
+    /**
+     * constructor de vector dinamic
+     * aloca memorie pentru 8 entitati
+     */
     VectorDinamic();
 
-    // constructor de copiere
+    /**
+     * constructor de copiere
+     * @param oldTemplate vectorul ce urmeaza a fi copiat
+     */
     VectorDinamic(const VectorDinamic& oldTemplate);
 
-    // eliberarea memoriei
+    /** destructor */
     ~VectorDinamic();
 
-    // operator assignment
+    /** operator assignment */
     VectorDinamic& operator=(const VectorDinamic& oldTemplate);
 
     /**
@@ -50,14 +58,30 @@ public:
      */
     void adauga_element(const ElementType& element);
 
+    /**
+     * @return urmatorul id ce poate fi folosit SAU numarul de elemente din vector
+     */
     const int get_last_id_vd() const;
 
+    /**
+     * @param position pozitia elementului din vector care se
+     *                  doreste a se obtine
+     * @return un element din vector de tip ElementType
+     */
     const ElementType & get_element(int position) const;
 
-    const void set_element(int position, const ElementType& element);
-
+    /**
+     * modifica informatiile unui element
+     * @param position pozitia elementului ce urmeaza a fi modificat
+     * @param new_price noul pret al elementului
+     * @param new_subst noua substanta activa a elementului
+     */
     void modifica_element(int position, int new_price, const string& new_subst);
 
+    /**
+     * sterge un element de pe o pozitie data
+     * @param position pozitia elementului ce se doreste a fi sters
+     */
     void sterge_element(int position);
 };
 
@@ -170,13 +194,8 @@ const int VectorDinamic<ElementType>::get_last_id_vd() const {
 }
 
 template<typename ElementType>
-const ElementType & VectorDinamic<ElementType>::get_element(int position) const {
+const ElementType& VectorDinamic<ElementType>::get_element(int position) const {
     return this->lista[position];
-}
-
-template<typename ElementType>
-const void VectorDinamic<ElementType>::set_element(int position, const ElementType &element) {
-    this->lista[position] = element;
 }
 
 template<typename ElementType>

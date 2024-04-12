@@ -105,8 +105,19 @@ public:
      */
     const char citire_operator_filtrare(const string& msg, const string& msg_err);
 
+    /**
+     * afiseaza sortat elementele unui vector dupa un anumit criteriu
+     * @param storage: containerul cu elemente
+     * @param func: criteriul dupa care se face sortarea
+     */
     const void oneCriteriaSort(VectorDinamic<Medicament> &storage, function<bool(const Medicament&, const Medicament&)> func) const;
 
+    /**
+     * afiseaza sortat elementele unui vector dupa doua criterii
+     * @param storage: containerul cu elemente
+     * @param function_1: primul criteriu dupa care se face sortarea
+     * @param function_2: al doilea criteriu dupa care se face sortarea
+     */
     const void twoCriteriaSort(VectorDinamic<Medicament> &storage, function<int(const Medicament&, const Medicament&)> function_1,
                                function<bool(const Medicament&, const Medicament&)> function_2) const;
 };

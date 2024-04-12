@@ -20,6 +20,7 @@ public:
      */
     const bool valideaza_med(const VectorDinamic<Medicament>& storage, const Medicament& medicament);
 
+    // criterii de comparare a doua elemente
     static const bool compare_denumire(const Medicament& med1, const Medicament& med2);
     static const bool compare_producator(const Medicament& med1, const Medicament& med2);
     static const bool compare_pret(const Medicament& med1, const Medicament& med2);

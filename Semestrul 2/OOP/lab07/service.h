@@ -11,6 +11,9 @@
 #include "validators.h"
 #include "definedVector.h"
 #include "domain.h"
+#include <functional>
+
+using std::function;
 
 class Service {
 public:
