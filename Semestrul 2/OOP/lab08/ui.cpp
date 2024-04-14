@@ -307,9 +307,7 @@ string ui_operations::create_file_with_data(MedicamenteRepo &storage, string &fi
     const string HTML_TABLE_ROW_END = "</tr>";
     const string HTML_TABLE_CELL_BEGIN = "<td>";
     const string HTML_TABLE_CELL_END = "</td>";
-    string DOC_HEADER = "<h2  style=\"text-align: center\">Reteta numarul ";
-    DOC_HEADER += std::to_string(prescription_number);
-    DOC_HEADER += "</h2>";
+    const string DOC_HEADER = "<h2  style=\"text-align: center\">Reteta numarul " + std::to_string(prescription_number) + "</h2>";
 
     std::ofstream out_in_file(file_name);
 
