@@ -1,0 +1,100 @@
+//
+// Created by raulo on 4/2/2024.
+//
+
+#include "service.h"
+#include "iteratorVector.h"
+#include <cassert>
+#include <bitset>
+
+const string Service::adaugaMedicament(MedicamenteRepo& storage, const Medicament& medicament) {
+    Validator vali;
+    if(vali.valideaza_med(storage, medicament)) {
+        std::cout << "->";
+        storage.adauga_medicament(medicament);
+        return "Medicament adaugat cu succes!";
+    }
+    return "Acest medicament exista deja!";
+}
+
+const string Service::stergeMedicament(MedicamenteRepo &storage, const int &id_medicament) {
+    storage.sterge_medicament(id_medicament);
+    return "Medicament sters cu succes!";
+}
+
+const string Service::modificaMedicament(MedicamenteRepo &storage, const int &id_medicament, const int& new_pret,
+                                   const string& new_subst_activa) {
+    storage.modifica_medicament(id_medicament, new_pret, new_subst_activa);
+    return "Medicament modificat cu succes!";
+}
+
+const string Service::cautaMedicament(const MedicamenteRepo &storage, const string &search) {
+    for(int i = 0; i < storage.get_last_id(); i++) {
+        const Medicament& med = storage.get_med(i);
+
+        if(med.get_denumire() == search) {
+            ui_operations ui;
+            ui.show_message("  ID  |  DENUMIRE  |  PRET  |  PRODUCATOR  |  SUBST. ACTIVA");
+            ui.print_one_med(med);
+            return "Medicament gasit si afisat cu succes!";
+        }
+    }
+    return "Nu am gasit niciun medicament inregistrat cu aceasta denumire!";
+}
+
+const void serviceTests::run_all_servive_tests() {
+    test_adaugaMedicament();
+    test_cautaMedicament();
+    test_modificaMedicament();
+    test_stergeMedicament();
+}
+
+const void serviceTests::test_adaugaMedicament() {
+    Service service;
+
+    MedicamenteRepo storage;
+    Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
+
+    assert(service.adaugaMedicament(storage, med) == "Medicament adaugat cu succes!");
+    assert(service.adaugaMedicament(storage, med) == "Acest medicament exista deja!");
+
+    // adaug mult pentru a verifica
+    // daca se executa corect realocarea de memorie
+    for(int i = 1; i <= 20; i++) {
+        Medicament med1(i, "adsda", 20 + i, "dsadada", "asddaa");
+        service.adaugaMedicament(storage, med1);
+    }
+    // verific numarul de elemente din storage
+    assert(storage.get_last_id() == 21);
+}
+
+const void serviceTests::test_stergeMedicament() {
+    MedicamenteRepo storage;
+    Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
+
+    Service service;
+    service.adaugaMedicament(storage, med);
+
+    assert(service.stergeMedicament(storage, 0) == "Medicament sters cu succes!");
+}
+
+const void serviceTests::test_modificaMedicament() {
+    MedicamenteRepo storage;
+    Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
+
+    Service service;
+    service.adaugaMedicament(storage, med);
+
+    assert(service.modificaMedicament(storage, 0, 26, "alta_substanta") == "Medicament modificat cu succes!");
+}
+
+const void serviceTests::test_cautaMedicament() {
+    MedicamenteRepo storage;
+    Medicament med(0, "algolcalmin", 25, "Pharma", "paracetamol");
+
+    Service service;
+    service.adaugaMedicament(storage, med);
+
+    assert(service.cautaMedicament(storage, "algolcalmin") == "Medicament gasit si afisat cu succes!");
+    assert(service.cautaMedicament(storage, "paramataciol") == "Nu am gasit niciun medicament inregistrat cu aceasta denumire!");
+}
