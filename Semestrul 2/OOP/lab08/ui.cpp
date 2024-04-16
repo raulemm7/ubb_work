@@ -298,16 +298,18 @@ const void ui_operations::twoCriteriaSort(MedicamenteRepo &storage,
 }
 
 string ui_operations::create_file_with_data(MedicamenteRepo &storage, string &file_name, int prescription_number) {
-    const string HTML_BEGIN = "<!DOCTYPE html><html><style> table, th, td { border:1px solid black; text-align: center; }"
-                              " table.center { margin-left: auto; margin-right: auto; } </style><head></head><body>";
-    const string HTML_END = "</body></html>";
-    const string HTML_TABLE_HEADER_BEGIN = "<th>";
+    const string HTML_BEGIN = "<!DOCTYPE html>\n<html  lang=\"ro\">\n<style>\n    table, th, td { \n        border:1px "
+                              "\n        solid black; \n        text-align: center; \n    }"
+                              "\n    table.center { \n        margin-left: auto; \n        margin-right: auto; \n    } "
+                              "\n</style>\n<head>\n    <title>Reteta</title>\n</head>\n<body>";
+    const string HTML_END = "\n</body>\n</html>";
+    const string HTML_TABLE_HEADER_BEGIN = "\n            <th>";
     const string HTML_TABLE_HEADER_END = "</th>";
-    const string HTML_TABLE_ROW_BEGGIN = "<tr>";
-    const string HTML_TABLE_ROW_END = "</tr>";
-    const string HTML_TABLE_CELL_BEGIN = "<td>";
+    const string HTML_TABLE_ROW_BEGGIN = "\n        <tr>";
+    const string HTML_TABLE_ROW_END = "\n        </tr>";
+    const string HTML_TABLE_CELL_BEGIN = "\n            <td>";
     const string HTML_TABLE_CELL_END = "</td>";
-    const string DOC_HEADER = "<h2  style=\"text-align: center\">Reteta numarul " + std::to_string(prescription_number) + "</h2>";
+    const string DOC_HEADER = "\n    <h2  style=\"text-align: center\">Reteta numarul " + std::to_string(prescription_number) + "</h2>";
 
     std::ofstream out_in_file(file_name);
 
@@ -316,7 +318,7 @@ string ui_operations::create_file_with_data(MedicamenteRepo &storage, string &fi
     out_in_file << DOC_HEADER;
 
     // create table
-    out_in_file << R"(<table class="center" style="width:75%">)";
+    out_in_file << "\n    <table class=\"center\" style=\"width:75%\">";
 
     // create table header
     string TABLE_HEADER;
@@ -368,7 +370,7 @@ string ui_operations::create_file_with_data(MedicamenteRepo &storage, string &fi
     }
 
     // close table
-    out_in_file << "</table>";
+    out_in_file << "\n    </table>";
 
     // close html
     out_in_file << HTML_END;
