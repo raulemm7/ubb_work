@@ -83,6 +83,13 @@ public:
      */
     const int read_id(const int& MAX_ID, const string& msg_out, const string& msg_err);
 
+    /**
+     * citeste de la tastatura denumirea unui medicament existent in storage
+     * @param storage lista cu medicamente
+     * @param msg_out mesajul de informare a utilizatorului
+     * @param msg_err mesaj de eroare
+     * @return (int) id-ul medicamentului din storage
+     */
     const int read_id_with_string(MedicamenteRepo& storage, const string& msg_out, const string& msg_err);
 
     /**
@@ -91,21 +98,6 @@ public:
      * @return: obiect de tip Medicament
      */
     const Medicament citire_medicament(const int& id) ;
-
-    /**
-     * afiseaza informatiile medicamentelor filtrate in functie de pret
-     * @param storage: lista cu medicamente din care se face filtrarea
-     * @param criteriu: criteriul dupa care se face filtrarea ('<', '=', '>')
-     * @param suma: suma dupa care se face filtrarea
-     */
-    const void show_meds_filter_by_price(MedicamenteRepo& storage, const char& criteriu, const int& suma) const;
-
-    /**
-     * afiseaaza informatiile medicamentelor filtrate in functie de substanta activa
-     * @param storage: lista cu medicamente din care se va face filtrarea
-     * @param substanta: substanta dupa care se face filtrarea
-     */
-    const void show_meds_filter_by_subst(MedicamenteRepo& storage, const string& substanta) const;
 
     /**
      * citeste de la tastatura un operator ce reprezinta
@@ -117,30 +109,26 @@ public:
     const char citire_operator_filtrare(const string& msg, const string& msg_err);
 
     /**
-     * afiseaza sortat elementele unui vector dupa un anumit criteriu
-     * @param storage: containerul cu elemente
-     * @param func: criteriul dupa care se face sortarea
+     * afiseaza informatiile medicamentelor filtrate in functie de pret
+     * @param storage: lista cu medicamente din care se face filtrarea
+     * @param pret: suma dupa care se face filtrarea
+     * @param op: criteriul dupa care se face filtrarea ('<', '=', '>')
      */
-    const void oneCriteriaSort(MedicamenteRepo &storage, function<bool(const Medicament&, const Medicament&)> func) const;
+    const void filterPret(MedicamenteRepo &storage, int pret, char op) const;
 
     /**
-     * afiseaza sortat elementele unui vector dupa doua criterii
-     * @param storage: containerul cu elemente
-     * @param function_1: primul criteriu dupa care se face sortarea
-     * @param function_2: al doilea criteriu dupa care se face sortarea
+     * afiseaaza informatiile medicamentelor filtrate in functie de substanta activa
+     * @param storage: lista cu medicamente din care se va face filtrarea
+     * @param subst: substanta dupa care se face filtrarea
      */
-    const void twoCriteriaSort(MedicamenteRepo &storage, function<int(const Medicament&, const Medicament&)> function_1,
-                               function<bool(const Medicament&, const Medicament&)> function_2) const;
+    const void filterSubstActiva(MedicamenteRepo &storage, const string& subst) const;
 
     /**
-     * creeaza un fisier html ce contine informatiile medicamentelor dintr o lista
-     * Locatia fisierului: D:/oop/lab06/cmake-build-debug/
+     * functie ce afiseaza, sortat dupa un criteriu dat, informatiile medicamentelor
      * @param storage lista cu medicamente
-     * @param file_name numele fisierului
-     * @param prescription_number numarul retetei care urmeaza a se creeea
-     * @return string reprezentand statusul executiei
+     * @param functie_comparare criteriul dupa care se face comapararea
      */
-    string create_file_with_data(MedicamenteRepo& storage, string &file_name, int prescription_number);
+    const void genericSort(MedicamenteRepo &storage, function<int(const Medicament&, const Medicament&)> functie_comparare) const;
 };
 
 #endif //LAB06_UI_H

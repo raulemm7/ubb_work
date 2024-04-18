@@ -6,7 +6,6 @@
 #include "domain.h"
 #include <numeric>
 #include "validators.h"
-#include <fstream>
 
 const void ui_operations::show_menu() {
     std::cout << "1. Adauga medicament\n";
@@ -18,7 +17,7 @@ const void ui_operations::show_menu() {
     std::cout << "7. Sortare medicamente\n";
     std::cout << "8. Creeaza reteta\n";
     std::cout << "9. Iesire din aplicatie\n";
-    std::cout << "0. Adaugare rapida (adauga 4 medicamente)\n";
+    std::cout << "0. Adaugare rapida (adauga 10 medicamente)\n";
 }
 
 const void ui_operations::show_menu_for_prescription() {
@@ -154,64 +153,6 @@ const Medicament ui_operations::citire_medicament(const int &id) {
     return med;
 }
 
-const void ui_operations::show_meds_filter_by_price(MedicamenteRepo &storage, const char &criteriu, const int &suma) const {
-    bool ok = false;
-
-    for(int i = 0; i < storage.get_last_id(); i++) {
-        const Medicament& med = storage.get_med(i);
-
-        if(criteriu == '=') {
-            if(med.get_pret() == suma) {
-                if(!ok) {
-                    std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
-                    ok = true;
-                }
-                print_one_med(med);
-            }
-        }
-        if(criteriu == '<') {
-            if(med.get_pret() < suma) {
-                if(!ok) {
-                    std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
-                    ok = true;
-                }
-                print_one_med(med);
-            }
-        }
-        if(criteriu == '>') {
-            if(med.get_pret() > suma) {
-                if(!ok) {
-                    std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
-                    ok = true;
-                }
-                print_one_med(med);
-            }
-        }
-    }
-    if(!ok) {
-        std::cout << "Nu am gasit niciun medicament inregistrat care sa corespunda criteriilor!\n";
-    }
-}
-
-const void ui_operations::show_meds_filter_by_subst(MedicamenteRepo &storage, const string &substanta) const {
-    bool ok = false;
-    for(int i = 0; i < storage.get_last_id(); i++) {
-        const Medicament& med = storage.get_med(i);
-
-        if(med.get_subst_activa() == substanta) {
-            if(!ok) {
-                std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
-                ok = true;
-            }
-            print_one_med(med);
-        }
-    }
-
-    if(!ok) {
-        std::cout << "Nu am gasit niciun medicament inregistrat care sa corespunda criteriilor!\n";
-    }
-}
-
 const char ui_operations::citire_operator_filtrare(const string& msg, const string& msg_err) {
     char operatori[] = {'>', '=', '<'};
     while(true) {
@@ -229,152 +170,57 @@ const char ui_operations::citire_operator_filtrare(const string& msg, const stri
     }
 }
 
-const void ui_operations::oneCriteriaSort(MedicamenteRepo &storage, function<bool(const Medicament&, const Medicament&)> func) const {
-    // initializare vector de pozitii
-    int vector_de_pozitii[storage.get_last_id()];
-    for(int i = 0; i < storage.get_last_id(); i++)
-        vector_de_pozitii[i] = i;
+const void ui_operations::filterPret(MedicamenteRepo &storage, int pret, char op) const {
+    vector<Medicament>& vec_from = storage.get_all();
+    vector<Medicament> vector_filtrat;
+    vector_filtrat.clear();
 
-    // sortare
-    for(int i = 0; i < storage.get_last_id() - 1; i++) {
-        for(int j = i + 1; j < storage.get_last_id(); j++) {
-            // med_i.criteriu > med_j.criteriu
-            const Medicament& med_i = storage.get_med(vector_de_pozitii[i]);
-            const Medicament& med_j = storage.get_med(vector_de_pozitii[j]);
+    auto criteriu = [&pret, &op](Medicament& med){
+                if(op == '>') return med.get_pret() > pret;
+                if(op == '=') return med.get_pret() == pret;
+                if(op == '<') return med.get_pret() < pret;
+                return false;
+    };
 
-            if(func(med_i, med_j) == 1) {
-                int aux = vector_de_pozitii[i];
-                vector_de_pozitii[i] = vector_de_pozitii[j];
-                vector_de_pozitii[j] = aux;
-            }
-        }
+    std::copy_if(vec_from.begin(), vec_from.end(), std::back_inserter(vector_filtrat), criteriu);
+
+    if(vector_filtrat.empty()) {
+        std::cout << "Nu am gasit niciun medicament inregistrat care sa corespunda criteriilor!\n";
     }
-
-    // afisare
-    std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
-    for(int i = 0; i < storage.get_last_id(); i++) {
-        const Medicament& med = storage.get_med(vector_de_pozitii[i]);
-        print_one_med(med);
+    else {
+        std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
+        for(const auto & med : vector_filtrat) {
+            print_one_med(med);
+        }
     }
 }
 
-const void ui_operations::twoCriteriaSort(MedicamenteRepo &storage,
-                                          function<int(const Medicament &, const Medicament &)> function_1,
-                                          function<bool(const Medicament &, const Medicament &)> function_2) const {
-    // initializare vector de pozitii
-    int vector_de_pozitii[storage.get_last_id()];
-    for(int i = 0; i < storage.get_last_id(); i++)
-        vector_de_pozitii[i] = i;
+const void ui_operations::filterSubstActiva(MedicamenteRepo &storage, const string &subst) const {
+    vector<Medicament>& vec_from = storage.get_all();
+    vector<Medicament> vector_filtrat;
+    vector_filtrat.clear();
 
-    // sortare
-    for(int i = 0; i < storage.get_last_id() - 1; i++) {
-        for(int j = i + 1; j < storage.get_last_id(); j++) {
-            // med_i.criteriu > med_j.criteriu
-            const Medicament& med_i = storage.get_med(vector_de_pozitii[i]);
-            const Medicament& med_j = storage.get_med(vector_de_pozitii[j]);
+    std::copy_if(vec_from.begin(), vec_from.end(), std::back_inserter(vector_filtrat),
+                 [&subst](Medicament& med){return med.get_subst_activa() == subst;});
 
-            // verific dupa primul criteriu
-            if(function_1(med_i, med_j) == 1) {
-                // swap
-                int aux = vector_de_pozitii[i];
-                vector_de_pozitii[i] = vector_de_pozitii[j];
-                vector_de_pozitii[j] = aux;
-            }
-            else if(function_1(med_i, med_j) == 0 and function_2(med_i, med_j)) {
-                // swap
-                int aux = vector_de_pozitii[i];
-                vector_de_pozitii[i] = vector_de_pozitii[j];
-                vector_de_pozitii[j] = aux;
-            }
-        }
+    if(vector_filtrat.empty()) {
+        std::cout << "Nu am gasit niciun medicament inregistrat care sa corespunda criteriilor!\n";
     }
-
-    // afisare
-    std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
-    for(int i = 0; i < storage.get_last_id(); i++) {
-        const Medicament& med = storage.get_med(vector_de_pozitii[i]);
-        print_one_med(med);
+    else {
+        std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
+        for(const auto & med : vector_filtrat) {
+            print_one_med(med);
+        }
     }
 }
 
-string ui_operations::create_file_with_data(MedicamenteRepo &storage, string &file_name, int prescription_number) {
-    const string HTML_BEGIN = "<!DOCTYPE html>\n<html  lang=\"ro\">\n<style>\n    table, th, td { \n        border:1px "
-                              "\n        solid black; \n        text-align: center; \n    }"
-                              "\n    table.center { \n        margin-left: auto; \n        margin-right: auto; \n    } "
-                              "\n</style>\n<head>\n    <title>Reteta</title>\n</head>\n<body>";
-    const string HTML_END = "\n</body>\n</html>";
-    const string HTML_TABLE_HEADER_BEGIN = "\n            <th>";
-    const string HTML_TABLE_HEADER_END = "</th>";
-    const string HTML_TABLE_ROW_BEGGIN = "\n        <tr>";
-    const string HTML_TABLE_ROW_END = "\n        </tr>";
-    const string HTML_TABLE_CELL_BEGIN = "\n            <td>";
-    const string HTML_TABLE_CELL_END = "</td>";
-    const string DOC_HEADER = "\n    <h2  style=\"text-align: center\">Reteta numarul " + std::to_string(prescription_number) + "</h2>";
+const void ui_operations::genericSort(MedicamenteRepo &storage,
+                                      function<int(const Medicament &, const Medicament &)> functie_comparare) const {
+    vector<Medicament>& vec = storage.get_all();
+    std::sort(vec.begin(), vec.end(), functie_comparare);
 
-    std::ofstream out_in_file(file_name);
-
-    // insert in file
-    out_in_file << HTML_BEGIN;
-    out_in_file << DOC_HEADER;
-
-    // create table
-    out_in_file << "\n    <table class=\"center\" style=\"width:75%\">";
-
-    // create table header
-    string TABLE_HEADER;
-    TABLE_HEADER += HTML_TABLE_ROW_BEGGIN;
-    TABLE_HEADER += HTML_TABLE_HEADER_BEGIN;
-    TABLE_HEADER += "Numar medicament";
-    TABLE_HEADER += HTML_TABLE_HEADER_END;
-    TABLE_HEADER += HTML_TABLE_HEADER_BEGIN;
-    TABLE_HEADER += "Denumire";
-    TABLE_HEADER += HTML_TABLE_HEADER_END;
-    TABLE_HEADER += HTML_TABLE_HEADER_BEGIN;
-    TABLE_HEADER += "Producator";
-    TABLE_HEADER += HTML_TABLE_HEADER_END;
-    TABLE_HEADER += HTML_TABLE_HEADER_BEGIN;
-    TABLE_HEADER += "Substanta activa";
-    TABLE_HEADER += HTML_TABLE_HEADER_END;
-    TABLE_HEADER += HTML_TABLE_HEADER_BEGIN;
-    TABLE_HEADER += "Pret";
-    TABLE_HEADER += HTML_TABLE_HEADER_END;
-    TABLE_HEADER += HTML_TABLE_ROW_END;
-
-    out_in_file << TABLE_HEADER;
-
-    for(int i = 0; i < storage.get_last_id(); i++) {
-        const Medicament& med = storage.get_med(i);
-
-        // meds info -> text
-        string med_text;
-
-        med_text += HTML_TABLE_ROW_BEGGIN;
-        med_text += HTML_TABLE_CELL_BEGIN;
-        med_text += std::to_string(i + 1);
-        med_text += HTML_TABLE_CELL_END;
-        med_text += HTML_TABLE_CELL_BEGIN;
-        med_text += med.get_denumire();
-        med_text += HTML_TABLE_CELL_END;
-        med_text += HTML_TABLE_CELL_BEGIN;
-        med_text += med.get_producator();
-        med_text += HTML_TABLE_CELL_END;
-        med_text += HTML_TABLE_CELL_BEGIN;
-        med_text += med.get_subst_activa();
-        med_text += HTML_TABLE_CELL_END;
-        med_text += HTML_TABLE_CELL_BEGIN;
-        med_text += std::to_string(med.get_pret());
-        med_text += HTML_TABLE_CELL_END;
-        med_text += HTML_TABLE_ROW_END;
-
-        out_in_file << med_text;
+    std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
+    for(const auto & med : vec) {
+        print_one_med(med);
     }
-
-    // close table
-    out_in_file << "\n    </table>";
-
-    // close html
-    out_in_file << HTML_END;
-    out_in_file.close();
-
-    return "Fisier creat cu succes!\n";
 }

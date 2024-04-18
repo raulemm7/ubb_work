@@ -9,6 +9,10 @@ MedicamenteRepo::MedicamenteRepo() {
     this->nr_medicamente = 0;
 }
 
+vector<Medicament> &MedicamenteRepo::get_all() {
+    return this->lista_meds;
+}
+
 const void MedicamenteRepo::adauga_medicament(const Medicament& medicament) {
     this->lista_meds.push_back(medicament);
     this->nr_medicamente++;

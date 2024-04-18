@@ -17,8 +17,11 @@ private:
     vector<Medicament> lista_meds;
     int nr_medicamente;
 public:
-    // constructor
+    /** constructorul clasei */
     MedicamenteRepo();
+
+    /** returneaza lista propriu-zisa de medicamente */
+    vector<Medicament>& get_all();
 
     /** returneaza numarul de medicamente inregistrate */
     const int get_last_id() const;

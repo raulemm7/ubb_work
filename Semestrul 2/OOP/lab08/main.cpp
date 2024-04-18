@@ -3,14 +3,13 @@
 #include "service.h"
 #include "ui.h"
 #include "validators.h"
-//#include "definedVector.h"
 
 using std::string;
 
 const string NO_REGISTRATIONS_MESSAGE = "Introdu medicamente inainte de a efectua operatii!";
 const string NO_MEDS_IN_PRESCRIPTION_MESSAGE = "Nu exista medicamente in reteta!";
 const string NO_VALID_ID_MESSAGE = "Ai introdus un id gresit!";
-const string HEADER_PRESCRIPTION = "                            RETETA\n";
+const string HEADER_PRESCRIPTION = "                            RETETA";
 const string HEADER_MEDS = "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
 
 void run_all_tests();
@@ -44,29 +43,8 @@ void run_app() {
         int command = ui.read_command(9);
 
         if(command == 0) {
-            int id = storage.get_last_id();
-            string rez;
-
-            // adaugare rapida
-            Medicament med1(id, "brufen", 25, "pharma", "paracetamol");
-            rez = service.adaugaMedicament(storage, med1);
-            if(rez == "Medicament adaugat cu succes!")
-                id++;
-
-            Medicament med2(id, "lecitina", 34, "boiron", "boabe de soia");
-            rez = service.adaugaMedicament(storage, med2);
-            if(rez == "Medicament adaugat cu succes!")
-                id++;
-
-            Medicament med3(id, "algolcalmin", 19, "walmark", "paracetamol");
-            rez = service.adaugaMedicament(storage, med3);
-            if(rez == "Medicament adaugat cu succes!")
-                id++;
-
-            Medicament med4(id, "vitamina c", 36, "boiron", "vitamina c");
-            rez = service.adaugaMedicament(storage, med4);
-            if(rez == "Medicament adaugat cu succes!")
-                continue;
+            const string& rez = service.adaugaMedicamenteRapid(storage);
+            ui.show_message(rez);
         }
         if(command == 1) {
             int id = storage.get_last_id();
@@ -125,11 +103,11 @@ void run_app() {
                 if(command == 1) {
                     char op = ui.citire_operator_filtrare("Introdu opreatorul de filtrare(>, <, =): ", "Ai introdus un operator gresit!");
                     int pret = ui.citire_pret("Introdu pretul dupa care faci filtrarea: ", "Ai introdus un pret gresit!");
-                    ui.show_meds_filter_by_price(storage, op, pret);
+                    ui.filterPret(storage, pret, op);
                 }
                 else {
                     string subst = ui.citire_string("Introdu substanta activa dupa care doresti sa faci filtrarea: ");
-                    ui.show_meds_filter_by_subst(storage, subst);
+                    ui.filterSubstActiva(storage, subst);
                 }
             }
             else {
@@ -142,15 +120,15 @@ void run_app() {
                 command = ui.read_command(3);
                 if(command == 1) {
                     // sortare dupa denumire
-                    ui.oneCriteriaSort(storage, &Validator::compare_denumire);
+                    ui.genericSort(storage, &Validator::compare_denumire);
                 }
                 if(command == 2) {
                     // sortare dupa producator
-                    ui.oneCriteriaSort(storage, &Validator::compare_producator);
+                    ui.genericSort(storage, &Validator::compare_producator);
                 }
                 if(command == 3) {
                     // sortare dupa subst activa + pret
-                    ui.twoCriteriaSort(storage, &Validator::compare_subst_activa, &Validator::compare_pret);
+                    ui.genericSort(storage, &Validator::compare_subst_activa_and_pret);
                 }
             }
             else {
@@ -158,6 +136,7 @@ void run_app() {
             }
         }
         if(command == 8) {
+            // initializari
             int number_of_iterations;
             if(!storage.get_last_id()) {
                 ui.show_message(NO_REGISTRATIONS_MESSAGE);
@@ -169,6 +148,7 @@ void run_app() {
             MedicamenteRepo reteta;
 
             while(number_of_iterations) {
+                // afisarea retetei cand numarul de executie este > 1
                 if(number_of_iterations > 1) {
                     if (reteta.get_last_id() > 0) {
                         ui.show_message(HEADER_PRESCRIPTION);
@@ -184,46 +164,46 @@ void run_app() {
 
                 if(command == 1) {
                     /** adaugare */
-                    // afisez medicamentele disponibile
                     ui.print_meds(storage, HEADER_MEDS);
-                    // aleg un medicament
+
                     int id_med = ui.read_id_with_string(storage, "Introdu denumirea medicamentului pe care doresti sa il introduci in reteta: ",
                                             "Nu exista niciun medicament cu aceasta denumire!\n");
                     const Medicament& medicament = storage.get_med(id_med);
-                    // adaug medicamentul la reteta
+
                     string msg_output = service.adaugaMedicament(reteta, medicament);
-                    // setez id-urile corect pentru medicamentele de pe reteta
                     reteta.set_id_correctly();
-                    // afisez statusul executiei operatiei
+
                     ui.show_message(msg_output);
                 }
                 if(command == 2) {
                     /** stergere */
-                    for(int i = 0; i < reteta.get_last_id(); i++) {
-                        const string& msgout = service.stergeMedicament(reteta, i);
-
-                        if(msgout == "Medicament sters cu succes!")
-                            continue;
-                    }
-
-                    ui.show_message("Toate medicamentele de pe reteta au fost sterse cu succes!");
+                    const string& rez = service.stergeToateMedicamentele(reteta);
+                    ui.show_message(rez);
                 }
                 if(command == 3) {
                     /** generare random */
-                    ui.show_message("NU E IMPLEMENTATA IN PULA MEA!\n");
+                    int numarMeds = ui.read_id(storage.get_last_id(), "Introdu numarul de medicamente pe care doresti sa il \a"
+                                                                      "daugi in reteta: ", "Nu exista atatea medicamente in stoc!");
+
+                    // sterg reteta actuala
+                    service.stergeToateMedicamentele(reteta);
+
+                    // populez reteta
+                    const string& rez = service.adaugareRandom(storage, reteta, numarMeds);
+
+                    // pun id-urile corect
+                    reteta.set_id_correctly();
+
+                    ui.show_message(rez);
                 }
                 if(command == 4) {
                     /** export */
                     if(reteta.get_last_id() > 0) {
                         NUMBER_OF_PRESCRIPTIONS++;
-                        // citesc numele de fisier
                         string nameFile = ui.read_name_file();
-                        // creez fisierul
-                        string rez = ui.create_file_with_data(reteta, nameFile, NUMBER_OF_PRESCRIPTIONS);
-                        rez += "Locatia fisierului: D:/oop/lab06/cmake-build-debug/";
-                        rez += nameFile;
-                        rez += '\n';
-                        // afisez statusul executiei
+
+                        string rez = service.exportDataInHTMLformat(reteta, nameFile, NUMBER_OF_PRESCRIPTIONS);
+
                         ui.show_message(rez);
                     }
                     else

@@ -34,6 +34,13 @@ public:
     const string stergeMedicament(MedicamenteRepo& storage, const int& id_medicament);
 
     /**
+     * sterge toate medicamentele dintr o lista
+     * @param storage lista de medicamente din care se vor sterge toate medicamentele
+     * @return string ce reprezinta rezultatul operatiei efectuate
+     */
+    const string stergeToateMedicamentele(MedicamenteRepo& storage);
+
+    /**
      * functionalitatea de modificare a unui medicament
      * @param storage: repo-ul cu medicamente in care se va modifica un medicament
      * @param id_medicament: id-ul medicamentului care se va modifica
@@ -50,15 +57,41 @@ public:
      * @param search: string ce reprezinta denumirea medicamentului cautat
      * @return: string ce reprezinta rezultatul operatiei efectutate
      */
-    const string cautaMedicament(const MedicamenteRepo& storage, const string& search);
+    const string cautaMedicament(MedicamenteRepo& storage, const string& search);
+
+    /**
+     * adauga 10 medicamente in storage
+     */
+    const string adaugaMedicamenteRapid(MedicamenteRepo& storage);
+
+    /**
+     * exporta informatiile medicamentelor intr un fisier html
+     * @param storage lista cu medicamente
+     * @param file_name numele fisierului care se va creea
+     * @param prescription_number numarul retetei care se va scrie
+     * @return string ce reprezinta rezultatul operatiei efectuate
+     */
+    const string exportDataInHTMLformat(MedicamenteRepo& storage, const string& file_name, int prescription_number);
+
+    /**
+     * adauga random medicamente dintr o lista in alta
+     * @param storage_with_meds lista de unde se vor lua medicamente
+     * @param reteta lista in care se vor stoca medicamentele alese random
+     * @param numar_medicamente numarul de medicamente care se vor introduce in lista de medicamente
+     * @return string ce reprezinta rezultatul operatiei efectuate
+     */
+    const string adaugareRandom(MedicamenteRepo& storage_with_meds, MedicamenteRepo& reteta, int numar_medicamente);
 };
 
 class serviceTests {
 private:
     const static void test_adaugaMedicament();
     const static void test_stergeMedicament();
+    const static void test_stergeToateMedicamentele();
     const static void test_modificaMedicament();
     const static void test_cautaMedicament();
+    const static void test_exportDataInHTMLformat();
+    const static void test_adaugareRapida_and_adaugareRandom();
 public:
     const static void run_all_servive_tests();
 };

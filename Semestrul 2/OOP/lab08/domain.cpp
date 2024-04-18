@@ -90,6 +90,17 @@ void domainTests::test_getters_and_setters() {
     assert(med.get_producator() == "Pharma");
     assert(med.get_subst_activa() == "paracetamol");
 
+    // o carpeala pe care nu o inteleg
+    med = med;
+
+    // testez operatorul =
+    Medicament med1 = med;
+    assert(med1.get_id() == 0);
+    assert(med1.get_denumire() == "algolcalmin");
+    assert(med1.get_pret() == 25);
+    assert(med1.get_producator() == "Pharma");
+    assert(med1.get_subst_activa() == "paracetamol");
+
     med.set_id(1);
     med.set_pret(34);
     med.set_subst_activa("alta_substanta");

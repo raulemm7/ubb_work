@@ -18,7 +18,7 @@ private:
     string producator;
     string subst_activa;
 public:
-    // constructor
+    /** default constructor */
     Medicament(const int id_med, const string& denumire, const int pret, const string& producator,
                const string& subst_activa) :
     id_med{id_med}, denumire{denumire}, pret{pret}, producator{producator}, subst_activa{subst_activa}{};
@@ -38,14 +38,14 @@ public:
     /** move assignement */
 //    Medicament& operator=(Medicament&& oldMed) noexcept;
 
-    // getters
+    /** getters */
     const int get_id() const;
     const string& get_denumire() const;
     const int get_pret() const;
     const string& get_producator() const;
     const string& get_subst_activa() const;
 
-    // setters
+    /** setters */
     const void set_id(int id);
     void set_pret(const int& new_pret);
     void set_subst_activa(const string& new_subst_activa);
