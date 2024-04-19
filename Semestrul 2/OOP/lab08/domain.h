@@ -10,6 +10,18 @@
 #include <utility>
 using std::string;
 
+class MedicamentDTO {
+public:
+    string substanta_activa;
+    int nr_meds{};
+
+    /** constructor */
+    MedicamentDTO()=default;
+
+    /** explicit constructor */
+    MedicamentDTO(const string& subst_activa, int nr_medicamenete) : substanta_activa{ subst_activa }, nr_meds{ nr_medicamenete }{};
+};
+
 class Medicament {
 private:
     int id_med{};

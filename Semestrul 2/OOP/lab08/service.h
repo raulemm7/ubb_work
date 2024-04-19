@@ -81,6 +81,14 @@ public:
      * @return string ce reprezinta rezultatul operatiei efectuate
      */
     const string adaugareRandom(MedicamenteRepo& storage_with_meds, MedicamenteRepo& reteta, int numar_medicamente);
+
+    /**
+     * genereaza un raport al medicamentelor curente din stod
+     * @param storage lista cu medicamente
+     * @return unordered_map cu 2 campuri: string (substanta activa) si MedicamentDTO
+     *          (retine informatii pentru raport)
+     */
+    std::unordered_map<string, MedicamentDTO> generareRaport(MedicamenteRepo& storage);
 };
 
 class serviceTests {
@@ -92,6 +100,7 @@ private:
     const static void test_cautaMedicament();
     const static void test_exportDataInHTMLformat();
     const static void test_adaugareRapida_and_adaugareRandom();
+    const static void test_generareRaport();
 public:
     const static void run_all_servive_tests();
 };

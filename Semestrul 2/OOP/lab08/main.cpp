@@ -40,7 +40,7 @@ void run_app() {
     while(true) {
         ui.show_menu();
 
-        int command = ui.read_command(9);
+        int command = ui.read_command(10);
 
         if(command == 0) {
             const string& rez = service.adaugaMedicamenteRapid(storage);
@@ -182,7 +182,7 @@ void run_app() {
                 }
                 if(command == 3) {
                     /** generare random */
-                    int numarMeds = ui.read_id(storage.get_last_id(), "Introdu numarul de medicamente pe care doresti sa il \a"
+                    int numarMeds = ui.read_id(INT16_MAX, "Introdu numarul de medicamente pe care doresti sa il \a"
                                                                       "daugi in reteta: ", "Nu exista atatea medicamente in stoc!");
 
                     // sterg reteta actuala
@@ -218,6 +218,10 @@ void run_app() {
             }
         }
         if(command == 9) {
+            std::unordered_map<string, MedicamentDTO> raport = service.generareRaport(storage);
+            ui.print_raport(raport);
+        }
+        if(command == 10) {
             return;
         }
     }

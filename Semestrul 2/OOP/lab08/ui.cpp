@@ -16,7 +16,8 @@ const void ui_operations::show_menu() {
     std::cout << "6. Filtrare medicamente\n";
     std::cout << "7. Sortare medicamente\n";
     std::cout << "8. Creeaza reteta\n";
-    std::cout << "9. Iesire din aplicatie\n";
+    std::cout << "9. Genereaza raport medicamente\n";
+    std::cout << "10. Iesire din aplicatie\n";
     std::cout << "0. Adaugare rapida (adauga 10 medicamente)\n";
 }
 
@@ -222,5 +223,12 @@ const void ui_operations::genericSort(MedicamenteRepo &storage,
     std::cout << "ID    |    DENUMIRE    |    PRET    |    PRODUCATOR    |    SUBST. ACTIVA\n";
     for(const auto & med : vec) {
         print_one_med(med);
+    }
+}
+
+const void ui_operations::print_raport(std::unordered_map<string, MedicamentDTO> &raport) {
+    std::cout << "       RAPORT MEDICAMENTE\n";
+    for(auto & it : raport) {
+        std::cout << "Substanta activa: " << it.first << ", Numar medicamente: " << it.second.nr_meds << '\n';
     }
 }

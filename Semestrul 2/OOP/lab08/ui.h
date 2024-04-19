@@ -129,6 +129,8 @@ public:
      * @param functie_comparare criteriul dupa care se face comapararea
      */
     const void genericSort(MedicamenteRepo &storage, function<int(const Medicament&, const Medicament&)> functie_comparare) const;
+
+    const void print_raport(std::unordered_map<string, MedicamentDTO>& raport);
 };
 
 #endif //LAB06_UI_H

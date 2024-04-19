@@ -181,12 +181,25 @@ const string Service::adaugareRandom(MedicamenteRepo &storage_with_meds, Medicam
         int randomNumber = dist(mt);
 
         const Medicament& med = storage_with_meds.get_med(randomNumber);
-        const string& msgoutput = adaugaMedicament(reteta, med);
-        if(msgoutput == "Acest medicament exista deja!")
-            i--;
+        reteta.adauga_medicament(med);
     }
 
     return "Medicamente adaugate cu succes!";
+}
+
+std::unordered_map<string, MedicamentDTO> Service::generareRaport(MedicamenteRepo &storage) {
+    vector<Medicament>& vectorMeds = storage.get_all();
+    std::unordered_map<string, MedicamentDTO> raport;
+
+    for(const auto &med : vectorMeds) {
+        const string& subst_activa = med.get_subst_activa();
+        if(raport.find(subst_activa) != raport.end())
+            raport[subst_activa].nr_meds += 1;
+        else
+            raport[subst_activa] = MedicamentDTO(subst_activa, 1);
+    }
+
+    return raport;
 }
 
 const void serviceTests::run_all_servive_tests() {
@@ -197,6 +210,7 @@ const void serviceTests::run_all_servive_tests() {
     test_stergeToateMedicamentele();
     test_exportDataInHTMLformat();
     test_adaugareRapida_and_adaugareRandom();
+    test_generareRaport();
 }
 
 const void serviceTests::test_adaugaMedicament() {
@@ -279,4 +293,35 @@ const void serviceTests::test_adaugareRapida_and_adaugareRandom() {
     const string& rezultat = service.adaugareRandom(storage, reteta, 5);
     assert(rezultat == "Medicamente adaugate cu succes!");
     assert(reteta.get_last_id() == 5);
+}
+
+const void serviceTests::test_generareRaport() {
+    Service service;
+
+    MedicamenteRepo storage;
+    Medicament med0(0, "brufen", 25, "pharma", "paracetamol");
+    service.adaugaMedicament(storage, med0);
+
+    Medicament med1(1, "lecitina", 34, "boiron", "soia");
+    service.adaugaMedicament(storage, med1);
+
+    Medicament med2(2, "algolcalmin", 19, "walmark", "paracetamol");
+    service.adaugaMedicament(storage, med2);
+
+    std::unordered_map<string, MedicamentDTO> raport = service.generareRaport(storage);
+
+    assert(!raport.empty());
+
+    auto it = raport.begin();
+    assert(it != raport.end());
+    assert(it->first == "soia");
+    assert(it->second.nr_meds == 1);
+
+    it++;
+    assert(it != raport.end());
+    assert(it->first == "paracetamol");
+    assert(it->second.nr_meds == 2);
+
+    it++;
+    assert(it == raport.end());
 }

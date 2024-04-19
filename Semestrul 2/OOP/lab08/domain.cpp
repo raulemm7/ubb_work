@@ -108,4 +108,9 @@ void domainTests::test_getters_and_setters() {
     assert(med.get_id() == 1);
     assert(med.get_pret() == 34);
     assert(med.get_subst_activa() == "alta_substanta");
+
+    // testez clasa MedicamenteDTO
+    MedicamentDTO med_dto("paracetamol", 2);
+    assert(med_dto.substanta_activa == "paracetamol");
+    assert(med_dto.nr_meds == 2);
 }
