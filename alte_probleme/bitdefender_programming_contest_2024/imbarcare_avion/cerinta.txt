@@ -1,0 +1,54 @@
+La Aeroportul Otopeni, un agent de îmbarcare a propus o nouă metodă de organizare a pasagerilor pentru a-i antrena mental și a-i ține ocupați 
+pe cei care ajung în fața porții de îmbarcare cu câteva ore înainte de zbor. Fiecare pasager primește un tichet de ordine și, când se apropie timpul 
+îmbarcării, toți sunt așezați la coadă.Regula propusă de agent este următoarea: la fiecare doi pasageri, fie de la începutul sau de la sfârșitul cozii, 
+fie câte unul de la început și unul de la sfârșit, li se permite accesul în culoarul de îmbarcare rapidă dacă suma tichetelor lor de ordine este 
+egală cu suma precedentă, stabilită de primii doi care au accesat culoarul rapid.
+
+Pasagerii se întreabă acum: "Care este numărul maxim de persoane care pot beneficia de îmbarcarea rapidă?" și încearcă să găsească diverse strategii
+înainte de momentul îmbarcării.
+
+Input Format:
+Citirea se face de la STDIN.
+
+Prima linie va conține un număr N ce reprezintă numărul de pasageri.
+Următoarea linie va conține N numere întregi, reprezentând valoarea tichetului de ordine al fiecărui pasager.
+
+Constraints
+Limită de timp:
+
+C/C++: 1 secundă
+Java: 1 secundă
+Python: 1 secundă
+Limită de memorie: 512MB
+
+Notă: Dacă folosiți recursivitate în Python, adăugați următoarele linii:
+import sys
+sys.setrecursionlimit(1000000)
+
+Output Format
+Afișarea se face la STDOUT.
+
+Se va afișa pe prima linie numărul maxim de pasageri care pot beneficia de îmbarcarea rapidă.
+
+Sample Input 0
+6
+5 3 2 4 4 6
+Sample Output 0
+6
+Explanation 0
+Este posibilă îmbarcarea rapidă a tuturor celor 6 pasageri:
+- La primul pas, se îmbarcă primii 2 pasageri, având suma tichetelor de ordine egală cu 8. Lista va deveni: [2, 4, 4, 6].
+- La al doilea pas, se îmbarcă primul și ultimul pasager, respectând suma tichetelor egală cu 8. Lista va deveni: [4, 4].
+- La ultimul se îmbarcă primii 2 pasageri, respectând suma tichetelor egală cu 8. Lista va deveni: [].
+
+Sample Input 1
+8
+9 10 7 4 8 1 19 11
+Sample Output 1
+4
+Explanation 1
+Este posibilă îmbarcarea rapidă a maxim 4 pasageri:
+- La primul pas, se îmbarcă îmbarcă primul și ultimul pasager, având suma tichetelor de ordine egală cu 20. Lista va deveni: [10, 7, 4, 8, 1, 19].
+- La al doilea pas, se îmbarcă ultimii 2 pasageri, respectând suma tichetelor egală cu 20. Lista va deveni: [10, 7, 4, 8].
+În acest moment, nicio altă pereche nu are suma egală cu 20.
+Nicio altă modalitate de selecționare a perechilor nu conduce la un rezultat mai bun.
