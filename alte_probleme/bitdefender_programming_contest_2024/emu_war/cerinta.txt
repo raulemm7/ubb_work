@@ -1,0 +1,50 @@
+În anul 1932 a avut loc Războiul Emu, un război din Australia, ce a durat o lună, o săptămână și o zi, purtat între soldații armatei australiene 
+și populația de păsări emu. Soldații înarmați cu mitraliere au încercat fără succes să reducă numărul de astfel de păsări din regiune sub pretextul 
+faptului că acestea distrugeau recoltele.Aproape un secol mai târziu, în urma declasificării unor documente militare secrete s-a aflat cauza eșecului 
+armatei australiene. Aceasta a descoperit că faimoasele păsări foloseau un limbaj codificat pentru a își coordona acțiunile și pentru a îi induce 
+în eroare pe soldați. Ele foloseau o cheie cu care criptau fiecare ciripit (dacă se poate numi așa) prin care comunicau. Această cheie era un string ce 
+era schimbat în fiecare zi, fix la răsăritul soarelui.
+
+În fiecare dimineață, de la sediul central emu, era transmisă cheia în toată țara în următorul format:
+<key><key><prefix_key>
+
+Scopul era de a ascunde cheia de armata australiană, lucru pe care au și reușit să îl facă. prefix_key reprezintă un prefix al lui key, posibil gol, 
+dar cu siguranță diferit de key. După aproape 100 de ani, scopul vostru este să găsiți un algoritm care să obțină cheia dintr-un mesaj trimis 
+de la sediul central emu (în caz că emu se hotărăsc să cucerească lumea și nu își schimbă metodele de comunicare).
+
+Dacă există mai multe soluții, se va afișa cea de lungime minimă.
+
+Input Format
+Citirea se va face de la STDIN. Inputul va conține o singură linie ce va conține un mesaj trimis de la sediul central emu acum 92 de ani.
+Mesajul va conține doar litere mici ale alfabetului englez.
+
+Constraints
+1 <= N <= 5000, unde N este dimensiunea mesajului
+
+Limită de timp:
+C/C++: 1 secundă
+Java: 1 secundă
+Python: 1 secundă
+Limită de memorie: 512MB
+
+Notă: Dacă folosiți recursivitate în Python, adăugați următoarele linii:
+import sys
+sys.setrecursionlimit(1000000)
+Output Format
+
+Afișarea se va face la STDOUT.
+Programul va afișa pe prima linie cheia folosită de emu în acea zi. Dacă mesajul a fost interceptat greșit și nu se poate obține o cheie, se va afișa -1.
+
+Sample Input 0
+abcabca
+Sample Output 0
+abc
+Explanation 0
+abcabca = abc + abc + a, iar a este un prefix al lui abc.
+
+Sample Input 1
+abcabda
+Sample Output 1
+-1
+Explanation 1
+Nu există nicio cheie posibilă.
