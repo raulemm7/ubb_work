@@ -1,0 +1,45 @@
+În Muzeul Simțurilor, Camera Oglinzilor este un spațiu unde limitele dintre realitate și reflecție se estompează. Ionel, un vizitator curios, 
+navighează printr-un labirint de oglinzi verticale fermecate, fiecare provocându-l să reevalueze ce este real și ce este iluzie.
+
+Odată intrat în cameră, au loc N evenimente magice de 2 tipuri:
+
+Tipul 1: x y1 y2 apare o oglindă ce are înfățișarea unui segment cu capetele la (x,y1) (x,y2)
+Tipul 2: x y protagonistul nostru este teleportat în mod miraculos la coordonatele (x,y) și avem nevoie de ajutorul vostru pentru 
+a stabili de cate ori îi este reflectata privirea când se uită înspre (x+1,y+1)
+
+Totuși, puterile magice ale camerei sunt limitate:
+-> lungimea oglinzilor este întotdeauna <= 5
+-> nu există oglinzi care să se suprapună
+-> Ionel își poate avea reflectată privirea în oglindă de un număr de ori egal cu lungimea acesteia, după care oglinda va dispărea în mod miraculos.
+-> pentru că ne pasă de integritatea corporală a lui Ionel, nu îl vom teleporta în interiorul unei oglinzi.
+
+Input Format
+Citirea se va face de la STDIN.
+Pe prima linie se va afla N, numărul de evenimente magice.
+Pe fiecare din următoarele N linii va fi un număr tip, ce poate fi 1 sau 2 reprezentând tipul evenimentului:
+- Dacă tipul este 1 urmează 3 numere întregi x y1 y2 cu semnificația de mai sus.
+- Dacă tipul este 2 urmează 2 numere întregi x y reprezentând poziția în care este teleportat Ionel.
+
+Constraints
+Limită de timp:
+C/C++: 3s
+Java: 6s
+Python: 10s
+Limită de memorie: 512MB
+
+Notă: Dacă folosiți recursivitate în Python, adăugați următoarele linii:
+import sys
+sys.setrecursionlimit(1000000)
+
+Output Format
+Pentru fiecare eveniment de tipul 2 se va afișa la STDOUT pe câte o linie răspunsul la întrebare.
+
+Sample Input 0
+4
+1 8 0 4
+1 5 3 5
+1 6 4 5
+2 7 0
+Sample Output 0
+3
+Explanation 0 -> poza.png
