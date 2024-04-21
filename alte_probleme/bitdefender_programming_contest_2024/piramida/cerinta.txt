@@ -1,0 +1,43 @@
+Mergând pe coridoarele dintr-o piramidă mayașă, intri într-o camera întunecată și brusc auzi ușa închizându-se în spatele tău. 
+Pe o masă rotundă sunt 5 pahare de aur, fiecare cu câte un bănuț de aur și un scaun în dreptul unuia dintre pahare.
+Te așezi pe scaun și deodată o lumină roșie luminează paharul din fața ta, iar 2 lumini aurii lumineaza paharul din stanga și paharul din dreapta. 
+În fața ta se ridică o tabliță de piatră pe care scrie: “Ai căutat nemurirea, iar acum ai găsit-o. Vei afla răspunsul sau vei petrece o eternitate 
+adunând bănuți. După N rotiri, câți bănuți vor fi în fața ta?”.
+
+Rotiri? Nedumerit, iei paharul din fața ta, iar bănuțul dispare din el. După câteva minute de gândire, pui bănuții din paharele din stânga și 
+din dreapta în paharul din fața ta. În mod magic, bănuții apar la loc în cele 2 pahare luminate auriu, iar masa se roteste în sens invers acelor 
+de ceasornic, mutând paharele cu o poziție.
+
+După o zi de încercări, regulile îți sunt clare:
+
+-> Paharul din fața ta se golește
+-> Trebuie să muți bănuții din paharele din stânga și din dreapta în paharul din fața ta.
+-> Paharele din stânga și din dreapta se umplu magic cu cantitatea de bănuți pe care o aveau înainte
+-> Masa se rotește în sens invers acelor de ceasornic (paharul curent se va muta în dreapta, paharul din stanga va deveni paharul curent etc).
+-> Pentru a putea să scapi, trebuie să scrii pe tăbliță câți bănuți va avea paharul din fața ta după N pași.
+-> Tăblița are loc pentru maxim 9 cifre. De aceea, vei scrie rezultatul modulo 999999937.
+
+Input Format
+Citirea se face de la STDIN.
+Pe prima linie va fi numărul N.
+
+Constraints
+Limită de timp:
+C/C++: 1 secundă
+Java: 1 secundă
+Python: 1 secundă
+Limită de memorie: 512MB
+
+Notă: Dacă folosiți recursivitate în Python, adăugați următoarele linii:
+import sys
+sys.setrecursionlimit(1000000)
+
+Output Format
+Afișarea se face la STDOUT.
+Se va afișa pe prima linie răspunsul modulo 999999937
+
+Sample Input 0
+6
+Sample Output 0
+3
+Explanation 0 -> poze
