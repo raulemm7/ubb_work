@@ -84,15 +84,18 @@ void Colectie::adauga(TElem elem) {
     /* de adaugat */
     if(this->vida())
         this->prim = this->primLiber;
-    if(!this->cauta(elem)) {
-        this->creeaza_nod(elem);
-        return;
-    }
-    for(int i = 0; i < this->capacitate; i++) {
-        if(this->elemente[i] == elem) {
-            this->frecventa[i]++;
+
+    int poz = this->prim;
+    while(poz != -1) {
+        if(this->elemente[poz] == elem and this->frecventa[poz] > 0) {
+            this->frecventa[poz]++;
             return;
         }
+        poz = this->urmator[poz];
+    }
+    if(poz == -1) {
+        this->creeaza_nod(elem);
+        return;
     }
 }
 
