@@ -1,7 +1,7 @@
 #pragma once
 
 #define NULL_TELEM -1
-#define INIT_CAPACITY 60028
+#define INIT_CAPACITY 21000
 typedef int TElem;
 
 class IteratorColectie;
