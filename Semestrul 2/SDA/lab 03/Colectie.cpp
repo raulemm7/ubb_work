@@ -93,10 +93,9 @@ void Colectie::adauga(TElem elem) {
         }
         poz = this->urmator[poz];
     }
-    if(poz == -1) {
-        this->creeaza_nod(elem);
-        return;
-    }
+
+    this->creeaza_nod(elem);
+    return;
 }
 
 
