@@ -4,7 +4,6 @@
 #include "IteratorColectie.h"
 #include <iostream>
 #include <vector>
-#include <exception>
 
 using namespace std;
 
@@ -84,8 +83,7 @@ void testAdauga() {
     for (int i = 10000; i > -10000; i--) { //adaugam mult, si acum prima data adaugam valori mari, dupa aceea mici
         c.adauga(i);
     }
-    cout << c.dim();
-//    assert(c.dim()==20240);
+    assert(c.dim()==20240);
 
     cout << "testAdauga finalizat cu succes!\n";
 }
@@ -209,8 +207,6 @@ void testIterator() { // nu stim reprezentarea Colectiei, putem testa doar anumi
     }
     assert(ic2.valid() == false);
     ic2.prim(); //resetam pe primul elemente
-    ic2.afiseaza_date();
-    c.afiseaza_elemente();
     assert(ic2.valid() == true);
     for (int i = 0; i < 100; i++) {
         cout << i << '\n';

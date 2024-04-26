@@ -1,7 +1,6 @@
 #include "Colectie.h"
 #include "IteratorColectie.h"
 #include <exception>
-#include <iostream>
 
 using namespace std;
 
@@ -133,7 +132,7 @@ bool Colectie::cauta(TElem elem) const {
 int Colectie::nrAparitii(TElem elem) const {
     /* de adaugat */
     for(int i = 0; i < this->capacitate; i++) {
-        if(this->elemente[i] == elem)
+        if(this->elemente[i] == elem and this->frecventa[i] > 0)
             return this->frecventa[i];
     }
     return 0;
@@ -164,17 +163,27 @@ Colectie::~Colectie() {
     /* de adaugat */
 }
 
-void Colectie::afiseaza_elemente() {
-    cout << this->primLiber << '\n';
-    for(int i = 0; i < this->capacitate; i++) {
-        if(this->frecventa[i])
-            cout << i << " " << this->elemente[i] << " " << this->frecventa[i] << '\n';
+int Colectie::transformaInMultime() {
+    int nr_total_sterse = 0;
+
+    int poz = this->prim;
+    while(poz != -1) {
+        if(this->frecventa[poz] > 1) {
+            int nr_frecv = this->frecventa[poz];
+            this->frecventa[poz] = 1;
+            nr_total_sterse += nr_frecv - 1;
+        }
+
+        poz = this->urmator[poz];
     }
+
+    return nr_total_sterse;
 }
 
-int Colectie::nr_elemente_distincte() {
-    int k = 0;
-    for(int i = 0; this->frecventa[i] != 0; i++)
-        k++;
-    return k;
-}
+/*void Colectie::afiseaza_elemente() {
+    std::cout << this->primLiber << '\n';
+    for(int i = 0; i < this->capacitate; i++) {
+        if(this->frecventa[i])
+            std::cout << i << " " << this->elemente[i] << " " << this->frecventa[i] << '\n';
+    }
+}*/

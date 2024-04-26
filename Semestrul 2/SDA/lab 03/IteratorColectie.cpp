@@ -1,6 +1,5 @@
 #include "IteratorColectie.h"
 #include "Colectie.h"
-#include <iostream>
 
 IteratorColectie::IteratorColectie(const Colectie& c): col(c) {
     /* de adaugat */
@@ -42,8 +41,4 @@ bool IteratorColectie::valid() const {
 TElem IteratorColectie::element() const {
     /* de adaugat */
     return this->col.elemente[this->curent];
-}
-
-void IteratorColectie::afiseaza_date() const {
-    std::cout << this->curent << " " << this->frecv_curent << '\n';
 }

@@ -3,10 +3,6 @@
 #include "Colectie.h"
 #include "IteratorColectie.h"
 
-
-
-
-
 void testAll() { //apelam fiecare functie sa vedem daca exista
     Colectie c;
     assert(c.vida() == true);
@@ -33,4 +29,22 @@ void testAll() { //apelam fiecare functie sa vedem daca exista
         TElem e = ic.element();
         ic.urmator();
     }
+
+    // testare transformaInMultime
+    Colectie c2;
+    assert(c2.dim() == 0);
+
+    for(int i = 0; i < 20; i++) {
+        for(int j = 0; j < 3; j++)
+            c2.adauga(i);
+    }
+    assert(c2.dim() == 60);
+
+    int k = c2.transformaInMultime();
+    assert(c2.dim() == 20);
+    assert(k == 40);
+
+    k = c2.transformaInMultime();
+    assert(c2.dim() == 20);
+    assert(k == 0);
 }
