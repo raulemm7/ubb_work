@@ -1,7 +1,3 @@
-//
-// Created by Alexandru-Paul Sirbu on 26.03.2022.
-//
-
 #ifndef LAB06_7_SERVICE_H
 #define LAB06_7_SERVICE_H
 
