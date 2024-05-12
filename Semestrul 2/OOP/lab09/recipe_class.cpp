@@ -1,7 +1,3 @@
-//
-// Created by Alexandru-Paul Sirbu on 12.04.2022.
-//
-
 #include "recipe_class.h"
 #include <random>
 #include <fstream>
