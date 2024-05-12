@@ -7,8 +7,6 @@
 #include <utility>
 #include <random>
 #include "repo.h"
-//#include "vector_man.h"
-//#include "vector_man.cpp"
 
 void Repo::add_medicine(const Medicine &a) {
     this->elems.push_back(a);
