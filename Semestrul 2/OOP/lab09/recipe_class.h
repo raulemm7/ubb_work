@@ -1,7 +1,3 @@
-//
-// Created by Alexandru-Paul Sirbu on 12.04.2022.
-//
-
 #ifndef LAB06_7_RECIPE_CLASS_H
 #define LAB06_7_RECIPE_CLASS_H
 
