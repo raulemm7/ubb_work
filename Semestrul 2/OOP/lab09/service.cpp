@@ -1,11 +1,6 @@
-//
-// Created by Alexandru-Paul Sirbu on 26.03.2022.
-//
-
 #include <algorithm>
 #include <memory>
 #include "service.h"
-//#include "vector_man.cpp"
 
 using std::sort;
 
