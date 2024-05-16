@@ -105,8 +105,18 @@ public:
      */
     const string executa_undo(AbstractRepo& storage);
 
+    /**
+     * incarca medicamente din fisier
+     * @param storage repository-ul in care vor fi incarcate medicamentele
+     * @return mesaj ce reprezinta statusul operatiei
+     */
     const string load_data_from_txt(FileRepo& storage);
 
+    /**
+     * salveaza medicamente in fisier
+     * @param storage repository-ul cu medicamentele care vor fi incarcate medicamentele
+     * @return mesaj ce reprezinta statusul operetiei
+     */
     const string store_data_in_txt(FileRepo& storage);
 };
 

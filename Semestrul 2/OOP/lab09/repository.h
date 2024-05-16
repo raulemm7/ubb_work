@@ -92,6 +92,10 @@ private:
     vector<Medicament> medicamente;
     void probabilitate() const;
 public:
+    /**
+     * aceleasi functionalitati ca si AbstractRepo
+     */
+
     MedicamenteRepoProbabilitate() : nr_probabilitate{1.0}{};
 
     explicit MedicamenteRepoProbabilitate(float prob);

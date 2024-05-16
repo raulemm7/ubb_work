@@ -17,9 +17,13 @@ public:
     /** constructor explicit */
     explicit FileRepo(const string& nume);
 
+    /** incarca medicamente dintr-un fisier text */
     void load_from_file();
+    /** salveaza medicamente intr-un fisier text*/
     void save_to_file();
+    /** goleste fisierul */
     void clear_file();
+    /** seteaza calea catre fisier */
     void set_path(const string& path);
 
     const void adauga_medicament(const Medicament& medicament) override {
