@@ -59,13 +59,13 @@ public:
      * adaugare medicament in lista curenta
      * @param medicament: medicamentul care se va adauga
      */
-    const void adauga_medicament(const Medicament& medicament) override;
+    virtual const void adauga_medicament(const Medicament& medicament) override;
 
     /**
      * stergerea unui medicament din lista curenta
      * @param id_med: id-ul medicamentului care se va sterge
      */
-    const void sterge_medicament(const int& id_med) override;
+    virtual const void sterge_medicament(const int& id_med) override;
 
     /**
      * modificarea unui medicament din lista curenta
@@ -73,7 +73,7 @@ public:
      * @param new_pret: noul pret al medicamentului
      * @param new_subst_activa: noua substanta activa a medicamentului
      */
-    const void modifica_medicament(const int& id_med, const int& new_pret, const string& new_subst_activa) override;
+    virtual const void modifica_medicament(const int& id_med, const int& new_pret, const string& new_subst_activa) override;
 
     /**
      * seteaza tuturor medicamentelor din lista curenta
@@ -111,38 +111,6 @@ public:
     const void set_id_correctly() override;
 
     ~MedicamenteRepoProbabilitate() override = default;
-};
-
-class FileRepository:public MedicamenteRepo {
-private:
-    string file_name;
-    REPO_TYPE storage;
-public:
-    FileRepository() = default;
-    explicit FileRepository(string ceva_string) {
-        this->file_name = std::move(ceva_string);
-    };
-
-    void load_from_file();
-    void save_on_file();
-
-    const void adauga_medicament(const Medicament& medicament) override {
-        this->storage.adauga_medicament(medicament);
-        this->save_on_file();
-    };
-
-    const void sterge_medicament(const int& id_med) override {
-        this->storage.sterge_medicament(id_med);
-        this->storage.set_id_correctly();
-        this->save_on_file();
-    };
-
-    const void modifica_medicament(const int& id_med, const int& new_pret, const string& new_subst_activa) override {
-        this->storage.modifica_medicament(id_med, new_pret, new_subst_activa);
-        this->save_on_file();
-    };
-
-    ~FileRepository() override = default;
 };
 
 class repositoryTests{

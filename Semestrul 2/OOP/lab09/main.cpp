@@ -3,6 +3,7 @@
 #include "service.h"
 #include "ui.h"
 #include "validators.h"
+#include "file_repository.h"
 #include <functional>
 
 using std::string;
@@ -32,24 +33,21 @@ void run_all_tests() {
     repositoryTests::test_repository_functionalities();
     repositoryTests::test_new_repo_funct();
     validatorTests::validator_all_tests();
+    file_repository_tests::test_all();
 }
 
 void run_app() {
     // initializari
     Service service;
-    REPO_TYPE storage(0.1);
+    FileRepo storage("storage.txt");
     ui_operations ui;
-    string file_name = "storage.html";
-    service.exportDataInHTMLformat(storage, file_name, 0);
-    file_name = "storage.txt";
-    FileRepository* file_repo = new FileRepository("storage.txt");
 
     int NUMBER_OF_PRESCRIPTIONS = 0;
 
     while(true) {
         ui.show_menu();
 
-        int command = ui.read_command(11);
+        int command = ui.read_command(13);
 
         if(command == 0) {
             const string& rez = service.adaugaMedicamenteRapid(storage);
@@ -60,8 +58,6 @@ void run_app() {
             Medicament medicament = ui.citire_medicament(id);
             string rez = service.adaugaMedicament(storage, medicament);
             ui.show_message(rez);
-
-            file_repo->adauga_medicament(medicament);
         }
         if(command == 2) {
             if(storage.get_last_id() > 0) {
@@ -70,8 +66,6 @@ void run_app() {
                                     NO_VALID_ID_MESSAGE);
                 string rez = service.stergeMedicament(storage, id);
                 ui.show_message(rez);
-
-                file_repo->sterge_medicament(id);
             }
             else {
                 ui.show_message(NO_REGISTRATIONS_MESSAGE);
@@ -87,8 +81,6 @@ void run_app() {
                 string new_subst_activa = ui.citire_string("Introdu noua substanta activa a medicamentului: ");
                 string rez = service.modificaMedicament(storage, id, new_pret, new_subst_activa);
                 ui.show_message(rez);
-
-                file_repo->modifica_medicament(id, new_pret, new_subst_activa);
             }
             else {
                 ui.show_message(NO_REGISTRATIONS_MESSAGE);
@@ -240,11 +232,18 @@ void run_app() {
             const string st = service.executa_undo(storage);
             storage.set_id_correctly();
             ui.show_message(st);
-
-            service.exportDataInHTMLformat(storage, file_name, 0);
         }
         if(command == 11) {
-            service.exportDataInHTMLformat(storage, file_name, 0);
+            // load data from file
+            string status = service.load_data_from_txt(storage);
+            ui.show_message(status);
+        }
+        if(command == 12) {
+            // save data to file
+            string status = service.store_data_in_txt(storage);
+            ui.show_message(status);
+        }
+        if(command == 13) {
             return;
         }
     }

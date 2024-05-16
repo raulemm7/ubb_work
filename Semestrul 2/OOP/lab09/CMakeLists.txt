@@ -20,4 +20,6 @@ add_executable(lab06 main.cpp
         iteratorVector.cpp
         iteratorVector.h
         undo.cpp
-        undo.h)
+        undo.h
+        file_repository.cpp
+        file_repository.h)

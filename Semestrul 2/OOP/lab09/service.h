@@ -15,6 +15,7 @@
 #include <memory>
 #include <locale>
 #include "undo.h"
+#include "file_repository.h"
 
 #define REPO_TYPE MedicamenteRepoProbabilitate
 
@@ -103,6 +104,10 @@ public:
      * @return mesaj ce reprezinta statusul operatiei efectuate
      */
     const string executa_undo(AbstractRepo& storage);
+
+    const string load_data_from_txt(FileRepo& storage);
+
+    const string store_data_in_txt(FileRepo& storage);
 };
 
 class serviceTests {
@@ -116,6 +121,8 @@ private:
     const static void test_adaugareRapida_and_adaugareRandom();
     const static void test_generareRaport();
     const static void test_executa_undo();
+    const static void test_load_from_txt();
+    const static void test_upload_to_txt();
 public:
     const static void run_all_servive_tests();
 };

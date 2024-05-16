@@ -62,6 +62,7 @@ MedicamenteRepoProbabilitate::MedicamenteRepoProbabilitate(float prob) {
 
 void MedicamenteRepoProbabilitate::probabilitate() const {
     auto pb = int(this->nr_probabilitate * 10);
+    srand(time(NULL));
     int numar = rand() % 10 + 1;
 
     if(numar <= pb) {
@@ -157,53 +158,6 @@ const void MedicamenteRepoProbabilitate::set_id_correctly() {
         elem.second.set_id(k);
         k++;
     }
-}
-
-void FileRepository::load_from_file() {
-    while(this->storage.get_last_id()) {
-        this->storage.sterge_medicament(0);
-    }
-
-    // fisier: id/denumire/pret/producator/substanta_activa
-    std::ifstream read(this->file_name);
-    string linie;
-
-    while(getline(read, linie)) {
-        std::stringstream ss(linie);
-
-        string word;
-        vector<string> med;
-        while (getline(ss, word, '/')) {
-            med.push_back(word);
-        }
-        int id = 0;
-        for(auto& ch: med[0]) {
-            id = id * 10 + (ch - '0');
-        }
-        int pret = 0;
-        for(auto& ch : med[2]){
-            pret = pret * 10 + (ch-'0');
-        }
-        this->storage.adauga_medicament(Medicament{id, med[1], pret, med[2], med[3]});
-    }
-
-    read.close();
-}
-
-void FileRepository::save_on_file() {
-    std::ofstream write(this->file_name);
-    for(int i = 0; i < this->storage.get_last_id(); i++) {
-        const Medicament& med = this->storage.get_med(i);
-        string linie;
-        linie = std::to_string(med.get_id()) + "/";
-        linie += med.get_denumire() + "/";
-        linie += std::to_string(med.get_pret()) + "/";
-        linie += med.get_producator() + "/";
-        linie += med.get_subst_activa() + "\n";
-
-        write << linie;
-    }
-    write.close();
 }
 
 const void repositoryTests::test_repository_functionalities() {

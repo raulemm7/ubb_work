@@ -21,7 +21,9 @@ const void ui_operations::show_menu() {
     std::cout << "8. Creeaza reteta\n";
     std::cout << "9. Genereaza raport medicamente\n";
     std::cout << "10. Undo\n";
-    std::cout << "11. Iesire din aplicatie\n";
+    std::cout << "11. Preia medicamente din fisier (storage.txt)\n";
+    std::cout << "12. Stocheaza medicamente in fisier (storage.txt)\n";
+    std::cout << "13. Iesire din aplicatie\n";
     std::cout << "0. Adaugare rapida (adauga 10 medicamente)\n";
 }
 

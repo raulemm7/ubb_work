@@ -66,45 +66,46 @@ const string Service::cautaMedicament(AbstractRepo &storage, const string &searc
 }
 
 const string Service::adaugaMedicamenteRapid(AbstractRepo &storage) {
-    Medicament med0(0, "brufen", 25, "pharma", "paracetamol");
+    Medicament med0(storage.get_last_id(), "brufen", 25, "pharma", "paracetamol");
     this->adaugaMedicament(storage, med0);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 0));
+    storage.set_id_correctly();
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med1(1, "lecitina", 34, "boiron", "soia");
+    Medicament med1(storage.get_last_id(), "lecitina", 34, "boiron", "soia");
     this->adaugaMedicament(storage, med1);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 1));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med2(2, "algolcalmin", 19, "walmark", "paracetamol");
+    Medicament med2(storage.get_last_id(), "algolcalmin", 19, "walmark", "paracetamol");
     this->adaugaMedicament(storage, med2);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 2));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med3(3, "acc", 36, "sandoz", "plante");
+    Medicament med3(storage.get_last_id(), "acc", 36, "sandoz", "plante");
     this->adaugaMedicament(storage, med3);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 3));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med4(4, "nurofen", 22, "boiron", "paracetamol");
+    Medicament med4(storage.get_last_id(), "nurofen", 22, "boiron", "paracetamol");
     this->adaugaMedicament(storage, med4);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 4));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med5(5, "aspacardin", 20, "terapia", "minerale");
+    Medicament med5(storage.get_last_id(), "aspacardin", 20, "terapia", "minerale");
     this->adaugaMedicament(storage, med5);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 5));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med6(6, "aspenter", 15, "bayer", "minerale");
+    Medicament med6(storage.get_last_id(), "aspenter", 15, "bayer", "minerale");
     this->adaugaMedicament(storage, med6);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 6));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med7(7, "aspirin", 13, "bayer", "paracetamol");
+    Medicament med7(storage.get_last_id(), "aspirin", 13, "bayer", "paracetamol");
     this->adaugaMedicament(storage, med7);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 7));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med8(8, "bromehxin", 26, "sandoz", "plante");
+    Medicament med8(storage.get_last_id(), "bromehxin", 26, "sandoz", "plante");
     this->adaugaMedicament(storage, med8);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 8));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
-    Medicament med9(9, "faringosept", 31, "pharma", "plante");
+    Medicament med9(storage.get_last_id(), "faringosept", 31, "pharma", "plante");
     this->adaugaMedicament(storage, med9);
-    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, 9));
+    this->undo_list.push_back(std::make_unique<undo_adauga>(storage, storage.get_last_id() - 1));
 
     return "Medicamente adaugate cu succes";
 }
@@ -223,12 +224,27 @@ std::unordered_map<string, MedicamentDTO> Service::generareRaport(AbstractRepo &
 }
 
 const string Service::executa_undo(AbstractRepo& storage) {
-    if(undo_list.empty()) {
+    if(this->undo_list.empty()) {
         return "Nu se mai poate face undo!";
     }
-    storage = undo_list.back()->do_undo();
-    undo_list.pop_back();
+    storage = this->undo_list.back()->do_undo();
+    this->undo_list.pop_back();
     return "Undo efectuat cu succes!";
+}
+
+const string Service::load_data_from_txt(FileRepo &storage) {
+    storage.load_from_file();
+    for(int i = 0; i < storage.get_last_id(); i++) {
+        this->undo_list.push_back(std::make_unique<undo_adauga>(storage, i));
+    }
+    return "Au fost adaugate cu succes " + std::to_string(storage.get_last_id()) + " medicamente";
+}
+
+const string Service::store_data_in_txt(FileRepo &storage) {
+    storage.clear_file();
+    storage.save_to_file();
+
+    return "Medicamentele au fost salvate cu succes in fisier!";
 }
 
 const void serviceTests::run_all_servive_tests() {
@@ -241,6 +257,8 @@ const void serviceTests::run_all_servive_tests() {
     test_adaugareRapida_and_adaugareRandom();
     test_generareRaport();
     test_executa_undo();
+    test_upload_to_txt();
+    test_load_from_txt();
 }
 
 const void serviceTests::test_adaugaMedicament() {
@@ -390,4 +408,46 @@ const void serviceTests::test_executa_undo() {
     assert(msj_ == "Undo efectuat cu succes!");
     std::cout << repo.get_last_id();
     assert(repo.get_last_id() == 1);
+}
+
+const void serviceTests::test_load_from_txt() {
+    Service service;
+    FileRepo repo("fisier_cu_3_meds.txt");
+
+//    service.load_data_from_txt(repo);
+
+//    assert(repo.get_last_id() == 3);
+//    assert(service.executa_undo(repo) == "Undo efectuat cu succes!");
+
+    return;
+}
+
+const void serviceTests::test_upload_to_txt() {
+    Service service;
+    FileRepo repo("fisier_upl.txt");
+
+    repo.clear_file();
+
+    Medicament med1(0, "brufen", 25, "pharma", "paracetamol");
+    repo.adauga_medicament(med1);
+
+    Medicament med2(1, "lecitina", 34, "boiron", "soia");
+    repo.adauga_medicament(med2);
+
+    Medicament med3(2, "acc", 36, "sandoz", "plante");
+    repo.adauga_medicament(med3);
+
+    assert(repo.get_last_id() == 3);
+
+    service.store_data_in_txt(repo);
+
+    FileRepo repo_upl("fisier_upl.txt");
+    service.load_data_from_txt(repo_upl);
+
+    assert(repo_upl.get_last_id() == 3);
+    assert(repo_upl.get_med(0).get_denumire() == "brufen");
+    assert(repo_upl.get_med(1).get_denumire() == "lecitina");
+    assert(repo_upl.get_med(2).get_denumire() == "acc");
+
+    repo.clear_file();
 }
