@@ -1,0 +1,10 @@
+1001,Rochie de vara,S,150,true
+1002,Rochie de seara,M,300,false
+1003,Rochie casual,L,200,true
+1004,Rochie de cocktail,XL,250,true
+1005,Rochie office,S,180,false
+1006,Rochie eleganta,M,350,true
+1007,Rochie florala,L,220,false
+1008,Rochie maxi,XL,270,true
+1009,Rochie mini,S,160,false
+1010,Rochie festiva,M,400,true
