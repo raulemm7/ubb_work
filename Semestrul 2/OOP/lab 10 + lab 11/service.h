@@ -26,7 +26,7 @@ private:
 public:
     /**
      * functionalitatea de adaugare
-     * @param storage: repo-ul in care se adauga
+     * @param storage: storage-ul in care se adauga
      * @param medicament: medicamentul care se adauga
      * @return: string ce reprezinta rezultatul operatiei efectutate
      */
@@ -34,7 +34,7 @@ public:
 
     /**
      * functionalitatea de stergere
-     * @param storage: repo-ul din care se sterge un medicament
+     * @param storage: storage-ul din care se sterge un medicament
      * @param id_medicament: id-ul medicamentului care se va sterge
      * @return: string ce reprezinta rezultatul operatiei efectutate
      */
@@ -49,7 +49,7 @@ public:
 
     /**
      * functionalitatea de modificare a unui medicament
-     * @param storage: repo-ul cu medicamente in care se va modifica un medicament
+     * @param storage: storage-ul cu medicamente in care se va modifica un medicament
      * @param id_medicament: id-ul medicamentului care se va modifica
      * @param new_pret: noul pret al medicamentului
      * @param new_subst_activa: noua substanta activa a medicamentului
@@ -60,7 +60,7 @@ public:
 
     /**
      * functionalitatea de cautare a unui medicament
-     * @param storage: repo-ul in care se face cautarea
+     * @param storage: storage-ul in care se face cautarea
      * @param search: string ce reprezinta denumirea medicamentului cautat
      * @return: string ce reprezinta rezultatul operatiei efectutate
      */

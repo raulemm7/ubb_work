@@ -5,7 +5,7 @@
 #include "file_repository.h"
 #include <fstream>
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 #include <cstring>
 
 /**
@@ -15,65 +15,27 @@
 
 void FileRepo::load_from_file() {
     std::ifstream fin(this->nume_fisier);
-    char *line = (char*)malloc(sizeof(char) * 128);
 
-    while(fin.getline(line, 128)) {
-        int id, pret;
-        string denumire, producator, subst_act;
+    int id, pret;
+    string denumire, producator, subst_act;
 
-        int it = 0;
-        char *part = strtok(line, " ");
-        while(part) {
-            if(it == 0) {
-                // id
-                id = 0;
-
-                int i = 0;
-                while(part[i]) {
-                    id = (id * 10) + (part[i] -'0');
-                    i++;
-                }
-            }
-            if(it == 1) {
-                // denumire
-                denumire = std::move(part);
-            }
-            if(it == 2) {
-                // pret
-                pret = 0;
-
-                int i = 0;
-                while(part[i]) {
-                    pret = (pret * 10) + (part[i] -'0');
-                    i++;
-                }
-            }
-            if(it == 3) {
-                // producator
-                producator = std::move(part);
-            }
-            if(it == 4) {
-                // subst
-                subst_act = std::move(part);
-            }
-
-            it++;
-            part = strtok(NULL,  " ");
-        }
-        free(part);
+    while(fin >> id >> denumire >> pret >> producator >> subst_act) {
+        std::cout << denumire << " " << pret << " " << subst_act << '\n';
 
         Medicament med(id, denumire, pret, producator, subst_act);
         this->adauga_medicament(med);
     }
-    free(line);
+
 
     fin.close();
 }
 
 void FileRepo::save_to_file() {
+    this->clear_file();
+
     std::ofstream out(this->nume_fisier);
     for(const auto& med : this->get_all()) {
-        string info = "";
+        string info;
         info += std::to_string(med.get_id());
         info += " ";
         info += med.get_denumire();
@@ -119,10 +81,10 @@ const void file_repository_tests::test_load() {
     std::cout << "acum dau load: ";
     repo.load_from_file();
 
-    /*assert(repo.get_last_id() == 3);
-    assert(repo.get_med(0).get_denumire() == "brufen");
-    assert(repo.get_med(1).get_denumire() == "lecitina");
-    assert(repo.get_med(2).get_denumire() == "acc");*/
+    /*assert(storage.get_last_id() == 3);
+    assert(storage.get_med(0).get_denumire() == "brufen");
+    assert(storage.get_med(1).get_denumire() == "lecitina");
+    assert(storage.get_med(2).get_denumire() == "acc");*/
 
     repo.clear_file();
 }

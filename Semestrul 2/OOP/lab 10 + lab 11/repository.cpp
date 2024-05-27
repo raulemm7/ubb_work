@@ -22,11 +22,14 @@ const void MedicamenteRepo::adauga_medicament(const Medicament& medicament) {
 }
 
 const int MedicamenteRepo::get_last_id() const{
-    return this->nr_medicamente;
+    return (int)this->lista_meds.size();
 }
 
-const Medicament& MedicamenteRepo::get_med(const int &position) const {
-    return this->lista_meds[position];
+const Medicament& MedicamenteRepo::get_med(const int &id_med) const {
+    for(const auto& item : this->lista_meds) {
+        if(item.get_id() == id_med)
+            return item;
+    }
 }
 
 const void MedicamenteRepo::sterge_medicament(const int &id_med) {
@@ -43,8 +46,16 @@ const void MedicamenteRepo::sterge_medicament(const int &id_med) {
 }
 
 const void MedicamenteRepo::modifica_medicament(const int &id_med, const int& new_pret, const string& new_subst_activa) {
-    this->lista_meds[id_med].set_pret(new_pret);
-    this->lista_meds[id_med].set_subst_activa(new_subst_activa);
+    int i = 0;
+    for(auto item : this->lista_meds) {
+        if(item.get_id() == id_med) {
+            item.set_pret(new_pret);
+            item.set_subst_activa(new_subst_activa);
+            this->lista_meds[i] = item;
+            return;
+        }
+        i++;
+    }
 }
 
 const void MedicamenteRepo::set_id_correctly() {

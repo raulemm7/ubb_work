@@ -7,7 +7,11 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     Service serv;
-    MedicamenteRepo repo;
+
+    string file_name = "storage.txt";
+    FileRepo repo{file_name};
+    repo.load_from_file();
+
     MedicamentGUI app{serv, repo};
     app.show();
 

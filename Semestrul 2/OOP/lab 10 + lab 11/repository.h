@@ -40,7 +40,7 @@ private:
     int nr_medicamente;
 public:
     /** constructorul clasei */
-    MedicamenteRepo();
+    explicit MedicamenteRepo();
 
     /** returneaza lista propriu-zisa de medicamente */
     vector<Medicament>& get_all() override;
@@ -50,10 +50,10 @@ public:
 
     /**
      * returneaza un medicament de pe o pozitie specificata
-     * @param position: pozitia medicamentului din lista de medicamente
+     * @param id_med: pozitia medicamentului din lista de medicamente
      * @return: obiect de tip Medicament
      */
-    const Medicament& get_med(const int& position) const override;
+    const Medicament& get_med(const int& id_med) const override;
 
     /**
      * adaugare medicament in lista curenta

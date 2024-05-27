@@ -3,7 +3,6 @@
 //
 
 #include "MedicamentGUI.h"
-#include <utility>
 #include <vector>
 #include <string>
 #include "service.h"
@@ -13,11 +12,13 @@ void MedicamentGUI::init_gui() {
     this->setLayout(this->mainLayout);
 
     // left layout
-    this->leftLayout->addWidget(this->listaMedicamente);
+    this->layout_infos->addWidget(this->listaMedicamente);
+    this->layout_infos->addWidget(this->tableMeds);
+    this->leftLayout->addLayout(this->layout_infos);
 
     this->butoaneFiltrare->addWidget(this->filterByPrice);
     this->butoaneFiltrare->addWidget(this->filterBySubstance);
-    this->butoaneFiltrare->addWidget(this->quickadd);
+    this->butoaneFiltrare->addWidget(this->nesortat_button);
     this->leftLayout->addLayout(this->butoaneFiltrare);
 
     this->butoaneSortare->addWidget(this->sortByName);
@@ -49,9 +50,11 @@ void MedicamentGUI::init_gui() {
     this->rightLayout->addLayout(this->butoane_buc_rap_undo);
 
     this->mainLayout->addLayout(this->rightLayout);
+
+    this->mainLayout->addLayout(this->ly_butoane_automate);
 }
 
-void MedicamentGUI::load_data(vector<Medicament>& meds) {
+void MedicamentGUI::load_data_in_list(vector<Medicament>& meds) {
     this->listaMedicamente->clear();
     for(auto const& item: meds) {
         auto* list_item = new QListWidgetItem(QString::fromStdString(item.get_denumire()));
@@ -59,6 +62,28 @@ void MedicamentGUI::load_data(vector<Medicament>& meds) {
         this->listaMedicamente->addItem(list_item);
     }
 }
+
+void MedicamentGUI::load_data_in_table(vector<Medicament> &meds) {
+    this->tableMeds->clear();
+    this->tableMeds->setColumnCount(4);
+    this->tableMeds->setRowCount((int)meds.size());
+
+    this->tableMeds->setHorizontalHeaderItem(0, new QTableWidgetItem(QString::fromStdString("Denumire")));
+    this->tableMeds->setHorizontalHeaderItem(1, new QTableWidgetItem(QString::fromStdString("Pret")));
+    this->tableMeds->setHorizontalHeaderItem(2, new QTableWidgetItem(QString::fromStdString("Producator")));
+    this->tableMeds->setHorizontalHeaderItem(3, new QTableWidgetItem(QString::fromStdString("Substanta activa")));
+
+    int nr_linii = 0;
+    for(const auto& item: meds) {
+        this->tableMeds->setItem(nr_linii, 0, new QTableWidgetItem(QString::fromStdString(item.get_denumire())));
+        this->tableMeds->setItem(nr_linii, 1, new QTableWidgetItem(QString::number(item.get_pret())));
+        this->tableMeds->setItem(nr_linii, 2, new QTableWidgetItem(QString::fromStdString(item.get_producator())));
+        this->tableMeds->setItem(nr_linii, 3, new QTableWidgetItem(QString::fromStdString(item.get_subst_activa())));
+
+        nr_linii++;
+    }
+}
+
 
 void MedicamentGUI::connect_buttons() {
     QObject::connect(this->listaMedicamente, &QListWidget::itemSelectionChanged, [&](){
@@ -75,7 +100,7 @@ void MedicamentGUI::connect_buttons() {
            this->denumire->setText(selectedItem->text());
            int id = selectedItem->data(Qt::UserRole).toInt();
 
-           auto med = this->repo.get_med(id);
+           const auto& med = this->storage.get_med(id);
            this->id_med->setText(QString::number(id));
            this->pret->setText(QString::number(med.get_pret()));
            this->producator->setText(QString::fromStdString(med.get_producator()));
@@ -83,12 +108,16 @@ void MedicamentGUI::connect_buttons() {
        }
     });
 
-    QObject::connect(this->quickadd, &QPushButton::clicked, this, &MedicamentGUI::gui_adauga_rapid);
+    QObject::connect(this->nesortat_button, &QPushButton::clicked, this, [&](){
+        this->load_data_in_list(this->storage.get_all());
+        this->load_data_in_table(this->storage.get_all());
+    });
 
     // right
     QObject::connect(this->addMed, &QPushButton::clicked, this, &MedicamentGUI::gui_adauga_med);
     QObject::connect(this->deleteMed, &QPushButton::clicked, this, &MedicamentGUI::gui_sterge_med);
     QObject::connect(this->searchMed, &QPushButton::clicked, this, &MedicamentGUI::gui_cauta_med);
+    QObject::connect(this->raport, &QPushButton::clicked, this, &MedicamentGUI::raport_gui);
     QObject::connect(this->modifyMed, &QPushButton::clicked, this, &MedicamentGUI::gui_modifica_med);
     QObject::connect(this->undo, &QPushButton::clicked, this, &MedicamentGUI::gui_undo);
 
@@ -106,11 +135,6 @@ void MedicamentGUI::message_box(string& informatie) {
     qmsg.exec();
 }
 
-void MedicamentGUI::gui_adauga_rapid() {
-    this->serv.adaugaMedicamenteRapid(this->repo);
-    this->load_data(this->repo.get_all());
-}
-
 void MedicamentGUI::gui_adauga_med() {
     if(this->denumire->text().isEmpty() or
        this->pret->text().isEmpty() or
@@ -126,26 +150,33 @@ void MedicamentGUI::gui_adauga_med() {
     string prod = this->producator->text().toStdString();
     string act_subst = this->subst->text().toStdString();
 
-    int idmed = this->repo.get_last_id();
+    int idmed = this->storage.get_last_id();
 
     Medicament med(idmed, name, price, prod, act_subst);
-    auto msg = this->serv.adaugaMedicament(repo, med);
+    auto msg = this->serv.adaugaMedicament(storage, med);
     MedicamentGUI::message_box(msg);
 
-    this->load_data(this->repo.get_all());
+    this->load_data_in_list(this->storage.get_all());
+    this->load_data_in_table(this->storage.get_all());
+    this->storage.save_to_file();
+    this->butoane_dinamic();
 }
 
 void MedicamentGUI::gui_sterge_med() {
     string msg;
 
-    if(this->id_med->text().isEmpty() or this->id_med->text().toInt() >= this->repo.get_last_id()){
+    if(this->id_med->text().isEmpty() or this->id_med->text().toInt() >= this->storage.get_last_id()){
         msg = "ID invalid!";
     }
     else {
         int id = this->id_med->text().toInt();
-        if (id < this->repo.get_last_id()) {
-            msg = this->serv.stergeMedicament(repo, id);
-            this->load_data(this->repo.get_all());
+        if (id < this->storage.get_last_id()) {
+            msg = this->serv.stergeMedicament(storage, id);
+
+            this->load_data_in_list(this->storage.get_all());
+            this->load_data_in_table(this->storage.get_all());
+            this->storage.save_to_file();
+            this->butoane_dinamic();
         }
     }
 
@@ -165,7 +196,12 @@ void MedicamentGUI::gui_modifica_med() {
     int new_price = this->pret->text().toInt();
     const string new_subst = this->subst->text().toStdString();
 
-    string msg = this->serv.modificaMedicament(this->repo, id, new_price, new_subst);
+    string msg = this->serv.modificaMedicament(this->storage, id, new_price, new_subst);
+
+    this->storage.save_to_file();
+    this->load_data_in_table(this->storage.get_all());
+    this->butoane_dinamic();
+
     MedicamentGUI::message_box(msg);
 }
 
@@ -177,14 +213,14 @@ void MedicamentGUI::gui_cauta_med() {
         return;
     }
 
-    int id = this->serv.cautaMedicament(this->repo, name);
+    int id = this->serv.cautaMedicament(this->storage, name);
 
     string msg;
     if(id == -1) {
         msg = "Nu s-a gasit medicamentul cautat!";
     }
     else {
-        auto med = this->repo.get_med(id);
+        auto med = this->storage.get_med(id);
         msg = "ID: " + std::to_string(med.get_id()) + "\n";
         msg += "Denumire: " + med.get_denumire() + "\n";
         msg += "Pret: " + std::to_string(med.get_pret()) + "\n";
@@ -195,42 +231,24 @@ void MedicamentGUI::gui_cauta_med() {
 }
 
 void MedicamentGUI::gui_sort_denumrie() {
-    auto meds = this->serv.sortare_generica(this->repo, &Validator::compare_denumire);
-    while(this->repo.get_last_id()) {
-        this->repo.sterge_medicament(0);
-        this->repo.set_id_correctly();
-    }
-    for(auto& med: meds){
-        med.set_id(this->repo.get_last_id());
-        this->serv.adaugaMedicament(this->repo, med);
-    }
-    this->load_data(this->repo.get_all());
+    auto meds = this->serv.sortare_generica(this->storage, &Validator::compare_denumire);
+
+    this->load_data_in_list(meds);
+    this->load_data_in_table(meds);
 }
 
 void MedicamentGUI::gui_sort_producator() {
-    auto meds = this->serv.sortare_generica(this->repo, &Validator::compare_producator);
-    while(this->repo.get_last_id()) {
-        this->repo.sterge_medicament(0);
-        this->repo.set_id_correctly();
-    }
-    for(auto& med: meds){
-        med.set_id(this->repo.get_last_id());
-        this->serv.adaugaMedicament(this->repo, med);
-    }
-    this->load_data(this->repo.get_all());
+    auto meds = this->serv.sortare_generica(this->storage, &Validator::compare_producator);
+
+    this->load_data_in_list(meds);
+    this->load_data_in_table(meds);
 }
 
 void MedicamentGUI::gui_sort_price_and_subst() {
-    auto meds = this->serv.sortare_generica(this->repo, &Validator::compare_subst_activa_and_pret);
-    while(this->repo.get_last_id()) {
-        this->repo.sterge_medicament(0);
-        this->repo.set_id_correctly();
-    }
-    for(auto& med: meds){
-        med.set_id(this->repo.get_last_id());
-        this->serv.adaugaMedicament(this->repo, med);
-    }
-    this->load_data(this->repo.get_all());
+    auto meds = this->serv.sortare_generica(this->storage, &Validator::compare_subst_activa_and_pret);
+
+    this->load_data_in_list(meds);
+    this->load_data_in_table(meds);
 }
 
 void MedicamentGUI::gui_filtrare_dupa_substanta() {
@@ -240,9 +258,10 @@ void MedicamentGUI::gui_filtrare_dupa_substanta() {
         return;
     }
 
-    auto meds = this->serv.filtrare_dupa_substanta(this->repo, this->subst->text().toStdString());
+    auto meds = this->serv.filtrare_dupa_substanta(this->storage, this->subst->text().toStdString());
 
-    this->load_data(meds);
+    this->load_data_in_list(meds);
+    this->load_data_in_table(meds);
 }
 
 void MedicamentGUI::gui_filtrare_dupa_pret() {
@@ -264,15 +283,56 @@ void MedicamentGUI::gui_filtrare_dupa_pret() {
         return;
     }
 
-    auto meds = this->serv.filtrare_dupa_pret(this->repo, this->pret->text().toInt(), op);
+    auto meds = this->serv.filtrare_dupa_pret(this->storage, this->pret->text().toInt(), op);
 
-    this->load_data(meds);
+    this->load_data_in_list(meds);
+    this->load_data_in_table(meds);
 }
 
 void MedicamentGUI::gui_undo() {
-    string m = this->serv.executa_undo(this->repo);
+    string m = this->serv.executa_undo(this->storage);
     MedicamentGUI::message_box(m);
 
-    this->load_data(this->repo.get_all());
+    this->load_data_in_list(this->storage.get_all());
+    this->load_data_in_table(this->storage.get_all());
+    this->storage.save_to_file();
+    this->butoane_dinamic();
+}
+
+void MedicamentGUI::raport_gui() {
+    const auto& raport_substante = this->serv.generareRaport(this->storage);
+
+    string msg;
+
+    for(auto const& item : raport_substante) {
+        auto med_dto = item.second;
+
+        msg += med_dto.substanta_activa + ": " + std::to_string(med_dto.nr_meds) + '\n';
+    }
+
+    MedicamentGUI::message_box(msg);
+}
+
+void MedicamentGUI::butoane_dinamic() {
+    // eliberez memoria folosita de butoanele vechi
+    for(auto btn: vector_butoane)
+        delete btn;
+
+    // eliberez vectorul de butoane
+    vector_butoane.clear();
+
+    // completez noile butoane cu informatii
+    const auto& raport_substante = this->serv.generareRaport(this->storage);
+    for(auto const& item : raport_substante) {
+        auto* btn = new QPushButton{QString::fromStdString(item.first)};
+        vector_butoane.push_back(btn);
+
+        QObject::connect(btn, &QPushButton::clicked, this, [item](){
+                QMessageBox::information(nullptr, QString::fromStdString(item.first),
+                                         QString::fromStdString("Numar medicamente: " + std::to_string(item.second.nr_meds)));
+        });
+
+        this->ly_butoane_automate->addWidget(btn);
+    }
 }
 

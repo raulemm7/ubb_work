@@ -12,6 +12,7 @@
 #include <QtWidgets/qformlayout.h>
 #include <QtWidgets/qlistwidget.h>
 #include <QtWidgets/qmessagebox.h>
+#include <QtWidgets/qtablewidget.h>
 #include "repository.h"
 #include "service.h"
 
@@ -20,12 +21,14 @@ private:
     QHBoxLayout* mainLayout = new QHBoxLayout;
 
     QVBoxLayout* leftLayout = new QVBoxLayout;
+    QHBoxLayout* layout_infos = new QHBoxLayout;
+    QTableWidget* tableMeds = new QTableWidget;
     QListWidget* listaMedicamente = new QListWidget;
 
     QHBoxLayout* butoaneFiltrare = new QHBoxLayout;
     QPushButton* filterByPrice = new QPushButton("&Filtreaza dupa pret");
     QPushButton* filterBySubstance = new QPushButton("&Filtreaza dupa substanta");
-    QPushButton* quickadd = new QPushButton("&Adauga rapid");
+    QPushButton* nesortat_button = new QPushButton("&Lista initiala");
 
     QHBoxLayout* butoaneSortare = new QHBoxLayout;
     QPushButton* sortByName = new QPushButton("&Sorteaza dupa denumire");
@@ -54,18 +57,22 @@ private:
     QLineEdit* subst = new QLineEdit;
     QLineEdit* oper = new QLineEdit;
 
+    vector<QPushButton*> vector_butoane;
+    QVBoxLayout* ly_butoane_automate = new QVBoxLayout;
+    void butoane_dinamic();
+
     Service& serv;
-    MedicamenteRepo& repo;
+    FileRepo& storage;
 
     void init_gui();
 
-    void load_data(vector<Medicament>& meds);
+    void load_data_in_list(vector<Medicament>& meds);
+    void load_data_in_table(vector<Medicament>& meds);
 
     void connect_buttons();
 
     static void message_box(string& informatie);
 
-    void gui_adauga_rapid();
     void gui_adauga_med();
     void gui_sterge_med();
     void gui_modifica_med();
@@ -76,11 +83,14 @@ private:
     void gui_filtrare_dupa_substanta();
     void gui_filtrare_dupa_pret();
     void gui_undo();
+    void raport_gui();
 public:
-    MedicamentGUI(Service& service, MedicamenteRepo& storage):serv{service},repo{storage}{
+    MedicamentGUI(Service& service, FileRepo& storage): serv{service}, storage{storage}{
         this->init_gui();
-        this->load_data(this->repo.get_all());
+        this->load_data_in_list(this->storage.get_all());
+        this->load_data_in_table(this->storage.get_all());
         this->connect_buttons();
+        this->butoane_dinamic();
     };
 };
 

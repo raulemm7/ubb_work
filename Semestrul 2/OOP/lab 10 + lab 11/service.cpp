@@ -248,7 +248,8 @@ const string Service::store_data_in_txt(FileRepo &storage) {
 
 vector<Medicament> Service::sortare_generica(AbstractRepo &storage,
                                      function<int(const Medicament &, const Medicament &)> functie_comparare) {
-    vector<Medicament>& vec = storage.get_all();
+    auto vec = storage.get_all();
+    std::cout << "aici: " << vec.size() << '\n';
     std::sort(vec.begin(), vec.end(), functie_comparare);
     return vec;
 }
@@ -448,10 +449,10 @@ const void serviceTests::test_load_from_txt() {
     Service service;
     FileRepo repo("fisier_cu_3_meds.txt");
 
-//    service.load_data_from_txt(repo);
+//    service.load_data_from_txt(storage);
 
-//    assert(repo.get_last_id() == 3);
-//    assert(service.executa_undo(repo) == "Undo efectuat cu succes!");
+//    assert(storage.get_last_id() == 3);
+//    assert(service.executa_undo(storage) == "Undo efectuat cu succes!");
 
     return;
 }

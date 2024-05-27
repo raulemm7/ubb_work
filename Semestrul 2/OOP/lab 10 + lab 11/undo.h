@@ -36,6 +36,7 @@ public:
     undo_sterge(AbstractRepo& storage, const Medicament& med) : storage {storage}, med {med} {};
 
     AbstractRepo& do_undo() override {
+        this->med.set_id(this->storage.get_last_id());
         storage.adauga_medicament(this->med);
         return storage;
     }
@@ -47,7 +48,7 @@ class undo_modifica : public generic_undo {
     const string subst;
     AbstractRepo& storage;
 public:
-    undo_modifica(AbstractRepo& storage, const Medicament& med, const int price, const string subst) :
+    undo_modifica(AbstractRepo& storage, const Medicament& med, const int price, const string& subst) :
         storage {storage}, med {med}, price {price}, subst {subst} {};
 
     AbstractRepo& do_undo() override {

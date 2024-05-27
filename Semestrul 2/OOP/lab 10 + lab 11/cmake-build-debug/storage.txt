@@ -1,0 +1,11 @@
+0 Ibuprofen 20 MediHealth Ibuprofen
+1 Amoxicillin 30 BioPharm Amoxicillin
+2 Atorvastatin 40 MediHealth Atorvastatin
+3 Lisinopril 28 BioPharm Lisinopril
+4 IbuprofenMax 25 MediHealth Ibuprofen
+5 AmoxicillinForte 35 BioPharm Amoxicillin
+6 Omeprazole 35 Bayer Omeprazole
+7 Aspacardin 30 Bayer Amoxicilin
+8 Paracetamol 10 PharmaCorp Paracetamol
+9 Aspirin 15 Bayer Aspirin
+10 AspirinCardio 18 Bayer Aspirin
