@@ -1,0 +1,12 @@
+0 Ibuprofen 20 MediHealth Ibuprofen
+1 Atorvastatin 40 MediHealth Atorvastatin
+2 Lisinopril 28 BioPharm Lisinopril
+3 Aspirin 15 Bayer Aspirin
+4 AspirinCardio 18 Bayer Aspirin
+5 Omeprazole 35 Bayer Omeprazole
+6 Paracetamol 10 PharmaCorp Paracetamol
+7 Paracetamol 11 PharmaCorp ABC
+8 sdasd 3340 Bayer Paracetamol
+9 AmoxicillinForte 35 BioPharm Amoxicillin
+10 Amoxicillin 30 BioPharm Amoxicillin
+11 Aspacardin 30 Bayer Amoxicilin
