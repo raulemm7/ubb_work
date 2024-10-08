@@ -87,3 +87,7 @@ CREATE TABLE Facturi (
 	SumaPlata INT, 
 	StatusPlata VARCHAR(25) NOT NULL       --ex: efectuata, in procesare etc.
 );
+
+-- relatii one to one: Camioane-Remorci, Comenzi-Facturi
+-- relatii one to many: Camioane-Curse, Soferi-Curse, Marfa-Curse etc.
+-- relatii many to many: Curse-Rute (o cursa poate avea mai multe rute, o ruta poate avea mai multe curse)
