@@ -63,7 +63,7 @@ CREATE TABLE CurseRuteLeg (
 	PRIMARY KEY (CursaID, PunctPlecare, PunctDestinatie)
 );
 
-CREATE TABLE CLIENTI (
+CREATE TABLE Clienti (
 	ClientID INT PRIMARY KEY IDENTITY, 
 	Nume VARCHAR(25) NOT NULL, 
 	Prenume VARCHAR(25) NOT NULL, 
@@ -72,20 +72,20 @@ CREATE TABLE CLIENTI (
 	Adresa VARCHAR(80)
 );
 
+CREATE TABLE Facturi (
+	FacturaID INT PRIMARY KEY IDENTITY, 
+	DataEmitere DATE, 
+	SumaPlata INT, 
+	StatusPlata VARCHAR(25) NOT NULL       --ex: efectuata, in procesare etc.
+);
+
 CREATE TABLE Comenzi (
 	ComandaID INT PRIMARY KEY IDENTITY, 
 	ClientID INT FOREIGN KEY REFERENCES Clienti(ClientID),
 	CursaID INT FOREIGN KEY REFERENCES Curse(CursaID), 
+	FacturaID INT FOREIGN KEY REFERENCES Facturi(FacturaID),
 	DataComanda DATE, 
 	StatusComanda VARCHAR(25) NOT NULL     -- confirmata, preluata, spre destinatie, efectuata etc.
-);
-
-CREATE TABLE Facturi (
-	FacturaID INT PRIMARY KEY IDENTITY,
-	ComandaID INT FOREIGN KEY REFERENCES Comenzi(ComandaID), 
-	DataEmitere DATE, 
-	SumaPlata INT, 
-	StatusPlata VARCHAR(25) NOT NULL       --ex: efectuata, in procesare etc.
 );
 
 -- relatii one to one: Camioane-Remorci, Comenzi-Facturi
