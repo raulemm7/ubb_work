@@ -1,0 +1,1 @@
+Diagrama se genereaza automat din Intellij Idea
