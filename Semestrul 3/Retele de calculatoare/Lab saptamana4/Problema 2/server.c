@@ -18,11 +18,12 @@ void deservire_client(int c) {
         sir_caractere[bytes_primiti] = '\0';
         printf("[IN SERVER] Sir primit: %s\n", sir_caractere);
 
-        char* p = strtok(sir_caractere, " ");
-        while(p) {
-                numar++;
-                p = strtok(NULL, " ");
-        }
+        // am actualizat partea de numarare a spatiilor in sirul primit
+        for(int i = 0; i < bytes_primiti; i++) {
+                if(sir_caractere[i] == ' ') {
+                        numar++;
+                }
+        }  
 
         printf("[IN SERVER] Nr de spatii goale: %hu\n", numar);
 
