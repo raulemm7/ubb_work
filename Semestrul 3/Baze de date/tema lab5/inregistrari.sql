@@ -37,7 +37,10 @@ VALUES
 ('2024-01-16', 1800, 'in procesare'),
 ('2024-01-17', 2200, 'efectuata'),
 ('2024-01-18', 3000, 'in procesare'),
-('2024-01-19', 2750, 'efectuata');
+('2024-01-19', 2750, 'efectuata'),
+('2024-02-02', 2400, 'efectuata'),
+('2024-02-06', 6400, 'in procesare'), 
+('2024-03-01', 4100, 'efectuata')
 
 -- verific
 SELECT * FROM Facturi
@@ -145,7 +148,10 @@ VALUES
 (4567890123456, 4, 'Alimente', '2024-01-16', '07:45'),
 (5678901234567, 5, 'Textile', '2024-01-17', '11:00'),
 (6789012345678, 6, 'Echipamente', '2024-01-18', '08:00'),
-(7890123456789, 7, 'Auto', '2024-01-19', '12:30');
+(7890123456789, 7, 'Auto', '2024-01-19', '12:30'),
+('5678901234567', 5, 'Alimente', '2024-02-01', '05:00'), 
+('4567890123456', 4, 'Auto', '2024-02-04', '07:00'),
+('7890123456789', 7, 'Mobilier', '2024-02-09', '14:00');
 
 SELECT * FROM Curse
 
@@ -159,7 +165,10 @@ VALUES
 (4, 'Brasov', 'Sibiu'),
 (5, 'Bucuresti', 'Ploiesti'),
 (6, 'Timisoara', 'Arad'),
-(7, 'Craiova', 'Drobeta-Turnu Severin');
+(7, 'Craiova', 'Drobeta-Turnu Severin'),
+(8, 'Bucuresti', 'Constanta'),
+(9, 'Cluj-Napoca', 'Timisoara'),
+(10, 'Bucuresti', 'Ploiesti');
 
 SELECT * FROM CurseRuteLeg
 
@@ -182,7 +191,10 @@ VALUES
 (5, 4, 4, '2024-01-15', 'confirmata'),
 (6, 5, 5, '2024-01-16', 'preluata'),
 (7, 6, 6, '2024-01-17', 'spre destinatie'),
-(1, 7, 7, '2024-01-18', 'efectuata');
+(1, 7, 7, '2024-01-18', 'efectuata'),
+(2, 8, 8, '2024-01-29', 'spre destinatie'),
+(3, 9, 9, '2024-02-01', 'efectuata'),
+(7, 10, 10, '2024-02-25', 'confirmata');
 
 SELECT * FROM Comenzi
 
