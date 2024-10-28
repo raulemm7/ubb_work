@@ -76,6 +76,18 @@ public class UserService implements Service<Utilizator> {
     }
 
     /**
+     * Checks if a specified user, identified by their ID, is part of a given friendship.
+     *
+     * @param friendship the {@link Friendship} instance to check
+     * @param idUser the ID of the user to verify as part of the friendship
+     * @return {@code true} if the user with the specified ID is either the first or second user
+     *         in the friendship; {@code false} otherwise
+     */
+    private boolean checkIfUserInFriendship(Friendship friendship, Long idUser) {
+        return friendship.getFirstUser().getId().equals(idUser) || friendship.getSecondUser().getId().equals(idUser);
+    }
+
+    /**
      * Deletes a user with the specified ID, along with their friendships.
      * A success or failure message is returned based on the operation's outcome.
      *
@@ -85,10 +97,12 @@ public class UserService implements Service<Utilizator> {
     public String deleteUser(Long id) {
         // sterg mai intai prieteniile cu ceilalti useri
         Iterable<Friendship> friendships = friendshipRepository.findAll();
-        friendships.forEach(friendship -> {
-            if(friendship.getFirstUser().getId().equals(id) || friendship.getSecondUser().getId().equals(id))
-                this.friendshipRepository.delete(friendship.getId());
-        });
+        List<Long> friendshipsToDelete = StreamSupport.stream(friendships.spliterator(), false)
+                .filter(friendship -> checkIfUserInFriendship(friendship, id))
+                .map(Friendship::getId)
+                .toList();
+
+        friendshipsToDelete.forEach(friendshipRepository::delete);
 
         // sterg utilizatorul
         var result = this.userRepository.delete(id).orElse(null);
