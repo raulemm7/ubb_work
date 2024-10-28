@@ -91,6 +91,21 @@ public class FriendshipService implements Service<Friendship>{
     }
 
     /**
+     * Checks if a given friendship exists between two specified users.
+     *
+     * @param friendship the {@link Friendship} object representing the friendship to check
+     * @param idFirstUser the ID of the first user in the potential friendship
+     * @param idSecondUser the ID of the second user in the potential friendship
+     * @return {@code true} if the friendship exists between the specified users, {@code false} otherwise
+     */
+    private boolean checkIfUsersHaveFriendship(Friendship friendship, Long idFirstUser, Long idSecondUser) {
+        if(friendship.getFirstUser().getId().equals(idFirstUser) && friendship.getSecondUser().getId().equals(idSecondUser))
+            return true;
+
+        return friendship.getFirstUser().getId().equals(idSecondUser) && friendship.getSecondUser().getId().equals(idFirstUser);
+    }
+
+    /**
      * Deletes a friendship between two users identified by their IDs.
      *
      * @param idFirstUser the ID of the first user
@@ -101,10 +116,7 @@ public class FriendshipService implements Service<Friendship>{
         Iterable<Friendship> friendships = friendshipRepository.findAll();
 
         Optional<Friendship> friendshipToDelete = StreamSupport.stream(friendships.spliterator(), false)
-                .filter(friendship ->
-                        (friendship.getFirstUser().getId().equals(idFirstUser) && friendship.getSecondUser().getId().equals(idSecondUser)) ||
-                                (friendship.getFirstUser().getId().equals(idSecondUser) && friendship.getSecondUser().getId().equals(idFirstUser))
-                )
+                .filter(friendship -> checkIfUsersHaveFriendship(friendship, idFirstUser, idSecondUser))
                 .findFirst();
 
         if (friendshipToDelete.isPresent()) {
