@@ -54,13 +54,12 @@ JOIN Marfuri ON Curse.TipMarfa = Marfuri.NumeMarfa
 WHERE Marfuri.Volum > 50;
 
 -- 6
--- afiseaza totalul sumei de plata pentru fiecare client care are facturi cu statusul “efectuata”
-SELECT Clienti.Nume, Clienti.Prenume, SUM(Facturi.SumaPlata) AS TotalPlata
-FROM Comenzi
-JOIN Clienti ON Comenzi.ClientID = Clienti.ClientID
-JOIN Facturi ON Comenzi.FacturaID = Facturi.FacturaID
-WHERE Facturi.StatusPlata = 'efectuata'
-GROUP BY Clienti.Nume, Clienti.Prenume;
+-- afiseaza numarul total de curse efectuate de fiecare camion care are statusul "in folosinta"
+SELECT Camioane.NrInmatriculare, COUNT(Curse.CursaID) AS NrCurse
+FROM Camioane
+JOIN Curse ON Camioane.CamionID = Curse.CamionID
+WHERE Camioane.StatusCamion = 'in folosinta'
+GROUP BY Camioane.NrInmatriculare;
 
 -- 7
 -- afiseaza cursele care au parcurs o distanta mai mare de 300 km, impreuna cu informatiile despre punctul de plecare si destinatia lor
