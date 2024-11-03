@@ -87,8 +87,7 @@ public class FriendshipDBRepository implements Repository<Long, Friendship> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                Friendship friendship = getFriendshipFromQueryResult(resultSet);
-                return Optional.of(friendship);
+                return Optional.of(this.getFriendshipFromQueryResult(resultSet));
             }
             return Optional.empty();
 
