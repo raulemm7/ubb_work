@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.labx.HelloController">
+   <children>
+      <TableView fx:id="tableView" prefHeight="360.0" prefWidth="281.0">
+         <columns>
+            <TableColumn fx:id="studentColumn" prefWidth="122.80001258850098" text="Student" />
+            <TableColumn fx:id="temaColumn" prefWidth="62.0" text="Tema" />
+            <TableColumn fx:id="notaColumn" prefWidth="55.600006103515625" text="Nota" />
+         </columns>
+         <HBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </HBox.margin>
+      </TableView>
+      <VBox prefHeight="400.0" prefWidth="170.0">
+         <children>
+            <Label text="Filtreaza dupa nume:">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" top="83.0" />
+               </padding>
+            </Label>
+            <Label text="Filtreaza nota &gt; :">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="21.0" />
+               </padding>
+            </Label>
+            <Label text="Filtreaza dupa tema:">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="18.0" />
+               </padding>
+            </Label>
+         </children></VBox>
+      <VBox prefHeight="400.0" prefWidth="232.0">
+         <children>
+            <TextField fx:id="studentFilterField" prefHeight="0.0" prefWidth="203.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="80.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="notaFilterField">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="temaFilterField">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="butonReset" mnemonicParsing="false" text="Reset">
+               <VBox.margin>
+                  <Insets left="100.0" top="8.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+
+      </VBox>
+   </children>
+</HBox>
